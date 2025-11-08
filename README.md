@@ -1,6 +1,8 @@
 # Deathrunners
+
 **Assignment:** Software Systems Final Project
-**Final Project Proposal:**
+
+
 **Group members:** Claire Wu, Tyeon Ford, Andy Quach
 
 **Description/problem:** 
