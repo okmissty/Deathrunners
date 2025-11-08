@@ -14,7 +14,7 @@ Players have health and hunger bars
 Players can lose health, heal, and be taken out
 Games end when all survivors reach the goal or are dead.
 
-**Project Timeline:**
+*Project Timeline:*
 Week 1 (Nov 3-7): Decide theme of project, decide user group, finish project proposal
 Week 2 (Nov 8-14): Set up basic game structure and multiplayer connection
 Week 3 (Nov 15-21): Add “Death” abilities and player health system, finish prototype, and collect first round of user feedback
