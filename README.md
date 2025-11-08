@@ -1,11 +1,10 @@
 # Deathrunners
 
-**Assignment:** Software Systems Final Project
+Software Systems Final Project
 
+**Creators:** Claire Wu, Tyeon Ford, Andy Quach
 
-**Group members:** Claire Wu, Tyeon Ford, Andy Quach
-
-**Description/problem:** 
+**Description:** 
 
 A 2D multiplayer scroller survival game based in a X themed environment where one player is chosen to be “Death” and tries to take out all of the other players by throwing obstacles/enemies/silly inconveniences in their way to prevent them from getting to safety.
 
