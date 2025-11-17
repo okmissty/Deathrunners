@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://hsfjrenx6gwn"]
+
+[node name="test" type="Node2D"]
+
+[node name="Ground" type="StaticBody2D" parent="."]

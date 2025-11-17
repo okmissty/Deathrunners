@@ -1,0 +1,23 @@
+# Godot 4+ specific ignores
+/android/
+
+# Godot 4.x
+
+# Import cache (generated from source assets)
+.import/
+
+# Local Godot settings and cache
+.godot/
+
+# If you add C# later (probably not for this class)
+.mono/
+
+# OS-specific clutter
+.DS_Store
+Thumbs.db
+
+# Build outputs, if you export the game
+export/
+*.exe
+*.pck
+*.zip
