@@ -29,9 +29,37 @@ For everyone else the task is to survive till the end!
 - **Obstacle**: Base class for hazards
 - **GameManager**: Multiplayer and game state management
 
+
+#### **Project Structure**
+DeathRunGame/
+├── project/                  # Godot project files
+│   ├── project.godot
+│   ├── scenes/
+│   │   ├── main.tscn
+│   │   ├── player.tscn
+│   │   ├── death_player.tscn
+│   │   └── obstacle.tscn
+│   ├── scripts/             # GDScript (minimal, just for UI)
+│   └── assets/
+│       ├── sprites/
+│       └── fonts/
+├── src/                     # C++ source files
+│   ├── player.cpp
+│   ├── player.h
+│   ├── death_player.cpp
+│   ├── death_player.h
+│   ├── obstacle.cpp
+│   ├── obstacle.h
+│   ├── game_manager.cpp
+│   ├── game_manager.h
+│   └── register_types.cpp
+├── godot-cpp/               # Godot C++ bindings (gitignored)
+├── bin/                     # Compiled libraries
+├── SConstruct               # Build configuration
+├── Makefile                 # For your assignment
+└── README.md
+
 # Gameplay
-
-
 
 ### Survivors
 - **A / Left Arrow**: Move left
