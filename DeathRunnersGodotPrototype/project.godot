@@ -10,10 +10,12 @@ config_version=5
 
 [application]
 
-config/name="ini"
-config/features=PackedStringArray("4.5", "Mobile")
+config/name="DeathRunners"
+run/main_scene="uid://df8a5iyhj1xj0"
+config/features=PackedStringArray("4.5", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

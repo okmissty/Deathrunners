@@ -1,9 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bu3egq7jxmmhx"]
+[gd_scene load_steps=10 format=3 uid="uid://df8a5iyhj1xj0"]
 
-[ext_resource type="Script" path="res://Deathrunners/survivor.gd" id="1_xnqkp"]
-[ext_resource type="Script" path="res://Deathrunners/death.gd" id="2_231nh"]
-[ext_resource type="Script" path="res://Deathrunners/death_controller.gd" id="3_0x84s"]
-[ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://Deathrunners/hazard.tscn" id="4_85kue"]
+[ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
+[ext_resource type="Script" uid="uid://81f8t60kf53l" path="res://PrototypeFiles/death.gd" id="2_231nh"]
+[ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
+[ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="4_85kue"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_231nh"]
 
