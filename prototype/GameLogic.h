@@ -1,5 +1,4 @@
 #include <vector>
-#include "InputState.h"
 
 struct GameLogic
 {
