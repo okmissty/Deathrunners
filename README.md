@@ -29,17 +29,8 @@ For everyone else the task is to survive till the end!
 - **Obstacle**: Base class for hazards
 - **GameManager**: Multiplayer and game state management
 
-cd your-project-directory
-   git clone https://github.com/godotengine/godot-cpp.git
-   cd godot-cpp
-   git checkout 4.3  # Match your Godot version
-   
-   # Build the bindings (takes 10-15 minutes)
-   scons platform=linux  # or platform=macos/windows
-```
 
 #### **Project Structure**
-```
 DeathRunGame/
 ├── project/                  # Godot project files
 │   ├── project.godot
