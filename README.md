@@ -10,6 +10,37 @@ A 2D multiplayer scroller survival game based in a X themed environment where on
 
 For everyone else the task is to survive till the end!
 
+**Features**
+1. Multiplayer networking (2-4 players)
+2. Death role with obstacle spawning
+3. Health system with damage
+4. Hunger system
+5. Healing items and food pickups
+
+**Tech Stack**
+- Godot Engine 4.3+
+- GCC/Clang C++ compiler
+- SCons build system
+- Python 3.x
+
+**Key Classes**
+- **Player**: Survivor character with health/hunger
+- **DeathPlayer**: Controls obstacle spawning
+- **Obstacle**: Base class for hazards
+- **GameManager**: Multiplayer and game state management
+
+# Gameplay
+
+
+
+### Survivors
+- **A / Left Arrow**: Move left
+- **D / Right Arrow**: Move right
+- **Space / W**: Jump
+
+### Death Player
+- **Mouse Click**: Spawn obstacle
+- **1-3 Keys**: Select obstacle type
 **Features:**
 
 - Multiplayer
