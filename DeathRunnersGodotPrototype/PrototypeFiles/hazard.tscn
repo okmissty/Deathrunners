@@ -2,28 +2,12 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4fw0i"]
 
-[node name="Hazard" type="Node2D"]
+[node name="Hazard" type="RigidBody2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(32, 32)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D"]
-scale = Vector2(0.03125, 0.03125)
-shape = SubResource("RectangleShape2D_4fw0i")
-
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="HazardAppearance" type="ColorRect" parent="."]
 offset_right = 32.0
 offset_bottom = 32.0
+color = Color(0.7115772, 0.0076711033, 5.7756904e-07, 1)
 
-[node name="Hazard" type="Node2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="Hazard"]
-scale = Vector2(32, 32)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard/Sprite2D"]
-scale = Vector2(0.03125, 0.03125)
+[node name="HazardCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4fw0i")
-
-[node name="ColorRect" type="ColorRect" parent="Hazard"]
-offset_right = 32.0
-offset_bottom = 32.0

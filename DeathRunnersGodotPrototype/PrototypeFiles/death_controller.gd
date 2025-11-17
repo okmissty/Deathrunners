@@ -1,24 +1,28 @@
 extends Node2D
 
-@export var hazard_scene: PackedScene
-@export var survivor_path: NodePath
+@export var hazard_scene: PackedScene      # We'll assign Hazard.tscn in the editor
+@export var survivor_path: NodePath        # We'll point this at the Survivor node
 
 var survivor: Node2D
 
 func _ready():
-	survivor = get_node(survivor_path)
+	# Get the survivor node from the path
+	if survivor_path != NodePath():
+		survivor = get_node(survivor_path)
 
-func _process(delta):
-	# Example: press "1" to drop a hazard above the Survivor
-	if Input.is_key_pressed(KEY_1):
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("death_spawn_rock"):
 		spawn_hazard_over_survivor()
 
-func spawn_hazard_over_survivor():
-	if survivor == null or hazard_scene == null:
+func spawn_hazard_over_survivor() -> void:
+	if hazard_scene == null or survivor == null:
 		return
 
-	var h = hazard_scene.instantiate()
-	get_tree().current_scene.add_child(h)
+	# Instance a new hazard
+	var hazard = hazard_scene.instantiate()
+	# Add the hazard to the current scene (Main)
+	get_tree().current_scene.add_child(hazard)
 
-	# Spawn position a bit above survivor
-	h.global_position = survivor.global_position + Vector2(0, -200)
+	# Position it above the survivor
+	# Feel free to tweak the offset values
+	hazard.global_position = survivor.global_position + Vector2(0, -200)
