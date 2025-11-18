@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=12 format=3 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://81f8t60kf53l" path="res://PrototypeFiles/death.gd" id="2_231nh"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
 [ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="4_85kue"]
 [ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://horizontal_cam.gd" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://checkpoint.tscn" id="6_7mycd"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_231nh"]
 
@@ -47,7 +48,7 @@ position = Vector2(1999, 660)
 shape = SubResource("RectangleShape2D_231nh")
 one_way_collision = true
 
-[node name="Survivor" type="CharacterBody2D" parent="."]
+[node name="Survivor" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(362, 246)
 script = ExtResource("1_xnqkp")
 metadata/_edit_group_ = true
@@ -98,3 +99,33 @@ limit_top = -1000
 limit_bottom = 320
 script = ExtResource("5_lquwl")
 survivor_path = NodePath("../Survivor")
+
+[node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
+position = Vector2(86, 519)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
+position = Vector2(1012, 520)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="BarsContainer" type="VBoxContainer" parent="UI"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthRow" type="HBoxContainer" parent="UI/BarsContainer"]
+layout_mode = 2
+
+[node name="Health" type="Label" parent="UI/BarsContainer/HealthRow"]
+layout_mode = 2
+
+[node name="HealthBar" type="ProgressBar" parent="UI/BarsContainer/HealthRow"]
+layout_mode = 2
+
+[node name="HungerRow" type="HBoxContainer" parent="UI/BarsContainer"]
+layout_mode = 2
+
+[node name="Hunger" type="Label" parent="UI/BarsContainer/HungerRow"]
+layout_mode = 2
+
+[node name="HungerBar" type="ProgressBar" parent="UI/BarsContainer/HungerRow"]
+layout_mode = 2
