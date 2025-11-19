@@ -58,7 +58,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	# --- hunger ticking down ---
-	hunger -= hunger_decrease_rate * delta
+	if Input:
+		hunger -= hunger_decrease_rate * delta
 	if hunger < 0.0:
 		hunger = 0.0
 
