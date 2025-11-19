@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=13 format=3 uid="uid://df8a5iyhj1xj0"]
 
+[ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://81f8t60kf53l" path="res://PrototypeFiles/death.gd" id="2_231nh"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
@@ -23,16 +24,16 @@ size = Vector2(40, 40)
 [node name="Main" type="Node2D"]
 material = SubResource("CanvasItemMaterial_231nh")
 
-[node name="Background" type="ColorRect" parent="."]
-offset_right = 4000.0
-offset_bottom = 720.0
-color = Color(0.5803922, 1, 1, 1)
-metadata/_edit_use_anchors_ = true
+[node name="ParallaxBackground" parent="." instance=ExtResource("1_272bh")]
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
 
 [node name="Ground" type="ColorRect" parent="."]
 offset_top = 600.0
 offset_right = 4000.0
 offset_bottom = 720.0
+scale = Vector2(1.2689017, 0.6459883)
 color = Color(0.14901961, 0.6392157, 0.27058825, 1)
 metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true
@@ -109,8 +110,10 @@ position = Vector2(1012, 520)
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="BarsContainer" type="VBoxContainer" parent="UI"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 37.0
+offset_top = 222.0
+offset_right = 77.0
+offset_bottom = 280.0
 
 [node name="HealthRow" type="HBoxContainer" parent="UI/BarsContainer"]
 layout_mode = 2
