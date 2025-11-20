@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=14 format=3 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
@@ -97,12 +97,13 @@ hazard_scene = ExtResource("4_85kue")
 survivor_path = NodePath("../Survivor")
 
 [node name="HorizontalCam" type="Camera2D" parent="."]
+position = Vector2(673, 283)
 offset = Vector2(0, 400)
 zoom = Vector2(1.6, 1.6)
-limit_left = 33
-limit_top = -993
-limit_right = 10000071
-limit_bottom = 327
+limit_left = 309
+limit_top = -1124
+limit_right = 10000347
+limit_bottom = 196
 script = ExtResource("5_lquwl")
 survivor_path = NodePath("../Survivor")
 
