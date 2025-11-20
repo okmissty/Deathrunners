@@ -1,12 +1,14 @@
 [gd_scene load_steps=14 format=3 uid="uid://df8a5iyhj1xj0"]
 
+[ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
-[ext_resource type="Script" uid="uid://81f8t60kf53l" path="res://PrototypeFiles/death.gd" id="2_231nh"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
 [ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="4_85kue"]
 [ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://horizontal_cam.gd" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://checkpoint.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://healing_pickup.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://qsvk6usq0n6c" path="res://goal.tscn" id="8_5vw27"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_231nh"]
 
@@ -18,13 +20,13 @@ size = Vector2(3998, 120)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0x84s"]
 size = Vector2(32, 48)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_85kue"]
-size = Vector2(40, 40)
-
 [sub_resource type="Theme" id="Theme_7mycd"]
 
 [node name="Main" type="Node2D"]
 material = SubResource("CanvasItemMaterial_231nh")
+script = ExtResource("1_5vw27")
+survivor_path = NodePath("Survivor")
+end_label_path = NodePath("UI/EndLabel")
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_272bh")]
 
@@ -54,6 +56,7 @@ one_way_collision = true
 [node name="Survivor" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(362, 246)
 script = ExtResource("1_xnqkp")
+hunger_decrease_rate = 15.0
 health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
 hunger_bar_path = NodePath("../UI/BarsContainer/HungerRow/HungerBar")
 metadata/_edit_group_ = true
@@ -76,21 +79,6 @@ zoom = Vector2(2.5, 2.5)
 limit_left = 0
 limit_right = 4000
 
-[node name="Death" type="CharacterBody2D" parent="."]
-position = Vector2(531, 257)
-script = ExtResource("2_231nh")
-metadata/_edit_group_ = true
-
-[node name="DeathAppearance" type="ColorRect" parent="Death"]
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-metadata/_edit_use_anchors_ = true
-
-[node name="DeathCollision" type="CollisionShape2D" parent="Death"]
-shape = SubResource("RectangleShape2D_85kue")
-
 [node name="DeathController" type="Node2D" parent="."]
 script = ExtResource("3_0x84s")
 hazard_scene = ExtResource("4_85kue")
@@ -100,10 +88,10 @@ survivor_path = NodePath("../Survivor")
 position = Vector2(673, 283)
 offset = Vector2(0, 400)
 zoom = Vector2(1.6, 1.6)
-limit_left = 309
-limit_top = -1124
-limit_right = 10000347
-limit_bottom = 196
+limit_left = 0
+limit_top = -1000
+limit_right = 1500
+limit_bottom = 300
 script = ExtResource("5_lquwl")
 survivor_path = NodePath("../Survivor")
 
@@ -111,13 +99,14 @@ survivor_path = NodePath("../Survivor")
 position = Vector2(86, 519)
 
 [node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(1012, 520)
+position = Vector2(890, 520)
 
 [node name="UI" type="CanvasLayer" parent="."]
 offset = Vector2(25, 10)
 transform = Transform2D(1, 0, 0, 1, 25, 10)
 
 [node name="BarsContainer" type="VBoxContainer" parent="UI"]
+top_level = true
 anchors_preset = -1
 anchor_right = 0.276
 offset_right = -119.951996
@@ -133,6 +122,9 @@ theme = SubResource("Theme_7mycd")
 custom_minimum_size = Vector2(70, 0)
 layout_direction = 2
 layout_mode = 2
+theme_override_colors/font_color = Color(0.16139409, 0.86960924, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Health"
 
 [node name="HealthBar" type="ProgressBar" parent="UI/BarsContainer/HealthRow"]
@@ -148,9 +140,35 @@ layout_mode = 2
 [node name="Hunger" type="Label" parent="UI/BarsContainer/HungerRow"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0.39215687, 1)
 text = "Hunger"
 
 [node name="HungerBar" type="ProgressBar" parent="UI/BarsContainer/HungerRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 value = 100.0
+
+[node name="EndLabel" type="Label" parent="UI"]
+custom_minimum_size = Vector2(100, 100)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -601.0
+offset_top = -334.0
+offset_right = 551.0
+offset_bottom = 314.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+metadata/_edit_lock_ = true
+
+[node name="HealingPickup" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(824, 569)
+
+[node name="Goal" parent="." instance=ExtResource("8_5vw27")]
+position = Vector2(1126, 550)
