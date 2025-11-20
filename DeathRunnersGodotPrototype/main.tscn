@@ -1,14 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=16 format=3 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
-[ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="4_85kue"]
-[ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://horizontal_cam.gd" id="5_lquwl"]
-[ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://checkpoint.tscn" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://healing_pickup.tscn" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://qsvk6usq0n6c" path="res://goal.tscn" id="8_5vw27"]
+[ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://PrototypeFiles/horizontal_cam.gd" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://PrototypeFiles/checkpoint.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://PrototypeFiles/healing_pickup.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://qsvk6usq0n6c" path="res://PrototypeFiles/goal.tscn" id="8_5vw27"]
+[ext_resource type="PackedScene" uid="uid://mc3rp2mub6wh" path="res://PrototypeFiles/AoE.tscn" id="9_efxa6"]
+[ext_resource type="PackedScene" uid="uid://cftftv5x6nvl0" path="res://PrototypeFiles/boulder_trap.tscn" id="10_4c57u"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_231nh"]
 
@@ -17,10 +18,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_231nh"]
 size = Vector2(3998, 120)
 
+[sub_resource type="Theme" id="Theme_7mycd"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0x84s"]
 size = Vector2(32, 48)
-
-[sub_resource type="Theme" id="Theme_7mycd"]
 
 [node name="Main" type="Node2D"]
 material = SubResource("CanvasItemMaterial_231nh")
@@ -28,12 +29,24 @@ script = ExtResource("1_5vw27")
 survivor_path = NodePath("Survivor")
 end_label_path = NodePath("UI/EndLabel")
 
+[node name="HorizontalCam" type="Camera2D" parent="."]
+position = Vector2(673, 283)
+offset = Vector2(0, 350)
+zoom = Vector2(1.8, 1.8)
+limit_left = 0
+limit_top = -175
+limit_right = 2001
+limit_bottom = 120
+script = ExtResource("5_lquwl")
+survivor_path = NodePath("../Survivor")
+
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_272bh")]
 
 [node name="TileMap" type="TileMap" parent="."]
 format = 2
 
 [node name="Ground" type="ColorRect" parent="."]
+top_level = true
 offset_top = 550.00006
 offset_right = 4000.0
 offset_bottom = 670.00006
@@ -52,54 +65,6 @@ auto_translate_mode = 1
 position = Vector2(1999, 660)
 shape = SubResource("RectangleShape2D_231nh")
 one_way_collision = true
-
-[node name="Survivor" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(366, 500)
-script = ExtResource("1_xnqkp")
-hunger_decrease_rate = 15.0
-health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
-hunger_bar_path = NodePath("../UI/BarsContainer/HungerRow/HungerBar")
-metadata/_edit_group_ = true
-
-[node name="SurvivorAppearance" type="ColorRect" parent="Survivor"]
-offset_left = -16.0
-offset_top = -24.0
-offset_right = 16.0
-offset_bottom = 24.0
-color = Color(0.85033286, 0.8531872, 0.637935, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="SuvivorCollision" type="CollisionShape2D" parent="Survivor"]
-shape = SubResource("RectangleShape2D_0x84s")
-
-[node name="SurvivorCam" type="Camera2D" parent="Survivor"]
-offset = Vector2(0, -100)
-enabled = false
-zoom = Vector2(2.5, 2.5)
-limit_left = 0
-limit_right = 4000
-
-[node name="DeathController" type="Node2D" parent="."]
-script = ExtResource("3_0x84s")
-hazard_scene = ExtResource("4_85kue")
-survivor_path = NodePath("../Survivor")
-
-[node name="HorizontalCam" type="Camera2D" parent="."]
-position = Vector2(673, 283)
-offset = Vector2(0, 350)
-zoom = Vector2(1.8, 1.8)
-limit_left = 0
-limit_top = -175
-limit_right = 2001
-limit_bottom = 120
-script = ExtResource("5_lquwl")
-survivor_path = NodePath("../Survivor")
-
-[node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(238, 509)
-
-[node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(890, 509)
 
 [node name="UI" type="CanvasLayer" parent="."]
 offset = Vector2(25, 10)
@@ -167,9 +132,52 @@ vertical_alignment = 1
 uppercase = true
 metadata/_edit_lock_ = true
 
+[node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
+position = Vector2(238, 509)
+
+[node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
+position = Vector2(890, 509)
+
 [node name="HealingPickup" parent="." instance=ExtResource("7_272bh")]
 position = Vector2(824, 523)
+
+[node name="Survivor" type="CharacterBody2D" parent="." groups=["player"]]
+position = Vector2(366, 500)
+script = ExtResource("1_xnqkp")
+hunger_decrease_rate = 15.0
+health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
+hunger_bar_path = NodePath("../UI/BarsContainer/HungerRow/HungerBar")
+metadata/_edit_group_ = true
+
+[node name="SurvivorAppearance" type="ColorRect" parent="Survivor"]
+offset_left = -16.0
+offset_top = -24.0
+offset_right = 16.0
+offset_bottom = 24.0
+color = Color(0.85033286, 0.8531872, 0.637935, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="SuvivorCollision" type="CollisionShape2D" parent="Survivor"]
+shape = SubResource("RectangleShape2D_0x84s")
+
+[node name="SurvivorCam" type="Camera2D" parent="Survivor"]
+offset = Vector2(0, -100)
+enabled = false
+zoom = Vector2(2.5, 2.5)
+limit_left = 0
+limit_right = 4000
+
+[node name="DeathController" type="Node2D" parent="."]
+script = ExtResource("3_0x84s")
+boulder_trap_path = NodePath("../BoulderTrap")
+
+[node name="BoulderTrap" parent="." instance=ExtResource("10_4c57u")]
+position = Vector2(758, 510)
+speed = -100.0
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)
 position = Vector2(1126, 499)
+
+[node name="AoETrap" parent="." instance=ExtResource("9_efxa6")]
+position = Vector2(579, 543)
