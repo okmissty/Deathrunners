@@ -169,15 +169,15 @@ limit_right = 4000
 
 [node name="DeathController" type="Node2D" parent="."]
 script = ExtResource("3_0x84s")
-boulder_trap_path = NodePath("../BoulderTrap")
+survivor_path = NodePath("../Survivor")
 
-[node name="BoulderTrap" parent="." instance=ExtResource("10_4c57u")]
-position = Vector2(758, 510)
+[node name="BoulderTrap" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
+position = Vector2(767, 510)
 speed = -100.0
+
+[node name="AoETrap" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
+position = Vector2(579, 543)
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)
 position = Vector2(1126, 499)
-
-[node name="AoETrap" parent="." instance=ExtResource("9_efxa6")]
-position = Vector2(579, 543)

@@ -1,19 +1,60 @@
 extends Node2D
 
-@export var boulder_trap_path: NodePath
+@export var survivor_path: NodePath
 
-var boulder_trap: Node2D
+var survivor: Node2D
 
 func _ready() -> void:
-	if boulder_trap_path != NodePath():
-		boulder_trap = get_node(boulder_trap_path)
-		print("DeathController found boulder_trap: ", boulder_trap.name)
+	if survivor_path != NodePath():
+		survivor = get_node(survivor_path)
+	else:
+		survivor = null
+	print("DeathController ready, survivor = ", survivor)
 
 func _process(_delta: float) -> void:
-	# Uses your input action from the screenshot: death_spawn_boulder (key 2)
+	if survivor == null:
+		return
+
 	if Input.is_action_just_pressed("death_spawn_boulder"):
-		print("death_spawn_boulder pressed")
-		if boulder_trap != null:
-			boulder_trap.activate()
-		else:
-			print("No boulder_trap set on DeathController!")
+		_activate_next_trap_ahead("trap_boulder")
+
+	if Input.is_action_just_pressed("death_aoe"):
+		_activate_next_trap_ahead("trap_aoe")
+
+	if Input.is_action_just_pressed("death_spawn_falling"):
+		_activate_next_trap_ahead("trap_falling")
+
+	if Input.is_action_just_pressed("death_arrow"):
+		_activate_next_trap_ahead("trap_arrow")
+
+
+func _activate_next_trap_ahead(group_name: String) -> void:
+	var traps: Array = get_tree().get_nodes_in_group(group_name)
+	print("Trying to activate group '", group_name, "', found ", traps.size(), " traps")
+
+	if traps.is_empty():
+		print("No traps of type ", group_name, " in the scene")
+		return
+
+	var survivor_x: float = survivor.global_position.x
+	var best_trap: Node = null
+	var best_x: float = INF
+
+	for trap in traps:
+		if trap == null:
+			continue
+		if not trap.has_method("activate") or not trap.has_method("can_activate"):
+			continue
+		if not trap.can_activate():
+			continue
+
+		var x: float = trap.global_position.x
+		if x > survivor_x and x < best_x:
+			best_x = x
+			best_trap = trap
+
+	if best_trap != null:
+		print("Activating trap: ", best_trap.name, " at x=", best_trap.global_position.x)
+		best_trap.activate()
+	else:
+		print("No available ", group_name, " trap ahead of survivor")

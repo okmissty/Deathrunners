@@ -1,27 +1,33 @@
 extends Node2D
 
 @export var damage: float = 30.0
-@export var warning_time: float = 1.0   # time before explosion
-@export var active_time: float = 0.5    # time AoE deals damage
+@export var warning_time: float = 1.0   # seconds before explosion
+@export var active_time: float = 0.5    # seconds during which it deals damage
+@export var max_uses: int = 3
 
 var active: bool = false
 var exploded: bool = false
+var times_used: int = 0
 var timer: float = 0.0
 
 func _ready() -> void:
 	add_to_group("trap_aoe")
-	# Initially invisible / inactive
-	#$Area.monitoring = false
-	#$Area.visible = false
+	$Area.monitoring = false
+	$Area.visible = false   # hide until armed
+	print("AoE Trap ready, groups: ", get_groups())
+
+func can_activate() -> bool:
+	return (not active) and (times_used < max_uses)
 
 func activate() -> void:
-	if exploded:
+	if not can_activate():
 		return
+	times_used += 1
 	active = true
+	exploded = false
 	timer = 0.0
-	print("AoE trap armed at: ", global_position)
-	# Maybe flash / change sprite color to warning?
 	$Area.visible = true
+	print("AoE trap armed at: ", global_position, " use ", times_used, "/", max_uses)
 
 func _process(delta: float) -> void:
 	if not active:
@@ -29,22 +35,23 @@ func _process(delta: float) -> void:
 
 	timer += delta
 
-	if timer >= warning_time and not exploded:
-		# Now "explode": enable monitoring so overlaps will be detected
-		print("AoE trap exploding!")
-		$Area.monitoring = true
+	if not exploded and timer >= warning_time:
 		exploded = true
+		$Area.monitoring = true
+		print("AoE trap exploding!")
 
-	if exploded and timer >= warning_time + active_time:
-		# End of AoE effect
-		print("AoE trap finished")
-		active = false
-		$Area.monitoring = false
-		# Optionally hide or queue_free()
-		queue_free()
+	elif exploded and timer >= warning_time + active_time:
+		_deactivate()
 
+func _deactivate() -> void:
+	active = false
+	exploded = false
+	timer = 0.0
+	$Area.monitoring = false
+	$Area.visible = false
+	print("AoE trap finished")
 
-func _on_Area_body_entered(body: Node) -> void:
+func _on_area_body_entered(body: Node2D) -> void:
 	if not exploded:
 		return
 	if body.is_in_group("player") and body.has_method("apply_damage"):
