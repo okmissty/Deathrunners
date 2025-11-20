@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bp1rr5otrhenm"
-path="res://.godot/imported/middleground.png-61b18e001d0c9078d810ff4c697a4c03.ctex"
+uid="uid://byqnwdmxhtol4"
+path="res://.godot/imported/Boulder.png-e9c0ceebeb8a50560622c6cbb28364ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/background/middleground.png"
-dest_files=["res://.godot/imported/middleground.png-61b18e001d0c9078d810ff4c697a4c03.ctex"]
+source_file="res://Assets/Boulder.png"
+dest_files=["res://.godot/imported/Boulder.png-e9c0ceebeb8a50560622c6cbb28364ab.ctex"]
 
 [params]
 

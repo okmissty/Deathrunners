@@ -1,17 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://c8k7dphv8fw27"]
+[gd_scene load_steps=4 format=3 uid="uid://c8k7dphv8fw27"]
 
 [ext_resource type="Script" uid="uid://ers53uhtihb7" path="res://PrototypeFiles/arrow_projectile.gd" id="1_kd5qf"]
+[ext_resource type="Texture2D" uid="uid://cmckfjjllt2gw" path="res://Assets/ArrowProjectile.png" id="2_q8lfg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kd5qf"]
+size = Vector2(410.5, 66)
 
-[node name="ArrowProjectile" type="Node2D"]
+[node name="ArrowProjectile" type="Area2D"]
 script = ExtResource("1_kd5qf")
 
-[node name="HitArea" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_kd5qf")
 
-[node name="ArrowSprite" type="Sprite2D" parent="HitArea"]
+[node name="ArrowSprite" type="Sprite2D" parent="."]
+rotation = 3.1415927
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("2_q8lfg")
 
-[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

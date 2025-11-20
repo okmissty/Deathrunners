@@ -4,11 +4,26 @@
 [ext_resource type="PackedScene" uid="uid://c8k7dphv8fw27" path="res://PrototypeFiles/arrow_projectile.tscn" id="2_vmf1c"]
 
 [node name="ArrowTrap" type="Node2D"]
-position = Vector2(0, -1)
 script = ExtResource("1_2mbj8")
 arrow_scene = ExtResource("2_vmf1c")
 fire_direction = Vector2(-1, 0)
 
-[node name="Muzzle" type="Node2D" parent="."]
-
 [node name="ArrowTrapSprite" type="Sprite2D" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+color = Color(0.3943528, 0.39435276, 0.39435276, 1)
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 3.0
+offset_bottom = 10.0
+color = Color(0.3943528, 0.39435276, 0.39435276, 1)
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(-35, -14)

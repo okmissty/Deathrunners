@@ -2,17 +2,23 @@ extends Node2D
 
 @export var arrow_scene: PackedScene
 @export var fire_direction: Vector2 = Vector2.RIGHT
+@export var max_uses: int = 3
 
-var used: bool = false
+var times_used: int = 0
 
 func _ready() -> void:
 	add_to_group("trap_arrow")
 
+func can_activate() -> bool:
+	return times_used < max_uses
+
 func activate() -> void:
-	if used:
+	if not can_activate():
+		print("ArrowTrap at ", global_position, " is out of uses")
 		return
-	used = true
-	print("Arrow trap firing at: ", global_position)
+
+	times_used += 1
+	print("Arrow trap firing at: ", global_position, " use ", times_used, "/", max_uses)
 
 	if arrow_scene == null:
 		push_error("ArrowTrap has no arrow_scene assigned")
