@@ -6,52 +6,25 @@
 [node name="ParallaxBackground" type="ParallaxBackground"]
 
 [node name="ParallaxLayerBackground" type="ParallaxLayer" parent="."]
+position = Vector2(0, 61)
+scale = Vector2(1.6, 1.6)
 
-[node name="background" type="TextureRect" parent="ParallaxLayerBackground"]
-offset_right = 192.0
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayerBackground"]
+offset_right = 2996.0
 offset_bottom = 240.0
-scale = Vector2(5.9778285, 3.1949894)
-texture = ExtResource("1_si5dj")
-stretch_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="background3" type="TextureRect" parent="ParallaxLayerBackground"]
-offset_left = 2296.0
-offset_right = 2488.0
-offset_bottom = 240.0
-scale = Vector2(5.9778285, 3.1949894)
-texture = ExtResource("1_si5dj")
-stretch_mode = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="background2" type="TextureRect" parent="ParallaxLayerBackground"]
-offset_left = 1148.0
-offset_right = 1340.0
-offset_bottom = 240.0
-scale = Vector2(5.9778285, 3.1949894)
+scale = Vector2(1.6, 1.6)
 texture = ExtResource("1_si5dj")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxLayerMiddleground" type="ParallaxLayer" parent="."]
+position = Vector2(0, 61)
+scale = Vector2(1.6, 1.6)
 
-[node name="middleground" type="TextureRect" parent="ParallaxLayerMiddleground"]
-offset_top = -0.00012207031
-offset_right = 1147.0
-offset_bottom = 644.9998
-scale = Vector2(1.0069447, 1.1922249)
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayerMiddleground"]
+offset_right = 2996.0
+offset_bottom = 240.0
+scale = Vector2(1.6, 1.6)
 texture = ExtResource("2_6h8ff")
-
-[node name="middleground2" type="TextureRect" parent="ParallaxLayerMiddleground"]
-offset_left = 1155.0
-offset_right = 2302.0
-offset_bottom = 645.0
-scale = Vector2(1.0069447, 1.1922249)
-texture = ExtResource("2_6h8ff")
-
-[node name="middleground3" type="TextureRect" parent="ParallaxLayerMiddleground"]
-offset_left = 2296.0
-offset_right = 3443.0
-offset_bottom = 645.0
-scale = Vector2(1.0069447, 1.1922249)
-texture = ExtResource("2_6h8ff")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
