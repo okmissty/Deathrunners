@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cftftv5x6nvl0"]
+
+[ext_resource type="Script" uid="uid://bw1237snhgus2" path="res://PrototypeFiles/boulder_trap.gd" id="1_ek05g"]
+[ext_resource type="Texture2D" uid="uid://byqnwdmxhtol4" path="res://PrototypeFiles/Boulder.png" id="2_vn8ls"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vn8ls"]
+radius = 40.0
+
+[node name="BoulderTrap" type="Node2D"]
+script = ExtResource("1_ek05g")
+
+[node name="HitArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("CircleShape2D_vn8ls")
+
+[node name="Sprite2D" type="Sprite2D" parent="HitArea"]
+visibility_layer = 17
+position = Vector2(-3.0398369e-06, -2.2798777e-06)
+scale = Vector2(0.013666665, 0.013666668)
+texture = ExtResource("2_vn8ls")
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
