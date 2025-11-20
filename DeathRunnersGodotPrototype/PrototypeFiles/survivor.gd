@@ -6,10 +6,11 @@ const GRAVITY := 900.0
 
 @export var max_health: int = 100
 @export var max_hunger: int = 100
-@export var hunger_decrease_rate: float = 5.0  # hunger points per second
-@export var hunger_damage_per_second: float = 10.0
 
-# paths to UI bars
+# Hunger drain only while moving
+@export var hunger_decrease_rate: float = 2.0    # hunger points per second while moving
+@export var hunger_damage_per_second: float = 5.0  # HP per second at 0 hunger
+
 @export var health_bar_path: NodePath
 @export var hunger_bar_path: NodePath
 
@@ -39,11 +40,11 @@ func _physics_process(delta: float) -> void:
 	if not alive or reached_goal:
 		return
 
-	# gravity
+	# Gravity
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	# horizontal movement
+	# Horizontal movement
 	var dir := 0.0
 	if Input.is_action_pressed("ui_left"):
 		dir -= 1.0
@@ -51,19 +52,20 @@ func _physics_process(delta: float) -> void:
 		dir += 1.0
 	velocity.x = dir * SPEED
 
-	# jump
+	# Jump
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 
 	move_and_slide()
 
-	# --- hunger ticking down ---
-	if Input:
+	# --- Hunger: only deplete while moving ---
+	var is_moving: bool = dir != 0.0
+	if is_moving:
 		hunger -= hunger_decrease_rate * delta
-	if hunger < 0.0:
-		hunger = 0.0
+		if hunger < 0.0:
+			hunger = 0.0
 
-	# if starving, take damage over time
+	# If starving, take damage over time
 	if hunger <= 0.0:
 		apply_damage(hunger_damage_per_second * delta)
 
