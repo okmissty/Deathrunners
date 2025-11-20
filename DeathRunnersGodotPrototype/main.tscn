@@ -1,6 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
+[ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
 [ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="4_85kue"]
@@ -27,16 +28,16 @@ script = ExtResource("1_5vw27")
 survivor_path = NodePath("Survivor")
 end_label_path = NodePath("UI/EndLabel")
 
-[node name="Background" type="ColorRect" parent="."]
-offset_right = 4000.0
-offset_bottom = 720.0
-color = Color(0.5803922, 1, 1, 1)
-metadata/_edit_use_anchors_ = true
+[node name="ParallaxBackground" parent="." instance=ExtResource("1_272bh")]
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
 
 [node name="Ground" type="ColorRect" parent="."]
 offset_top = 600.0
 offset_right = 4000.0
 offset_bottom = 720.0
+scale = Vector2(1.2689017, 0.6459883)
 color = Color(0.14901961, 0.6392157, 0.27058825, 1)
 metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true

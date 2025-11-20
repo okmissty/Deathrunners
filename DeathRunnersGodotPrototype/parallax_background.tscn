@@ -1,0 +1,57 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmb1uscbu8rbe"]
+
+[ext_resource type="Texture2D" uid="uid://bap0naers8oub" path="res://Assets/background.png" id="1_si5dj"]
+[ext_resource type="Texture2D" uid="uid://bp1rr5otrhenm" path="res://Assets/middleground.png" id="2_6h8ff"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayerBackground" type="ParallaxLayer" parent="."]
+
+[node name="background" type="TextureRect" parent="ParallaxLayerBackground"]
+offset_right = 192.0
+offset_bottom = 240.0
+scale = Vector2(5.9778285, 3.1949894)
+texture = ExtResource("1_si5dj")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="background3" type="TextureRect" parent="ParallaxLayerBackground"]
+offset_left = 2296.0
+offset_right = 2488.0
+offset_bottom = 240.0
+scale = Vector2(5.9778285, 3.1949894)
+texture = ExtResource("1_si5dj")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="background2" type="TextureRect" parent="ParallaxLayerBackground"]
+offset_left = 1148.0
+offset_right = 1340.0
+offset_bottom = 240.0
+scale = Vector2(5.9778285, 3.1949894)
+texture = ExtResource("1_si5dj")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ParallaxLayerMiddleground" type="ParallaxLayer" parent="."]
+
+[node name="middleground" type="TextureRect" parent="ParallaxLayerMiddleground"]
+offset_top = -0.00012207031
+offset_right = 1147.0
+offset_bottom = 644.9998
+scale = Vector2(1.0069447, 1.1922249)
+texture = ExtResource("2_6h8ff")
+
+[node name="middleground2" type="TextureRect" parent="ParallaxLayerMiddleground"]
+offset_left = 1155.0
+offset_right = 2302.0
+offset_bottom = 645.0
+scale = Vector2(1.0069447, 1.1922249)
+texture = ExtResource("2_6h8ff")
+
+[node name="middleground3" type="TextureRect" parent="ParallaxLayerMiddleground"]
+offset_left = 2296.0
+offset_right = 3443.0
+offset_bottom = 645.0
+scale = Vector2(1.0069447, 1.1922249)
+texture = ExtResource("2_6h8ff")
