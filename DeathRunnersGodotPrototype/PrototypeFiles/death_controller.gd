@@ -16,11 +16,12 @@ func _process(delta: float) -> void:
 
 func spawn_hazard_over_survivor() -> void:
 	if hazard_scene == null or survivor == null:
+		print("No hazard_scene or survivor set on DeathController")
 		return
 
 	var h = hazard_scene.instantiate()
 	get_tree().current_scene.add_child(h)
 
-	# spawn a bit ahead and above the survivor
+	# spawn above the survivor
 	h.global_position = survivor.global_position + Vector2(0, -200)
 	
