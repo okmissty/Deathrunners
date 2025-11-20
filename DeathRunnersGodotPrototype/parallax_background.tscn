@@ -6,8 +6,8 @@
 [node name="ParallaxBackground" type="ParallaxBackground"]
 
 [node name="ParallaxLayerBackground" type="ParallaxLayer" parent="."]
-position = Vector2(0, 61)
 scale = Vector2(1.6, 1.6)
+metadata/_edit_group_ = true
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayerBackground"]
 offset_right = 2996.0
@@ -18,8 +18,8 @@ stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ParallaxLayerMiddleground" type="ParallaxLayer" parent="."]
-position = Vector2(0, 61)
 scale = Vector2(1.6, 1.6)
+metadata/_edit_group_ = true
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxLayerMiddleground"]
 offset_right = 2996.0

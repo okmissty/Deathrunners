@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=15 format=3 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
@@ -34,9 +34,9 @@ end_label_path = NodePath("UI/EndLabel")
 format = 2
 
 [node name="Ground" type="ColorRect" parent="."]
-offset_top = 650.0
+offset_top = 550.00006
 offset_right = 4000.0
-offset_bottom = 770.0
+offset_bottom = 670.00006
 scale = Vector2(1.2689017, 0.6459883)
 color = Color(0.14901961, 0.6392157, 0.27058825, 1)
 metadata/_edit_use_anchors_ = true
@@ -54,7 +54,7 @@ shape = SubResource("RectangleShape2D_231nh")
 one_way_collision = true
 
 [node name="Survivor" type="CharacterBody2D" parent="." groups=["player"]]
-position = Vector2(362, 246)
+position = Vector2(366, 500)
 script = ExtResource("1_xnqkp")
 hunger_decrease_rate = 15.0
 health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
@@ -86,20 +86,20 @@ survivor_path = NodePath("../Survivor")
 
 [node name="HorizontalCam" type="Camera2D" parent="."]
 position = Vector2(673, 283)
-offset = Vector2(0, 400)
-zoom = Vector2(1.6, 1.6)
+offset = Vector2(0, 350)
+zoom = Vector2(1.8, 1.8)
 limit_left = 0
-limit_top = -1000
-limit_right = 1500
-limit_bottom = 300
+limit_top = -175
+limit_right = 2001
+limit_bottom = 120
 script = ExtResource("5_lquwl")
 survivor_path = NodePath("../Survivor")
 
 [node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(86, 519)
+position = Vector2(238, 509)
 
 [node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
-position = Vector2(890, 520)
+position = Vector2(890, 509)
 
 [node name="UI" type="CanvasLayer" parent="."]
 offset = Vector2(25, 10)
@@ -168,8 +168,8 @@ uppercase = true
 metadata/_edit_lock_ = true
 
 [node name="HealingPickup" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(824, 569)
+position = Vector2(824, 523)
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)
-position = Vector2(1126, 550)
+position = Vector2(1126, 499)
