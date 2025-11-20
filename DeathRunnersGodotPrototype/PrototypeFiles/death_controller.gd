@@ -1,27 +1,19 @@
 extends Node2D
 
-@export var hazard_scene: PackedScene
-@export var survivor_path: NodePath
+@export var boulder_trap_path: NodePath
 
-var survivor: Node2D
+var boulder_trap: Node2D
 
 func _ready() -> void:
-	if survivor_path != NodePath():
-		survivor = get_node(survivor_path)
+	if boulder_trap_path != NodePath():
+		boulder_trap = get_node(boulder_trap_path)
+		print("DeathController found boulder_trap: ", boulder_trap.name)
 
-func _process(delta: float) -> void:
-	# Example: press '1' to drop a rock above survivor
-	if Input.is_action_just_pressed("death_spawn_rock"):
-		spawn_hazard_over_survivor()
-
-func spawn_hazard_over_survivor() -> void:
-	if hazard_scene == null or survivor == null:
-		print("No hazard_scene or survivor set on DeathController")
-		return
-
-	var h = hazard_scene.instantiate()
-	get_tree().current_scene.add_child(h)
-
-	# spawn above the survivor
-	h.global_position = survivor.global_position + Vector2(0, -200)
-	
+func _process(_delta: float) -> void:
+	# Uses your input action from the screenshot: death_spawn_boulder (key 2)
+	if Input.is_action_just_pressed("death_spawn_boulder"):
+		print("death_spawn_boulder pressed")
+		if boulder_trap != null:
+			boulder_trap.activate()
+		else:
+			print("No boulder_trap set on DeathController!")
