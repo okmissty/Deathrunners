@@ -1,14 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=15 format=3 uid="uid://df8a5iyhj1xj0"]
 
-[ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
+[ext_resource type="Script" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
 [ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="4_85kue"]
 [ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://horizontal_cam.gd" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://checkpoint.tscn" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://healing_pickup.tscn" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://qsvk6usq0n6c" path="res://goal.tscn" id="8_5vw27"]
+[ext_resource type="PackedScene" path="res://healing_pickup.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" path="res://goal.tscn" id="8_5vw27"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_231nh"]
 
@@ -87,11 +87,11 @@ survivor_path = NodePath("../Survivor")
 [node name="HorizontalCam" type="Camera2D" parent="."]
 position = Vector2(673, 283)
 offset = Vector2(0, 400)
-zoom = Vector2(1.6, 1.6)
-limit_left = 0
-limit_top = -1000
-limit_right = 1500
-limit_bottom = 300
+zoom = Vector2(1.2, 1.2)
+limit_left = 1
+limit_top = -1054
+limit_right = 1497
+limit_bottom = 246
 script = ExtResource("5_lquwl")
 survivor_path = NodePath("../Survivor")
 
