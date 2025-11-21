@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
 [ext_resource type="Texture2D" uid="uid://dcsu254ss0abo" path="res://Assets/background/tileset.png" id="4_dg77c"]
-[ext_resource type="Script" path="res://PrototypeFiles/horizontal_cam.gd" id="5_lquwl"]
+[ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://PrototypeFiles/horizontal_cam.gd" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://PrototypeFiles/checkpoint.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://PrototypeFiles/HHpickup.tscn" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://d2514ixjb5c47" path="res://Assets/Character/sprites/jump.png" id="7_dg77c"]
