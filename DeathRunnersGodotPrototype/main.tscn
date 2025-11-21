@@ -84,9 +84,13 @@ texture = ExtResource("4_dg77c")
 10:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 11:5/0 = 0
 0:6/0 = 0
+0:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -3.057598, 8, -8, 8, 8, -1.978447, 8, 1.6187286, 3.5971756)
 1:6/0 = 0
+1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -6.115196, 8, -8, 8, 8, -10.971382, 8.273502, -4.6763268, -0.35971642)
 3:6/0 = 0
+3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 0.71943474, -1.7985859, 19.065023, 7.3742085, -8, 8, -8, 8)
 4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -1.6187286, -3.2374573, 1.2590122, 8, 8, -8, 8, -8, 8)
 7:6/0 = 0
 7:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 8:6/0 = 0
@@ -103,9 +107,13 @@ texture = ExtResource("4_dg77c")
 18:6/0 = 0
 19:6/0 = 0
 0:7/0 = 0
+0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, -8, 8, 8, -8, 8, -8, -8)
 1:7/0 = 0
+1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(8, -8, 8, -8, 8, 8, -8, 8, -8, -8)
 3:7/0 = 0
+3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8, -8, 8)
 4:7/0 = 0
+4:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8, -8, 8)
 7:7/0 = 0
 7:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 8:7/0 = 0
@@ -349,14 +357,42 @@ offset = Vector2(0, 350)
 zoom = Vector2(1.2, 1.2)
 limit_left = 4
 limit_top = -309
-limit_right = 2005
+limit_right = 7462
 limit_bottom = 388
 script = ExtResource("5_lquwl")
 survivor_path = NodePath("../Survivor")
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("1_272bh")]
 
+[node name="Decorations" type="Node2D" parent="."]
+
+[node name="tree" type="Sprite2D" parent="Decorations"]
+position = Vector2(1337.0001, 236)
+scale = Vector2(3.758216, 3.455157)
+texture = ExtResource("13_w48qg")
+
+[node name="plant" type="Sprite2D" parent="Decorations"]
+position = Vector2(103, 489.99997)
+scale = Vector2(4.666666, 4.0381956)
+texture = ExtResource("14_vivmo")
+
+[node name="vine" type="Sprite2D" parent="Decorations"]
+position = Vector2(629, 64)
+scale = Vector2(4.243902, 3)
+texture = ExtResource("22_d13ii")
+
+[node name="house" type="Sprite2D" parent="Decorations"]
+position = Vector2(2065.7017, 270.99554)
+scale = Vector2(3.3948286, 3.4877505)
+texture = ExtResource("23_1u8w0")
+
+[node name="Sprite2D" type="Sprite2D" parent="Decorations"]
+position = Vector2(2707, 496)
+scale = Vector2(4.2244897, 4.137931)
+texture = ExtResource("24_1u8w0")
+
 [node name="TileMap" type="TileMap" parent="."]
+position = Vector2(34.999996, 0)
 scale = Vector2(5, 5)
 tile_set = SubResource("TileSet_w48qg")
 format = 2
@@ -379,9 +415,11 @@ transform = Transform2D(1, 0, 0, 1, 25, 10)
 [node name="BarsContainer" type="VBoxContainer" parent="UI"]
 top_level = true
 anchors_preset = -1
-anchor_right = 0.276
-offset_right = -119.951996
-offset_bottom = 58.0
+anchor_right = 0.39
+offset_left = 52.0
+offset_top = 12.0
+offset_right = -21.199982
+offset_bottom = 70.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
@@ -439,9 +477,11 @@ uppercase = true
 metadata/_edit_lock_ = true
 
 [node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
+visible = false
 position = Vector2(238, 509)
 
 [node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
+visible = false
 position = Vector2(890, 509)
 
 [node name="HHpickup" parent="." instance=ExtResource("7_272bh")]
@@ -505,36 +545,9 @@ position = Vector2(701, 525)
 position = Vector2(869, 410)
 
 [node name="BoulderTrap2" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
-position = Vector2(773, 523)
+position = Vector2(773, 511)
 speed = -100.0
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)
-position = Vector2(1759, 509)
-
-[node name="Decorations" type="Node2D" parent="."]
-
-[node name="tree" type="Sprite2D" parent="Decorations"]
-position = Vector2(1337.0001, 236)
-scale = Vector2(3.758216, 3.455157)
-texture = ExtResource("13_w48qg")
-
-[node name="plant" type="Sprite2D" parent="Decorations"]
-position = Vector2(103, 489.99997)
-scale = Vector2(4.666666, 4.0381956)
-texture = ExtResource("14_vivmo")
-
-[node name="vine" type="Sprite2D" parent="Decorations"]
-position = Vector2(629, 64)
-scale = Vector2(4.243902, 3)
-texture = ExtResource("22_d13ii")
-
-[node name="house" type="Sprite2D" parent="Decorations"]
-position = Vector2(2065.7017, 270.99554)
-scale = Vector2(3.3948286, 3.4877505)
-texture = ExtResource("23_1u8w0")
-
-[node name="Sprite2D" type="Sprite2D" parent="Decorations"]
-position = Vector2(2707, 496)
-scale = Vector2(4.2244897, 4.137931)
-texture = ExtResource("24_1u8w0")
+position = Vector2(3424, 515)
