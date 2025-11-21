@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://byqnwdmxhtol4"
-path="res://.godot/imported/Boulder.png-7f23d87be27c876354b7a0a4500b567f.ctex"
+path="res://.godot/imported/Boulder.png-e9c0ceebeb8a50560622c6cbb28364ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://PrototypeFiles/Boulder.png"
-dest_files=["res://.godot/imported/Boulder.png-7f23d87be27c876354b7a0a4500b567f.ctex"]
+source_file="res://Assets/Boulder.png"
+dest_files=["res://.godot/imported/Boulder.png-e9c0ceebeb8a50560622c6cbb28364ab.ctex"]
 
 [params]
 

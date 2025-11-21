@@ -14,6 +14,10 @@
 [ext_resource type="Texture2D" uid="uid://ba7het8lkoeuc" path="res://Assets/Character/sprites/landing.png" id="8_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://mc3rp2mub6wh" path="res://PrototypeFiles/AoE.tscn" id="9_efxa6"]
 [ext_resource type="PackedScene" uid="uid://cftftv5x6nvl0" path="res://PrototypeFiles/boulder_trap.tscn" id="10_4c57u"]
+[ext_resource type="PackedScene" uid="uid://healthpickup" path="res://health_pickup.tscn" id="11_dg77c"]
+[ext_resource type="PackedScene" uid="uid://dljsw1cv5sq6r" path="res://PrototypeFiles/arrow_trap.tscn" id="11_w48qg"]
+[ext_resource type="PackedScene" uid="uid://c8k7dphv8fw27" path="res://PrototypeFiles/arrow_projectile.tscn" id="12_vivmo"]
+[ext_resource type="PackedScene" uid="uid://hungerpickup" path="res://hunger_pickup.tscn" id="12_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bcx7ix1iw467s" path="res://Assets/Character/sprites/run.png" id="11_yaehf"]
 [ext_resource type="Texture2D" uid="uid://bl5grvgaslses" path="res://Assets/background/tree.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dkinpkh3cb7hw" path="res://Assets/background/plant.png" id="14_vivmo"]
@@ -437,8 +441,14 @@ position = Vector2(238, 509)
 [node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
 position = Vector2(890, 509)
 
-[node name="HealingPickup" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(824, 523)
+[node name="HHpickup" parent="." instance=ExtResource("7_272bh")]
+position = Vector2(825, 523)
+
+[node name="HealthPickup" parent="." instance=ExtResource("11_dg77c")]
+position = Vector2(84, 510)
+
+[node name="HungerPickup" parent="." instance=ExtResource("12_ycdy4")]
+position = Vector2(144, 509)
 
 [node name="Survivor" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(352, 501)
@@ -478,12 +488,32 @@ limit_right = 4000
 script = ExtResource("3_0x84s")
 survivor_path = NodePath("../Survivor")
 
+[node name="AoETrap" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
+position = Vector2(579, 543)
+
+[node name="ArrowTrap" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
+position = Vector2(701, 525)
+
+[node name="ArrowProjectile" parent="." instance=ExtResource("12_vivmo")]
+position = Vector2(869, 410)
+
 [node name="BoulderTrap" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
 position = Vector2(773, 511)
 speed = -100.0
 
+
 [node name="AoETrap" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
 position = Vector2(579, 543)
+
+[node name="ArrowTrap" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
+position = Vector2(701, 525)
+
+[node name="ArrowProjectile" parent="." instance=ExtResource("12_vivmo")]
+position = Vector2(869, 410)
+
+[node name="BoulderTrap" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
+position = Vector2(773, 511)
+speed = -100.0
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)

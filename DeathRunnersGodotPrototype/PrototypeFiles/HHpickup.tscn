@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6ky2iojhuyks"]
 
-[ext_resource type="Script" uid="uid://dcm6afmprx0x3" path="res://PrototypeFiles/healing_pickup.gd" id="1_wfjnf"]
+[ext_resource type="Script" uid="uid://dcm6afmprx0x3" path="res://PrototypeFiles/HHpickup.gd" id="1_wfjnf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huou6"]
 

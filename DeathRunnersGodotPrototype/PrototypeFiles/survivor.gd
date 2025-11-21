@@ -4,9 +4,6 @@ const SPEED := 200.0
 const JUMP_VELOCITY := -400.0
 const GRAVITY := 900.0
 
-@export var max_health: int = 100
-@export var max_hunger: int = 100
-
 # Hunger drain only while moving
 @export var hunger_decrease_rate: float = 2.0    # hunger points per second while moving
 @export var hunger_damage_per_second: float = 5.0  # HP per second at 0 hunger
@@ -15,12 +12,15 @@ const GRAVITY := 900.0
 @export var hunger_bar_path: NodePath
 
 var health: float
+@export var max_health: int = 100
+var _health_bar: ProgressBar
+
 var hunger: float
+@export var max_hunger: int = 100
+var _hunger_bar: ProgressBar
+
 var alive: bool = true
 var reached_goal: bool = false
-
-var _health_bar: ProgressBar
-var _hunger_bar: ProgressBar
 
 func _ready() -> void:
 	health = max_health
