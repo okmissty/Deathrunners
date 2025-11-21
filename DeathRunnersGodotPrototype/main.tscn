@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_xnqkp"]
 [ext_resource type="Script" uid="uid://b8ohkdji0quof" path="res://PrototypeFiles/death_controller.gd" id="3_0x84s"]
 [ext_resource type="Texture2D" uid="uid://dcsu254ss0abo" path="res://Assets/background/tileset.png" id="4_dg77c"]
-[ext_resource type="Script" uid="uid://bcci8yq10apd5" path="res://PrototypeFiles/horizontal_cam.gd" id="5_lquwl"]
+[ext_resource type="Script" path="res://PrototypeFiles/horizontal_cam.gd" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://PrototypeFiles/checkpoint.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://PrototypeFiles/HHpickup.tscn" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://d2514ixjb5c47" path="res://Assets/Character/sprites/jump.png" id="7_dg77c"]
@@ -477,11 +477,9 @@ uppercase = true
 metadata/_edit_lock_ = true
 
 [node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
-visible = false
 position = Vector2(238, 509)
 
 [node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
-visible = false
 position = Vector2(890, 509)
 
 [node name="HHpickup" parent="." instance=ExtResource("7_272bh")]
@@ -497,9 +495,9 @@ position = Vector2(144, 509)
 position = Vector2(352, 501)
 scale = Vector2(3, 3)
 script = ExtResource("1_xnqkp")
-hunger_decrease_rate = 15.0
 health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
 hunger_bar_path = NodePath("../UI/BarsContainer/HungerRow/HungerBar")
+hunger_decrease_rate = 15.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Survivor"]
@@ -550,4 +548,4 @@ speed = -100.0
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)
-position = Vector2(3424, 515)
+position = Vector2(2021, 512)
