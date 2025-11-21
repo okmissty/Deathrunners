@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=50 format=4 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dcsu254ss0abo" path="res://Assets/background/tileset.png" id="4_dg77c"]
 [ext_resource type="Script" path="res://PrototypeFiles/horizontal_cam.gd" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://dofa221wg6twp" path="res://PrototypeFiles/checkpoint.tscn" id="6_7mycd"]
-[ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://PrototypeFiles/healing_pickup.tscn" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://b6ky2iojhuyks" path="res://PrototypeFiles/HHpickup.tscn" id="7_272bh"]
 [ext_resource type="Texture2D" uid="uid://d2514ixjb5c47" path="res://Assets/Character/sprites/jump.png" id="7_dg77c"]
 [ext_resource type="Texture2D" uid="uid://dgibo58vnfdam" path="res://Assets/Character/sprites/idling.png" id="7_efxa6"]
 [ext_resource type="PackedScene" uid="uid://qsvk6usq0n6c" path="res://PrototypeFiles/goal.tscn" id="8_5vw27"]
@@ -16,9 +16,9 @@
 [ext_resource type="PackedScene" uid="uid://cftftv5x6nvl0" path="res://PrototypeFiles/boulder_trap.tscn" id="10_4c57u"]
 [ext_resource type="PackedScene" uid="uid://healthpickup" path="res://health_pickup.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://dljsw1cv5sq6r" path="res://PrototypeFiles/arrow_trap.tscn" id="11_w48qg"]
+[ext_resource type="Texture2D" uid="uid://bcx7ix1iw467s" path="res://Assets/Character/sprites/run.png" id="11_yaehf"]
 [ext_resource type="PackedScene" uid="uid://c8k7dphv8fw27" path="res://PrototypeFiles/arrow_projectile.tscn" id="12_vivmo"]
 [ext_resource type="PackedScene" uid="uid://hungerpickup" path="res://hunger_pickup.tscn" id="12_ycdy4"]
-[ext_resource type="Texture2D" uid="uid://bcx7ix1iw467s" path="res://Assets/Character/sprites/run.png" id="11_yaehf"]
 [ext_resource type="Texture2D" uid="uid://bl5grvgaslses" path="res://Assets/background/tree.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dkinpkh3cb7hw" path="res://Assets/background/plant.png" id="14_vivmo"]
 
@@ -463,15 +463,6 @@ metadata/_edit_group_ = true
 sprite_frames = SubResource("SpriteFrames_4c57u")
 frame_progress = 0.80664784
 
-[node name="SurvivorAppearance" type="ColorRect" parent="Survivor"]
-visible = false
-offset_left = -16.0
-offset_top = -24.0
-offset_right = 16.0
-offset_bottom = 24.0
-color = Color(0.85033286, 0.8531872, 0.637935, 1)
-metadata/_edit_use_anchors_ = true
-
 [node name="SuvivorCollision" type="CollisionShape2D" parent="Survivor"]
 position = Vector2(0.33333588, -0.5)
 shape = SubResource("RectangleShape2D_0x84s")
@@ -488,30 +479,29 @@ limit_right = 4000
 script = ExtResource("3_0x84s")
 survivor_path = NodePath("../Survivor")
 
-[node name="AoETrap" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
+[node name="AoETrap1" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
 position = Vector2(579, 543)
 
-[node name="ArrowTrap" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
+[node name="ArrowTrap1" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
 position = Vector2(701, 525)
 
-[node name="ArrowProjectile" parent="." instance=ExtResource("12_vivmo")]
+[node name="ArrowProjectile1" parent="." instance=ExtResource("12_vivmo")]
 position = Vector2(869, 410)
 
-[node name="BoulderTrap" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
+[node name="BoulderTrap1" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
 position = Vector2(773, 511)
 speed = -100.0
 
-
-[node name="AoETrap" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
+[node name="AoETrap2" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
 position = Vector2(579, 543)
 
-[node name="ArrowTrap" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
+[node name="ArrowTrap2" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
 position = Vector2(701, 525)
 
-[node name="ArrowProjectile" parent="." instance=ExtResource("12_vivmo")]
+[node name="ArrowProjectile2" parent="." instance=ExtResource("12_vivmo")]
 position = Vector2(869, 410)
 
-[node name="BoulderTrap" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
+[node name="BoulderTrap2" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
 position = Vector2(773, 511)
 speed = -100.0
 

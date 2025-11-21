@@ -13,6 +13,8 @@ const GRAVITY := 900.0
 
 var health: float
 @export var max_health: int = 100
+@onready var sprite = $AnimatedSprite2D
+var was_on_floor = true
 var _health_bar: ProgressBar
 
 var hunger: float
@@ -25,7 +27,9 @@ var reached_goal: bool = false
 func _ready() -> void:
 	health = max_health
 	hunger = max_hunger
-
+	if sprite:
+		sprite.play("idle")
+	
 	if health_bar_path != NodePath():
 		_health_bar = get_node(health_bar_path)
 		_health_bar.max_value = max_health
@@ -55,7 +59,8 @@ func _physics_process(delta: float) -> void:
 	# Jump
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
+	# Handle animations
+	_handle_animations(dir)
 	move_and_slide()
 
 	# --- Hunger: only deplete while moving ---
@@ -100,3 +105,25 @@ func _update_ui() -> void:
 		_health_bar.value = health
 	if _hunger_bar:
 		_hunger_bar.value = hunger
+
+func _handle_animations(direction: float) -> void:
+	if not sprite:
+		return
+	
+	# Flip sprite based on direction
+	if direction > 0:
+		sprite.flip_h = false
+	elif direction < 0:
+		sprite.flip_h = true
+	
+	# Determine which animation to play
+	if not is_on_floor():
+		if velocity.y < 0:
+			sprite.play("jump")
+		else:
+			sprite.play("fall")
+	else:
+		if abs(velocity.x) > 0.1:
+			sprite.play("run")
+		else:
+			sprite.play("idle")
