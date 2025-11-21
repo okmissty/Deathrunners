@@ -4,29 +4,37 @@ const SPEED := 200.0
 const JUMP_VELOCITY := -400.0
 const GRAVITY := 900.0
 
-# Hunger drain only while moving
-@export var hunger_decrease_rate: float = 2.0    # hunger points per second while moving
-@export var hunger_damage_per_second: float = 5.0  # HP per second at 0 hunger
-
-@export var health_bar_path: NodePath
-@export var hunger_bar_path: NodePath
-
 var health: float
 @export var max_health: int = 100
-@onready var sprite = $AnimatedSprite2D
-var was_on_floor = true
 var _health_bar: ProgressBar
+@export var health_bar_path: NodePath
 
 var hunger: float
 @export var max_hunger: int = 100
 var _hunger_bar: ProgressBar
+@export var hunger_bar_path: NodePath
+# Hunger drain only while moving
+@export var hunger_decrease_rate: float = 2.0    # hunger points per second while moving
+@export var hunger_damage_per_second: float = 5.0  # HP per second at 0 hunger
+
+var lives: int
+var _lives_label: Label  # NEW
+@export var max_lives: int = 3  # Total lives (die 3 times = game over)
 
 var alive: bool = true
 var reached_goal: bool = false
+var checkpoint_position: Vector2
+var is_respawning: bool = false
+
+@onready var sprite = $AnimatedSprite2D
+var was_on_floor = true
 
 func _ready() -> void:
 	health = max_health
 	hunger = max_hunger
+	lives = max_lives
+	checkpoint_position = global_position  # Start position is first checkpoint
+
 	if sprite:
 		sprite.play("idle")
 	

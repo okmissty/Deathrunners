@@ -13,9 +13,9 @@ offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
 offset_bottom = 16.0
-color = Color(0.7115772, 0.0076711033, 5.7756904e-07, 1)
+color = Color(0.7, 0.2, 0.2, 1)
 
-[node name="HazardCollision" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_4fw0i")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
