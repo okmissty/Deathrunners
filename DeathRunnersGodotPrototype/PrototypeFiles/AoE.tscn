@@ -1,7 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://mc3rp2mub6wh"]
+[gd_scene load_steps=11 format=3 uid="uid://mc3rp2mub6wh"]
 
 [ext_resource type="Script" uid="uid://dx6hh1futt21c" path="res://PrototypeFiles/aoe_trap.gd" id="1_qfc4f"]
-[ext_resource type="Texture2D" uid="uid://byqnwdmxhtol4" path="res://Assets/Boulder.png" id="2_3vsyh"]
+[ext_resource type="Texture2D" uid="uid://l66gtxdh3bwd" path="res://Assets/Fire Effect and Bullet 16x16.png" id="2_akfgn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hy4h2"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(480, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7n42l"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(496, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_46hn7"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(512, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywuex"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(528, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8hcbo"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(544, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jjk5"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(560, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_o5dmg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hy4h2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7n42l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_46hn7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywuex")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8hcbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jjk5")
+}],
+"loop": true,
+"name": &"explode",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vsyh"]
 radius = 29.0
@@ -12,16 +62,16 @@ metadata/_edit_group_ = true
 
 [node name="Area" type="Area2D" parent="."]
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area"]
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_o5dmg")
+animation = &"explode"
+frame_progress = 0.17046307
+
 [node name="AoECollision" type="CollisionShape2D" parent="Area"]
 modulate = Color(0.24705882, 1, 1, 1)
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_3vsyh")
 debug_color = Color(1.3881557, 2.116038, 2.4642832, 0.42)
-
-[node name="AoESprite" type="Sprite2D" parent="Area"]
-modulate = Color(18.892157, 0, 0, 1)
-scale = Vector2(0.02, 0.02)
-texture = ExtResource("2_3vsyh")
-region_rect = Rect2(0, 0, 1, 1)
 
 [connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]

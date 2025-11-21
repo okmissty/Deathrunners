@@ -10,6 +10,7 @@ var exploded: bool = false
 var times_used: int = 0
 var timer: float = 0.0
 
+
 func _ready() -> void:
 	add_to_group("trap_aoe")
 	$Area.monitoring = false
@@ -57,3 +58,4 @@ func _on_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and body.has_method("apply_damage"):
 		print("AoE hit player for ", damage)
 		body.apply_damage(damage)
+		
