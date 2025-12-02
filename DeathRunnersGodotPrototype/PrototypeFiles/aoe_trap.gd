@@ -40,6 +40,7 @@ func _process(delta: float) -> void:
 		exploded = true
 		$Area.monitoring = true
 		print("AoE trap exploding!")
+		$Area/AnimatedSprite2D.play("explode")
 
 	elif exploded and timer >= warning_time + active_time:
 		_deactivate()
