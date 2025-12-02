@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://dx6hh1futt21c" path="res://PrototypeFiles/aoe_trap.gd" id="1_qfc4f"]
 [ext_resource type="Texture2D" uid="uid://l66gtxdh3bwd" path="res://Assets/Fire Effect and Bullet 16x16.png" id="2_akfgn"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywuex"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(528, 48, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_hy4h2"]
 atlas = ExtResource("2_akfgn")
 region = Rect2(480, 48, 16, 16)
@@ -15,10 +19,6 @@ region = Rect2(496, 48, 16, 16)
 atlas = ExtResource("2_akfgn")
 region = Rect2(512, 48, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ywuex"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(528, 48, 16, 16)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_8hcbo"]
 atlas = ExtResource("2_akfgn")
 region = Rect2(544, 48, 16, 16)
@@ -30,6 +30,9 @@ region = Rect2(560, 48, 16, 16)
 [sub_resource type="SpriteFrames" id="SpriteFrames_o5dmg"]
 animations = [{
 "frames": [{
+"duration": 0.21,
+"texture": SubResource("AtlasTexture_ywuex")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_hy4h2")
 }, {
@@ -45,12 +48,12 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8hcbo")
 }, {
-"duration": 1.0,
+"duration": 0.21,
 "texture": SubResource("AtlasTexture_5jjk5")
 }],
-"loop": true,
+"loop": false,
 "name": &"explode",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vsyh"]
@@ -66,7 +69,8 @@ metadata/_edit_group_ = true
 scale = Vector2(8, 8)
 sprite_frames = SubResource("SpriteFrames_o5dmg")
 animation = &"explode"
-frame_progress = 0.17046307
+frame = 6
+frame_progress = 1.0
 
 [node name="AoECollision" type="CollisionShape2D" parent="Area"]
 modulate = Color(0.24705882, 1, 1, 1)
