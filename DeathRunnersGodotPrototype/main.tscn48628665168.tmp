@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=4 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=51 format=4 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
@@ -21,9 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://hungerpickup" path="res://hunger_pickup.tscn" id="12_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bl5grvgaslses" path="res://Assets/background/tree.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dkinpkh3cb7hw" path="res://Assets/background/plant.png" id="14_vivmo"]
-[ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="21_0odxb"]
 [ext_resource type="Texture2D" uid="uid://w2bv84yxq7e4" path="res://Assets/background/vine.png" id="22_d13ii"]
-[ext_resource type="Texture2D" uid="uid://byqnwdmxhtol4" path="res://Assets/Boulder.png" id="22_lswn8"]
 [ext_resource type="Texture2D" uid="uid://d10oungf5cygk" path="res://Assets/background/house.png" id="23_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://cd0o181bmkktp" path="res://Assets/background/rock.png" id="24_1u8w0"]
 
@@ -479,26 +477,6 @@ vertical_alignment = 1
 uppercase = true
 metadata/_edit_lock_ = true
 
-[node name="Death HUD" type="VBoxContainer" parent="UI"]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -153.0
-offset_top = -2.0
-offset_right = -7.0
-offset_bottom = 48.0
-grow_horizontal = 0
-pivot_offset = Vector2(-20, 20)
-metadata/_edit_group_ = true
-
-[node name="TrapLabel" type="Label" parent="UI/Death HUD"]
-layout_mode = 2
-text = "Trap: (none)"
-
-[node name="TargetLabel" type="Label" parent="UI/Death HUD"]
-layout_mode = 2
-text = "Target: (none)"
-
 [node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
 position = Vector2(238, 509)
 
@@ -541,20 +519,7 @@ limit_right = 4000
 
 [node name="DeathController" type="Node2D" parent="."]
 script = ExtResource("3_0x84s")
-aoe_scene = ExtResource("9_efxa6")
-falling_block_scene = ExtResource("21_0odxb")
-
-[node name="TrapIndicator" type="Sprite2D" parent="DeathController"]
-modulate = Color(0, 0.8235294, 0.827451, 0.6627451)
-top_level = true
-scale = Vector2(0.005, 0.005)
-texture = ExtResource("22_lswn8")
-
-[node name="PlayerIndicator" type="Sprite2D" parent="DeathController"]
-modulate = Color(9.747754, 8.7978115, 0, 0.35686275)
-top_level = true
-scale = Vector2(0.005, 0.005)
-texture = ExtResource("22_lswn8")
+survivor_path = NodePath("../Survivor")
 
 [node name="AoETrap1" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
 position = Vector2(579, 543)
