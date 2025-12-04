@@ -26,6 +26,8 @@ var reached_goal: bool = false
 var checkpoint_position: Vector2
 var is_respawning: bool = false
 
+@export var death_y: float = 2000.0  # Y threshold below which the player is considered to have fallen off a cliff
+
 @onready var sprite = $AnimatedSprite2D
 var was_on_floor = true
 
@@ -83,6 +85,11 @@ func _physics_process(delta: float) -> void:
 		apply_damage(hunger_damage_per_second * delta)
 
 	_update_ui()
+
+	# Death by falling off the level (cliff)
+	if global_position.y > death_y:
+		# instant death
+		apply_damage(health)
 
 func apply_damage(amount: float) -> void:
 	if not alive:
