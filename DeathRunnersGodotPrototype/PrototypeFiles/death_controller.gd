@@ -157,7 +157,6 @@ func _activate_selected_trap() -> void:
 	print("Activating trap: ", trap.name)
 	trap.activate()
 
-
 # -------------------------------------------------------------------
 # PLAYER SELECTION
 # -------------------------------------------------------------------
@@ -244,6 +243,10 @@ func _spawn_aoe_on_selected_player() -> void:
 	get_tree().current_scene.add_child(aoe)
 	aoe.global_position = player.global_position + Vector2(0, 16)
 	print("Spawned AoE at: ", aoe.global_position)
+
+	# IMPORTANT: actually arm/activate the AoE
+	if aoe.has_method("activate"):
+		aoe.activate()
 
 
 func _spawn_falling_on_selected_player() -> void:

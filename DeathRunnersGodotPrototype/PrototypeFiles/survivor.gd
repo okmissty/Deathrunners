@@ -14,8 +14,8 @@ var hunger: float
 var _hunger_bar: ProgressBar
 @export var hunger_bar_path: NodePath
 # Hunger drain only while moving
-@export var hunger_decrease_rate: float = 2.0    # hunger points per second while moving
-@export var hunger_damage_per_second: float = 5.0  # HP per second at 0 hunger
+@export var hunger_decrease_rate: float = 0.5    # hunger points per second while moving
+@export var hunger_damage_per_second: float = 2.0  # HP per second at 0 hunger
 
 var lives: int
 var _lives_label: Label  # NEW

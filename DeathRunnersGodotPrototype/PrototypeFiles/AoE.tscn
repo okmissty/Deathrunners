@@ -1,81 +1,139 @@
-[gd_scene load_steps=11 format=3 uid="uid://mc3rp2mub6wh"]
+[gd_scene load_steps=19 format=3 uid="uid://mc3rp2mub6wh"]
 
 [ext_resource type="Script" uid="uid://dx6hh1futt21c" path="res://PrototypeFiles/aoe_trap.gd" id="1_qfc4f"]
 [ext_resource type="Texture2D" uid="uid://l66gtxdh3bwd" path="res://Assets/Fire Effect and Bullet 16x16.png" id="2_akfgn"]
+[ext_resource type="Texture2D" uid="uid://cmfykaxdk6gjg" path="res://hhuH20.png" id="2_hy4h2"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ywuex"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(528, 48, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hy4h2"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(480, 48, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7n42l"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(496, 48, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_46hn7"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(512, 48, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8hcbo"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(544, 48, 16, 16)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5jjk5"]
-atlas = ExtResource("2_akfgn")
-region = Rect2(560, 48, 16, 16)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_o5dmg"]
-animations = [{
-"frames": [{
-"duration": 0.21,
-"texture": SubResource("AtlasTexture_ywuex")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hy4h2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7n42l")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_46hn7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ywuex")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8hcbo")
-}, {
-"duration": 0.21,
-"texture": SubResource("AtlasTexture_5jjk5")
-}],
-"loop": false,
-"name": &"explode",
-"speed": 10.0
-}]
+[sub_resource type="CircleShape2D" id="CircleShape2D_hy4h2"]
+radius = 8.799999
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vsyh"]
 radius = 29.0
 
-[node name="AoETrap" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2qxp"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(480, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dey8g"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(496, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwdo7"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(480, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvo2w"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(528, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1hp0"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(512, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ccq2u"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(496, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bv1eh"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(512, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l05up"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(528, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ubd6x"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(544, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1obyr"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(560, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u6wvp"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(544, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2nnp"]
+atlas = ExtResource("2_akfgn")
+region = Rect2(560, 64, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_desu1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2qxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dey8g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwdo7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvo2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1hp0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ccq2u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bv1eh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l05up")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ubd6x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1obyr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u6wvp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2nnp")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 15.0
+}]
+
+[node name="AoETrap" type="CharacterBody2D"]
+top_level = true
+collision_layer = 4
 script = ExtResource("1_qfc4f")
-metadata/_edit_group_ = true
+warning_time = 1.2
+active_time = 1.0
 
-[node name="Area" type="Area2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.9999999)
+scale = Vector2(2.5, 2.5)
+shape = SubResource("CircleShape2D_hy4h2")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area"]
-scale = Vector2(8, 8)
-sprite_frames = SubResource("SpriteFrames_o5dmg")
-animation = &"explode"
-frame = 6
-frame_progress = 1.0
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
 
-[node name="AoECollision" type="CollisionShape2D" parent="Area"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
 modulate = Color(0.24705882, 1, 1, 1)
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_3vsyh")
 debug_color = Color(1.3881557, 2.116038, 2.4642832, 0.42)
 
-[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]
+[node name="BombSprite" type="Sprite2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_hy4h2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(7, 7)
+sprite_frames = SubResource("SpriteFrames_desu1")
+animation = &"explode"
+autoplay = "explode"
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_area_body_entered"]
