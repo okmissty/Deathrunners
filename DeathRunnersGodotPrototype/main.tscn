@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=27 format=4 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
@@ -185,6 +185,16 @@ texture = ExtResource("4_dg77c")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ycdy4")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_82xsv"]
+bg_color = Color(0.5822457, 0.20662613, 0.18285275, 1)
+corner_detail = 20
+
+[sub_resource type="Theme" id="Theme_ryguw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_getpj"]
+bg_color = Color(0.82355464, 0.52182764, 0.1818141, 1)
+border_color = Color(0, 0, 0, 1)
+
 [node name="Main" type="Node2D"]
 material = SubResource("CanvasItemMaterial_231nh")
 script = ExtResource("1_5vw27")
@@ -282,6 +292,7 @@ layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_82xsv")
 
 [node name="HungerRow" type="HBoxContainer" parent="UI/BarsContainer"]
 layout_mode = 2
@@ -296,6 +307,8 @@ text = "Hunger"
 [node name="HungerBar" type="ProgressBar" parent="UI/BarsContainer/HungerRow"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme = SubResource("Theme_ryguw")
+theme_override_styles/fill = SubResource("StyleBoxFlat_getpj")
 value = 100.0
 
 [node name="EndLabel" type="Label" parent="UI"]
@@ -354,7 +367,7 @@ position = Vector2(798, 524)
 
 [node name="HealthPickup" parent="." instance=ExtResource("11_dg77c")]
 position = Vector2(105, 525)
-scale = Vector2(1.5, 1.5)
+scale = Vector2(2, 2)
 
 [node name="HungerPickup" parent="." instance=ExtResource("12_ycdy4")]
 position = Vector2(144, 509)
