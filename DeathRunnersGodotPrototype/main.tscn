@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://qsvk6usq0n6c" path="res://PrototypeFiles/goal.tscn" id="8_5vw27"]
 [ext_resource type="PackedScene" uid="uid://mc3rp2mub6wh" path="res://PrototypeFiles/AoE.tscn" id="9_efxa6"]
 [ext_resource type="PackedScene" uid="uid://cftftv5x6nvl0" path="res://PrototypeFiles/boulder_trap.tscn" id="10_4c57u"]
+[ext_resource type="FontFile" uid="uid://c325ey32hhgx4" path="res://Assets/background/PixelifySans-VariableFont_wght.ttf" id="10_getpj"]
 [ext_resource type="PackedScene" uid="uid://healthpickup" path="res://health_pickup.tscn" id="11_dg77c"]
 [ext_resource type="PackedScene" uid="uid://dljsw1cv5sq6r" path="res://PrototypeFiles/arrow_trap.tscn" id="11_w48qg"]
 [ext_resource type="PackedScene" uid="uid://hungerpickup" path="res://hunger_pickup.tscn" id="12_ycdy4"]
@@ -184,8 +185,6 @@ texture = ExtResource("4_dg77c")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_ycdy4")
 
-[sub_resource type="Theme" id="Theme_7mycd"]
-
 [node name="Main" type="Node2D"]
 material = SubResource("CanvasItemMaterial_231nh")
 script = ExtResource("1_5vw27")
@@ -266,7 +265,6 @@ size_flags_vertical = 3
 
 [node name="HealthRow" type="HBoxContainer" parent="UI/BarsContainer"]
 layout_mode = 2
-theme = SubResource("Theme_7mycd")
 
 [node name="Health" type="Label" parent="UI/BarsContainer/HealthRow"]
 custom_minimum_size = Vector2(70, 0)
@@ -275,6 +273,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.16139409, 0.86960924, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("10_getpj")
 text = "Health"
 
 [node name="HealthBar" type="ProgressBar" parent="UI/BarsContainer/HealthRow"]
@@ -291,6 +290,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 0.39215687, 1)
+theme_override_fonts/font = ExtResource("10_getpj")
 text = "Hunger"
 
 [node name="HungerBar" type="ProgressBar" parent="UI/BarsContainer/HungerRow"]
@@ -350,10 +350,11 @@ position = Vector2(238, 509)
 position = Vector2(890, 509)
 
 [node name="HHpickup" parent="." instance=ExtResource("7_272bh")]
-position = Vector2(825, 523)
+position = Vector2(798, 524)
 
 [node name="HealthPickup" parent="." instance=ExtResource("11_dg77c")]
-position = Vector2(121, 509)
+position = Vector2(105, 525)
+scale = Vector2(1.5, 1.5)
 
 [node name="HungerPickup" parent="." instance=ExtResource("12_ycdy4")]
 position = Vector2(144, 509)
