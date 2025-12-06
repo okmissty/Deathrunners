@@ -3,6 +3,22 @@
 #include "player.h"
 #include "death_player.h"
 #include "obstacle.h"
+#include "survivor.h"
+#include "death_controller.h"
+#include "hhpickup.h"
+#include "aoe_trap.h"
+#include "boulder_trap.h"
+#include "arrow_trap.h"
+#include "arrow_projectile.h"
+#include "checkpoint.h"
+#include "goal.h"
+#include "hazard.h"
+#include "main_script.h"
+#include "health_pickup.h"
+#include "hunger_pickup.h"
+#include "horizontal_cam.h"
+#include "node_2d_script.h"
+#include "menu.h"
 #include "game_manager.h"
 
 #include <gdextension_interface.h>
@@ -18,6 +34,22 @@ void initialize_deathrun_module(ModuleInitializationLevel p_level) {
     }
 
     ClassDB::register_class<Player>();
+    ClassDB::register_class<Survivor>();
+    ClassDB::register_class<DeathController>();
+    ClassDB::register_class<HHPickup>();
+    ClassDB::register_class<AoeTrap>();
+    ClassDB::register_class<BoulderTrap>();
+    ClassDB::register_class<ArrowTrap>();
+    ClassDB::register_class<ArrowProjectile>();
+    ClassDB::register_class<Checkpoint>();
+    ClassDB::register_class<Goal>();
+    ClassDB::register_class<Hazard>();
+    ClassDB::register_class<MainScript>();
+    ClassDB::register_class<HealthPickup>();
+    ClassDB::register_class<HungerPickup>();
+    ClassDB::register_class<HorizontalCam>();
+    ClassDB::register_class<Node2DScript>();
+    ClassDB::register_class<Menu>();
     ClassDB::register_class<DeathPlayer>();
     ClassDB::register_class<Obstacle>();
     ClassDB::register_class<GameManager>();
