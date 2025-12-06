@@ -187,9 +187,9 @@ func activate_trap_networked(trap_path: NodePath):
 	if trap and trap.has_method("activate"):
 		trap.activate()
 
-# -------------------------------------------------------------------
+
 # PLAYER SELECTION
-# -------------------------------------------------------------------
+
 
 func _refresh_players() -> void:
 	players = get_tree().get_nodes_in_group("player")
@@ -250,9 +250,9 @@ func _update_player_indicator_follow() -> void:
 	else:
 		player_indicator.visible = false
 
-# -------------------------------------------------------------------
+
 # SPAWNED TRAPS (AoE + falling block on selected player)
-# -------------------------------------------------------------------
+
 
 func _spawn_aoe_on_selected_player() -> void:
 	var player := _current_player()
@@ -320,9 +320,7 @@ func _spawn_falling_at_position(pos: Vector2) -> void:
 	block.global_position = pos
 	print("Spawned falling block at: ", block.global_position)
 
-# -------------------------------------------------------------------
 # SHARED: indicator pulse animation (uses base scale)
-# -------------------------------------------------------------------
 
 func _pulse_indicator(ind: Node2D, base_scale: Vector2) -> void:
 	if ind == null:

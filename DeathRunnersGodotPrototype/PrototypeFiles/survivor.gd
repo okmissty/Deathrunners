@@ -1,4 +1,4 @@
-# survivor_multiplayer.gd - Fixed with proper Godot 4 RPC syntax
+# survivor_multiplayer.gd - Simplified without MultiplayerSynchronizer conflicts
 extends CharacterBody2D
 
 const SPEED := 200.0
@@ -38,15 +38,16 @@ func _ready() -> void:
 	lives = max_lives
 	checkpoint_position = global_position
 	
-	# Only process input if we have authority
-	if multiplayer.has_multiplayer_peer():
-		set_physics_process(is_multiplayer_authority())
+	# Add to player group
+	add_to_group("player")
 	
 	# Setup animations
 	if sprite:
 		sprite.play("idle")
 	
-	# Setup UI bars
+	# Setup UI bars - wait a frame for scene to be ready
+	await get_tree().process_frame
+	
 	if health_bar_path != NodePath(""):
 		_health_bar = get_node_or_null(health_bar_path)
 		if _health_bar:
@@ -60,114 +61,125 @@ func _ready() -> void:
 			_hunger_bar.value = hunger
 
 func _physics_process(delta: float) -> void:
-	# Only process if we have authority
-	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
-		return
+	# Only process input if we have authority
+	var process_input = true
+	if multiplayer.has_multiplayer_peer():
+		process_input = is_multiplayer_authority()
 		
 	if not alive or reached_goal:
 		return
 
-	# Gravity
+	# Gravity always applies
 	if not is_on_floor():
 		velocity.y += GRAVITY * delta
 
-	# Horizontal movement
-	var dir := 0.0
-	if Input.is_action_pressed("ui_left"):
-		dir -= 1.0
-	if Input.is_action_pressed("ui_right"):
-		dir += 1.0
-	velocity.x = dir * SPEED
+	# Input only if we have authority
+	if process_input:
+		# Horizontal movement
+		var dir := 0.0
+		if Input.is_action_pressed("ui_left"):
+			dir -= 1.0
+		if Input.is_action_pressed("ui_right"):
+			dir += 1.0
+		velocity.x = dir * SPEED
 
-	# Jump
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
+		# Jump
+		if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+			velocity.y = JUMP_VELOCITY
+			
+		# Handle animations
+		_handle_animations(dir)
 		
-	# Handle animations
-	_handle_animations(dir)
+		# Hunger system - only deplete while moving
+		var is_moving: bool = dir != 0.0
+		if is_moving:
+			hunger -= hunger_decrease_rate * delta
+			if hunger < 0.0:
+				hunger = 0.0
+
+		# If starving, take damage over time
+		if hunger <= 0.0:
+			apply_damage(hunger_damage_per_second * delta)
+
+		# Death by falling off the level
+		if global_position.y > death_y:
+			apply_damage(health)
+		
+		# Sync to other players
+		if multiplayer.has_multiplayer_peer():
+			update_remote_state.rpc(global_position, velocity, sprite.animation if sprite else "idle", sprite.flip_h if sprite else false)
 	
-	# Move the character
+	# Always move the character
 	move_and_slide()
-
-	# Hunger system - only deplete while moving
-	var is_moving: bool = dir != 0.0
-	if is_moving:
-		hunger -= hunger_decrease_rate * delta
-		if hunger < 0.0:
-			hunger = 0.0
-
-	# If starving, take damage over time
-	if hunger <= 0.0:
-		apply_damage(hunger_damage_per_second * delta)
-
+	
 	# Update UI
 	_update_ui()
 
-	# Death by falling off the level
-	if global_position.y > death_y:
-		apply_damage(health)
-	
-	# Sync position for multiplayer
-	if multiplayer.has_multiplayer_peer() and is_multiplayer_authority():
-		update_remote_position.rpc(global_position, velocity)
-
 @rpc("unreliable_ordered")
-func update_remote_position(pos: Vector2, vel: Vector2):
+func update_remote_state(pos: Vector2, vel: Vector2, anim: String, flip: bool):
 	if not is_multiplayer_authority():
 		global_position = pos
 		velocity = vel
+		if sprite:
+			sprite.play(anim)
+			sprite.flip_h = flip
 
 func apply_damage(amount: float) -> void:
 	if not alive:
 		return
 	
-	# Only apply damage if we have authority
-	if multiplayer.has_multiplayer_peer() and not is_multiplayer_authority():
-		return
-		
 	health -= amount
 	if health <= 0.0:
 		health = 0.0
 		alive = false
-		print("Survivor died")
+		print(name, " died! Health: ", health)
 		
 		# Sync death across network
 		if multiplayer.has_multiplayer_peer():
 			sync_death.rpc()
+		
+		# Play death animation
+		if sprite:
+			sprite.play("idle")  # Or "death" if you have one
 			
 	_update_ui()
 
 @rpc("call_local", "reliable")
 func sync_death():
 	alive = false
+	health = 0
 	if sprite:
 		sprite.play("idle")
+	_update_ui()
 
 func heal(amount: float) -> void:
 	if not alive:
 		return
 	health = min(max_health, health + amount)
 	_update_ui()
+	print(name, " healed for ", amount, ". Health: ", health)
 
 func restore_hunger(amount: float) -> void:
 	hunger = min(max_hunger, hunger + amount)
 	_update_ui()
+	print(name, " restored hunger for ", amount, ". Hunger: ", hunger)
 
 func set_checkpoint(pos: Vector2) -> void:
 	checkpoint_position = pos
-	print("Checkpoint set at: ", checkpoint_position)
+	print(name, " checkpoint set at: ", checkpoint_position)
 
 func mark_goal_reached() -> void:
 	reached_goal = true
-	print("Survivor reached the goal!")
+	print(name, " reached the goal!")
 	
 	# Sync goal reached across network
-	if multiplayer.has_multiplayer_peer() and is_multiplayer_authority():
+	if multiplayer.has_multiplayer_peer():
 		sync_goal_reached.rpc()
 
 @rpc("call_local", "reliable")
 func sync_goal_reached():
 	reached_goal = true
+	print(name, " goal reached synced!")
 
 func _update_ui() -> void:
 	if _health_bar:
@@ -196,13 +208,3 @@ func _handle_animations(direction: float) -> void:
 			sprite.play("run")
 		else:
 			sprite.play("idle")
-	
-	# Sync animation across network
-	if multiplayer.has_multiplayer_peer() and is_multiplayer_authority():
-		sync_animation.rpc(sprite.animation, sprite.flip_h)
-
-@rpc("unreliable_ordered")
-func sync_animation(anim: String, flip: bool):
-	if not is_multiplayer_authority() and sprite:
-		sprite.play(anim)
-		sprite.flip_h = flip
