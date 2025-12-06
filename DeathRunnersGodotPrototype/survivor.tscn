@@ -1,0 +1,214 @@
+[gd_scene load_steps=29 format=3 uid="uid://dxjcl2ktsv2og"]
+
+[ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_46ptc"]
+[ext_resource type="Texture2D" uid="uid://ba7het8lkoeuc" path="res://Assets/Character/sprites/landing.png" id="2_aj430"]
+[ext_resource type="Texture2D" uid="uid://dgibo58vnfdam" path="res://Assets/Character/sprites/idling.png" id="3_2h466"]
+[ext_resource type="Texture2D" uid="uid://d2514ixjb5c47" path="res://Assets/Character/sprites/jump.png" id="4_5se0h"]
+[ext_resource type="Texture2D" uid="uid://bcx7ix1iw467s" path="res://Assets/Character/sprites/run.png" id="5_g80ix"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dg77c"]
+atlas = ExtResource("3_2h466")
+region = Rect2(0, 0, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycdy4"]
+atlas = ExtResource("3_2h466")
+region = Rect2(19, 0, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w48qg"]
+atlas = ExtResource("3_2h466")
+region = Rect2(38, 0, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vivmo"]
+atlas = ExtResource("3_2h466")
+region = Rect2(57, 0, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2cqfq"]
+atlas = ExtResource("3_2h466")
+region = Rect2(76, 0, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yaehf"]
+atlas = ExtResource("3_2h466")
+region = Rect2(0, 34, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_074og"]
+atlas = ExtResource("3_2h466")
+region = Rect2(19, 34, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cegan"]
+atlas = ExtResource("3_2h466")
+region = Rect2(38, 34, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_82xsv"]
+atlas = ExtResource("3_2h466")
+region = Rect2(57, 34, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_getpj"]
+atlas = ExtResource("3_2h466")
+region = Rect2(76, 34, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryguw"]
+atlas = ExtResource("3_2h466")
+region = Rect2(0, 68, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d13ii"]
+atlas = ExtResource("3_2h466")
+region = Rect2(19, 68, 19, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1u8w0"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(0, 0, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0odxb"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(0, 33, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lswn8"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(21, 0, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6jrf"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(42, 0, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuqvo"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(63, 0, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsp4k"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(21, 33, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kq58d"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(42, 33, 21, 33)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_seu75"]
+atlas = ExtResource("5_g80ix")
+region = Rect2(63, 33, 21, 33)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4c57u"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_aj430")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dg77c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycdy4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w48qg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vivmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2cqfq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yaehf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_074og")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cegan")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_82xsv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_getpj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryguw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d13ii")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5se0h")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1u8w0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0odxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lswn8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6jrf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuqvo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qsp4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kq58d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_seu75")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0x84s"]
+size = Vector2(19.333328, 34)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_n3suq"]
+
+[node name="Survivor" type="CharacterBody2D" groups=["player"]]
+scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 9
+script = ExtResource("1_46ptc")
+max_health = null
+health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
+max_hunger = null
+hunger_bar_path = NodePath("../UI/BarsContainer/HungerRow/HungerBar")
+hunger_decrease_rate = 15.0
+hunger_damage_per_second = null
+max_lives = null
+death_y = null
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4c57u")
+animation = &"run"
+
+[node name="SuvivorCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0.33333588, -0.5)
+shape = SubResource("RectangleShape2D_0x84s")
+
+[node name="SurvivorCam" type="Camera2D" parent="."]
+offset = Vector2(0, -100)
+enabled = false
+zoom = Vector2(2.5, 2.5)
+limit_left = 0
+limit_right = 4000
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_n3suq")
