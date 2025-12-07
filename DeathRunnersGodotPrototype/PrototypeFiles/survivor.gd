@@ -1,4 +1,4 @@
-# survivor_multiplayer.gd - Simplified without MultiplayerSynchronizer conflicts
+# survivor_multiplayer.gd - Fixed for proper health/hunger and pickups
 extends CharacterBody2D
 
 const SPEED := 200.0
@@ -15,7 +15,7 @@ var hunger: float
 var _hunger_bar: ProgressBar
 @export var hunger_bar_path: NodePath
 
-@export var hunger_decrease_rate: float = 0.5
+@export var hunger_decrease_rate: float = 15.0
 @export var hunger_damage_per_second: float = 2.0
 
 var lives: int
@@ -45,20 +45,27 @@ func _ready() -> void:
 	if sprite:
 		sprite.play("idle")
 	
-	# Setup UI bars - wait a frame for scene to be ready
+	# Wait for UI to be ready
 	await get_tree().process_frame
-	
-	if health_bar_path != NodePath(""):
-		_health_bar = get_node_or_null(health_bar_path)
-		if _health_bar:
-			_health_bar.max_value = max_health
-			_health_bar.value = health
+	_setup_ui_bars()
 
-	if hunger_bar_path != NodePath(""):
-		_hunger_bar = get_node_or_null(hunger_bar_path)
-		if _hunger_bar:
-			_hunger_bar.max_value = max_hunger
-			_hunger_bar.value = hunger
+func _setup_ui_bars():
+	# Only set up UI bars for YOUR survivor (not other players')
+	if not multiplayer.has_multiplayer_peer() or is_multiplayer_authority():
+		# Try to find the UI bars in the main scene
+		var main_scene = get_tree().current_scene
+		if main_scene:
+			var health_bar = main_scene.get_node_or_null("UI/BarsContainer/HealthRow/HealthBar")
+			if health_bar:
+				_health_bar = health_bar
+				_health_bar.max_value = max_health
+				_health_bar.value = health
+				
+			var hunger_bar = main_scene.get_node_or_null("UI/BarsContainer/HungerRow/HungerBar")
+			if hunger_bar:
+				_hunger_bar = hunger_bar
+				_hunger_bar.max_value = max_hunger
+				_hunger_bar.value = hunger
 
 func _physics_process(delta: float) -> void:
 	# Only process input if we have authority
@@ -91,7 +98,7 @@ func _physics_process(delta: float) -> void:
 		_handle_animations(dir)
 		
 		# Hunger system - only deplete while moving
-		var is_moving: bool = dir != 0.0
+		var is_moving: bool = abs(dir) > 0.1
 		if is_moving:
 			hunger -= hunger_decrease_rate * delta
 			if hunger < 0.0:
@@ -105,21 +112,23 @@ func _physics_process(delta: float) -> void:
 		if global_position.y > death_y:
 			apply_damage(health)
 		
+		# Update UI only for local player
+		_update_ui()
+		
 		# Sync to other players
 		if multiplayer.has_multiplayer_peer():
-			update_remote_state.rpc(global_position, velocity, sprite.animation if sprite else "idle", sprite.flip_h if sprite else false)
+			sync_state.rpc(global_position, velocity, health, hunger, sprite.animation if sprite else "idle", sprite.flip_h if sprite else false)
 	
 	# Always move the character
 	move_and_slide()
-	
-	# Update UI
-	_update_ui()
 
 @rpc("unreliable_ordered")
-func update_remote_state(pos: Vector2, vel: Vector2, anim: String, flip: bool):
+func sync_state(pos: Vector2, vel: Vector2, h: float, hu: float, anim: String, flip: bool):
 	if not is_multiplayer_authority():
 		global_position = pos
 		velocity = vel
+		health = h
+		hunger = hu
 		if sprite:
 			sprite.play(anim)
 			sprite.flip_h = flip
@@ -158,11 +167,29 @@ func heal(amount: float) -> void:
 	health = min(max_health, health + amount)
 	_update_ui()
 	print(name, " healed for ", amount, ". Health: ", health)
+	
+	# Sync health across network
+	if multiplayer.has_multiplayer_peer() and is_multiplayer_authority():
+		sync_health.rpc(health)
+
+@rpc("call_local", "reliable")
+func sync_health(new_health: float):
+	health = new_health
+	_update_ui()
 
 func restore_hunger(amount: float) -> void:
 	hunger = min(max_hunger, hunger + amount)
 	_update_ui()
 	print(name, " restored hunger for ", amount, ". Hunger: ", hunger)
+	
+	# Sync hunger across network
+	if multiplayer.has_multiplayer_peer() and is_multiplayer_authority():
+		sync_hunger.rpc(hunger)
+
+@rpc("call_local", "reliable") 
+func sync_hunger(new_hunger: float):
+	hunger = new_hunger
+	_update_ui()
 
 func set_checkpoint(pos: Vector2) -> void:
 	checkpoint_position = pos
@@ -182,10 +209,12 @@ func sync_goal_reached():
 	print(name, " goal reached synced!")
 
 func _update_ui() -> void:
-	if _health_bar:
-		_health_bar.value = health
-	if _hunger_bar:
-		_hunger_bar.value = hunger
+	# Only update UI if this is the local player's survivor
+	if not multiplayer.has_multiplayer_peer() or is_multiplayer_authority():
+		if _health_bar:
+			_health_bar.value = health
+		if _hunger_bar:
+			_hunger_bar.value = hunger
 
 func _handle_animations(direction: float) -> void:
 	if not sprite:

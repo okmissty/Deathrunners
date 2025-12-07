@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=28 format=4 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://hungerpickup" path="res://hunger_pickup.tscn" id="12_ycdy4"]
 [ext_resource type="Texture2D" uid="uid://bl5grvgaslses" path="res://Assets/background/tree.png" id="13_w48qg"]
 [ext_resource type="Texture2D" uid="uid://dkinpkh3cb7hw" path="res://Assets/background/plant.png" id="14_vivmo"]
+[ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="17_getpj"]
 [ext_resource type="Texture2D" uid="uid://w2bv84yxq7e4" path="res://Assets/background/vine.png" id="22_d13ii"]
 [ext_resource type="Texture2D" uid="uid://byqnwdmxhtol4" path="res://Assets/Boulder.png" id="22_lswn8"]
 [ext_resource type="Texture2D" uid="uid://d10oungf5cygk" path="res://Assets/background/house.png" id="23_1u8w0"]
@@ -358,22 +359,34 @@ offset_bottom = 72.0
 
 [node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
 position = Vector2(238, 509)
+collision_layer = 2
+collision_mask = 3
 
 [node name="Checkpoint2" parent="." instance=ExtResource("6_7mycd")]
 position = Vector2(890, 509)
+collision_layer = 2
+collision_mask = 3
 
 [node name="HHpickup" parent="." instance=ExtResource("7_272bh")]
 position = Vector2(798, 524)
+collision_layer = 2
+collision_mask = 3
 
 [node name="HealthPickup" parent="." instance=ExtResource("11_dg77c")]
 position = Vector2(105, 525)
 scale = Vector2(2, 2)
+collision_layer = 2
+collision_mask = 3
 
 [node name="HungerPickup" parent="." instance=ExtResource("12_ycdy4")]
 position = Vector2(144, 509)
+collision_layer = 2
+collision_mask = 3
 
 [node name="DeathController" type="Node2D" parent="."]
 script = ExtResource("3_0x84s")
+aoe_scene = ExtResource("9_efxa6")
+falling_block_scene = ExtResource("17_getpj")
 
 [node name="TrapIndicator" type="Sprite2D" parent="DeathController"]
 modulate = Color(0, 0.8235294, 0.827451, 0.6627451)
@@ -406,18 +419,25 @@ speed = -100.0
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
 modulate = Color(0.9039432, 0.38405097, 0.8375063, 1)
 position = Vector2(7097, 510)
+collision_layer = 2
 
 [node name="AoETrap" parent="." instance=ExtResource("9_efxa6")]
 visible = false
 position = Vector2(542, 455)
+collision_layer = 2
+collision_mask = 3
 
 [node name="AoETrap1" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
 visible = false
 scale = Vector2(3, 3)
+collision_layer = 2
+collision_mask = 3
 
 [node name="AoETrap2" parent="." groups=["trap_aoe"] instance=ExtResource("9_efxa6")]
 visible = false
 position = Vector2(547, 523)
+collision_layer = 2
+collision_mask = 3
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dxjcl2ktsv2og")

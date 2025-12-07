@@ -1,10 +1,11 @@
-# main_multiplayer.gd - Fixed survivor spawning and synchronization
+# main_multiplayer.gd - Fixed with proper UI visibility and trap controls
 extends Node2D
 
 @export var survivor_scene: PackedScene = preload("res://survivor.tscn")
 @onready var death_controller = $DeathController
 @onready var end_label = $UI/EndLabel
 @onready var role_label = $UI/RoleLabel
+@onready var death_hud = $"UI/Death HUD"  # Death HUD container
 @onready var horizontal_cam = $HorizontalCam
 @onready var multiplayer_spawner = $MultiplayerSpawner
 
@@ -49,12 +50,18 @@ func setup_multiplayer():
 			death_controller.set_process(true)
 			death_controller.enabled = true
 			death_controller.visible = true
+		# Show Death HUD for Death player
+		if death_hud:
+			death_hud.visible = true
 	else:
 		# Disable death controller for survivors
 		if death_controller:
 			death_controller.set_process(false)
 			death_controller.enabled = false
 			death_controller.visible = false
+		# Hide Death HUD for survivors
+		if death_hud:
+			death_hud.visible = false
 	
 	# Configure MultiplayerSpawner
 	if multiplayer_spawner:
