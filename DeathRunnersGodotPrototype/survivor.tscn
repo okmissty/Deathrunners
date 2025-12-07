@@ -187,7 +187,6 @@ collision_mask = 9
 script = ExtResource("1_46ptc")
 health_bar_path = NodePath("../UI/BarsContainer/HealthRow/HealthBar")
 hunger_bar_path = NodePath("../UI/BarsContainer/HungerRow/HungerBar")
-hunger_decrease_rate = 15.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

@@ -162,7 +162,7 @@ func _on_peer_disconnected(id):
 			survivors[id].queue_free()
 		survivors.erase(id)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if game_over:
 		return
 	

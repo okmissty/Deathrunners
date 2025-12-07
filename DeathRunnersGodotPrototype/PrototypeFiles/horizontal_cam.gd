@@ -12,7 +12,7 @@ func _ready():
 	
 	# If no survivor found, we'll look for it dynamically
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	# If we don't have a survivor reference, try to find it
 	if survivor == null:
 		var survivors = get_tree().get_nodes_in_group("player")
