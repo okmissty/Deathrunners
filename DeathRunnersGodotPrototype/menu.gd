@@ -178,10 +178,10 @@ func _update_player_list():
 		var text = "Players:\n"
 		for id in connected_players:
 			var role = connected_players[id]
-			var name = "Player " + str(id)
+			var playername = "Player " + str(id)
 			if id == 1:
 				name += " (Host)"
 			if id == multiplayer.get_unique_id():
-				name += " (You)"
-			text += name + " - " + role + "\n"
+				playername += " (You)"
+			text += playername + " - " + role + "\n"
 		player_list.text = text

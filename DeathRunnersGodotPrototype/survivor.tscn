@@ -198,9 +198,10 @@ position = Vector2(0.33333588, -0.5)
 shape = SubResource("RectangleShape2D_0x84s")
 
 [node name="SurvivorCam" type="Camera2D" parent="."]
+position = Vector2(0.33333334, 0)
 offset = Vector2(0, -100)
 enabled = false
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(2.2, 2.2)
 limit_left = 0
 limit_right = 4000
 
