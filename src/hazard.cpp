@@ -3,9 +3,14 @@
 
 using namespace godot;
 
+/** Bind hazard methods/properties to Godot. */
 void Hazard::_bind_methods() {}
 
+/** Construct a hazard node. */
 Hazard::Hazard() {}
+
+/** Destructor. */
 Hazard::~Hazard() {}
 
+/** Initialize hazard on scene enter. */
 void Hazard::_ready() {}

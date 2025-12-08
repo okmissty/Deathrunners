@@ -11,7 +11,9 @@ extends CharacterBody2D
 
 var state: String = "idle" 
 var timer: float = 0.0
-var has_damaged: bool = false
+
+# FIX: Use an array to track WHO was hit, so we can hit multiple people
+var damaged_bodies: Array = [] 
 
 var bomb_sprite: Sprite2D
 var explosion_anim: AnimatedSprite2D
@@ -38,10 +40,10 @@ func _ready() -> void:
 
 	if hit_area:
 		hit_area.monitoring = false
-		# FIX: Ensure it hits players
-		hit_area.collision_mask = 3 
+		hit_area.collision_mask = 3 # Hit Players (2) + World (1)
 
 	z_index = 50
+	print("[AoE] Ready. Damage: ", damage)
 
 func can_activate() -> bool:
 	return state == "idle"
@@ -52,7 +54,10 @@ func activate() -> void:
 
 	state = "warning"
 	timer = 0.0
-	has_damaged = false
+	
+	# FIX: Clear the hit list for the new explosion
+	damaged_bodies.clear()
+	
 	show()
 	velocity = Vector2(initial_horizontal_speed, 0.0)
 
@@ -64,6 +69,8 @@ func activate() -> void:
 		explosion_anim.stop()
 	if hit_area:
 		hit_area.monitoring = false
+		
+	print("[AoE] Armed at ", global_position)
 
 func _physics_process(delta: float) -> void:
 	if state == "warning":
@@ -94,12 +101,14 @@ func _process(delta: float) -> void:
 		if timer >= active_time:
 			state = "done"
 			if hit_area: hit_area.monitoring = false
+			print("[AoE] Finished")
 			queue_free()
 
 func _start_explosion() -> void:
 	state = "active"
 	timer = 0.0
 	velocity = Vector2.ZERO
+	print("[AoE] BOOM! Exploding now.")
 
 	if bomb_sprite: bomb_sprite.visible = false
 	if explosion_anim:
@@ -109,6 +118,10 @@ func _start_explosion() -> void:
 
 	if hit_area:
 		hit_area.monitoring = true
+		
+		# Optional: Force check for bodies already inside the area
+		for body in hit_area.get_overlapping_bodies():
+			_handle_body_entered(body)
 
 func _on_hit_area_body_entered(body: Node) -> void:
 	_handle_body_entered(body)
@@ -117,14 +130,19 @@ func _on_area_body_entered(body: Node) -> void:
 	_handle_body_entered(body)
 
 func _handle_body_entered(body: Node) -> void:
-	if state != "active" or has_damaged:
+	if state != "active":
+		return
+		
+	# FIX: check if THIS SPECIFIC body has been hit
+	if body in damaged_bodies:
 		return
 
 	if body.is_in_group("player"):
-		# FIX: Only Server applies damage
-		if multiplayer.is_server() and body.has_method("apply_damage"):
-			print("AoE hit player for", damage)
-			body.apply_damage(damage)
+		# FIX: Add to list so we don't hit THIS player again in the same frame/explosion
+		damaged_bodies.append(body)
 		
-		# Mark as damaged so we don't hit the same player multiple times in one blast
-		has_damaged = true
+		if multiplayer.is_server() and body.has_method("apply_damage"):
+			print("[AoE] BLASTED Survivor: ", body.name, " -> Dealing ", damage, " damage")
+			body.apply_damage(damage)
+		else:
+			print("[AoE] Hit Survivor: ", body.name, " (Visual only)")

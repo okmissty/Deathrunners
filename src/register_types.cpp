@@ -1,5 +1,7 @@
 #include "register_types.h"
 
+#include <godot_cpp/classes/input_event.hpp>
+
 #include "player.h"
 #include "death_player.h"
 #include "obstacle.h"
@@ -55,6 +57,12 @@ void initialize_deathrun_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<GameManager>();
 }
 
+/**
+ * @brief Called when the module is being removed/unloaded.
+ *
+ * For this project there is no special cleanup required, but the function
+ * exists to satisfy the GDExtension lifecycle contract.
+ */
 void uninitialize_deathrun_module(ModuleInitializationLevel p_level) {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;
