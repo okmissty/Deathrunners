@@ -1,4 +1,4 @@
-# death_controller_multiplayer.gd - Fixed UI Finding and Updates
+# death_controller_multiplayer.gd - Fixed Target Label Auto-Assignment
 extends Node2D
 
 @export var aoe_scene: PackedScene
@@ -23,7 +23,7 @@ var player_indicator_base_scale: Vector2 = Vector2.ONE
 var enabled: bool = false
 
 func _ready() -> void:
-	# FIX: robustly find the labels (try both names just in case)
+	# Robustly find labels (checking both "Death HUD" and "DeathHUD")
 	trap_label = get_node_or_null("../UI/Death HUD/TrapLabel")
 	if not trap_label:
 		trap_label = get_node_or_null("../UI/DeathHUD/TrapLabel")
@@ -55,6 +55,7 @@ func _process(_delta: float) -> void:
 	if not enabled:
 		return
 	
+	# Trap Selection Inputs
 	if Input.is_action_just_pressed("death_trap_prev"):
 		_select_prev_trap()
 	if Input.is_action_just_pressed("death_trap_next"):
@@ -62,20 +63,52 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("death_trap_activate"):
 		_activate_selected_trap()
 
+	# Player Selection Inputs
 	if Input.is_action_just_pressed("death_player_prev"):
 		_select_prev_player()
 	if Input.is_action_just_pressed("death_player_next"):
 		_select_next_player()
 
+	# Ability Inputs
 	if Input.is_action_just_pressed("death_spawn_aoe"):
 		_spawn_aoe_on_selected_player()
 	if Input.is_action_just_pressed("death_spawn_falling"):
 		_spawn_falling_on_selected_player()
 
+	# Continuous Updates
 	_update_player_indicator_follow()
 	
-	# FIX: Update UI every frame to react to usage
+	# FIX 1: Update HUDs every frame so they react instantly when players spawn or traps are used
 	_update_trap_hud(_current_trap())
+	_update_player_hud(_current_player())
+
+func _refresh_players() -> void:
+	players = get_tree().get_nodes_in_group("player")
+	
+	if players.size() > 0:
+		# If we have no selection (or invalid), auto-select the first player
+		if selected_player_index < 0 or selected_player_index >= players.size():
+			selected_player_index = 0
+	else:
+		selected_player_index = -1
+
+func _current_player() -> Node2D:
+	if selected_player_index < 0 or selected_player_index >= players.size():
+		return null
+	var p = players[selected_player_index]
+	if p is Node2D: return p as Node2D
+	return null
+
+func _update_player_hud(player: Node) -> void:
+	if target_label == null: return
+	
+	if player == null:
+		target_label.text = "Target: (none)"
+		return
+		
+	target_label.text = "Target: %s" % player.name
+
+# --- Standard Trap Logic ---
 
 func _refresh_preplaced_traps() -> void:
 	preplaced_traps = []
@@ -156,20 +189,7 @@ func activate_trap_networked(trap_path: NodePath):
 	if trap and trap.has_method("activate"):
 		trap.activate()
 
-func _refresh_players() -> void:
-	players = get_tree().get_nodes_in_group("player")
-	if players.size() > 0:
-		if selected_player_index < 0 or selected_player_index >= players.size():
-			selected_player_index = 0
-	else:
-		selected_player_index = -1
-
-func _current_player() -> Node2D:
-	if selected_player_index < 0 or selected_player_index >= players.size():
-		return null
-	var p = players[selected_player_index]
-	if p is Node2D: return p as Node2D
-	return null
+# --- Player Selection Logic ---
 
 func _select_prev_player() -> void:
 	if players.is_empty(): return
@@ -187,13 +207,6 @@ func _update_player_highlight() -> void:
 		_pulse_indicator(player_indicator, player_indicator_base_scale)
 	_update_player_hud(player)
 
-func _update_player_hud(player: Node) -> void:
-	if target_label == null: return
-	if player == null:
-		target_label.text = "Target: (none)"
-		return
-	target_label.text = "Target: %s" % player.name
-
 func _update_player_indicator_follow() -> void:
 	var player := _current_player()
 	if player_indicator == null: return
@@ -202,6 +215,8 @@ func _update_player_indicator_follow() -> void:
 		player_indicator.global_position = player.global_position + Vector2(0, -40)
 	else:
 		player_indicator.visible = false
+
+# --- Spawning Logic ---
 
 func _spawn_aoe_on_selected_player() -> void:
 	var player := _current_player()
