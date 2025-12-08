@@ -171,17 +171,25 @@ func finalize_roles(players, death_id):
 
 @rpc("call_local", "reliable")
 func load_game():
+	# CRITICAL FIX: Wait 0.1s to ensure the RPC message actually sends 
+	# to all clients before the Host destroys this menu node.
+	await get_tree().create_timer(0.1).timeout
+	
 	get_tree().change_scene_to_file("res://main.tscn")
+
 
 func _update_player_list():
 	if player_list:
 		var text = "Players:\n"
 		for id in connected_players:
 			var role = connected_players[id]
-			var playername = "Player " + str(id)
+			# FIX: Use a local variable, DO NOT change 'name'
+			var display_name = "Player " + str(id)
+			
 			if id == 1:
-				name += " (Host)"
+				display_name += " (Host)"
 			if id == multiplayer.get_unique_id():
-				playername += " (You)"
-			text += playername + " - " + role + "\n"
+				display_name += " (You)"
+			
+			text += display_name + " - " + role + "\n"
 		player_list.text = text

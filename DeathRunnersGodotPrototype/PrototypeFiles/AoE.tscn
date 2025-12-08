@@ -130,10 +130,13 @@ scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_hy4h2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(7, 7)
+position = Vector2(-3, 4)
+scale = Vector2(7.5, 7.5)
 sprite_frames = SubResource("SpriteFrames_desu1")
 animation = &"explode"
 autoplay = "explode"
+frame = 11
+frame_progress = 1.0
 
 [connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
 [connection signal="body_entered" from="HitArea" to="." method="_on_area_body_entered"]

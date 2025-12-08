@@ -2,8 +2,8 @@ extends Node2D
 
 @export var speed: float = 300.0
 @export var damage: float = 40.0
-@export var lifetime: float = 4.0       # seconds boulder stays active
-@export var max_uses: int = 3           # how many times Death can use this trap
+@export var lifetime: float = 4.0
+@export var max_uses: int = 3
 
 var active: bool = false
 var times_used: int = 0
@@ -13,9 +13,10 @@ var start_position: Vector2
 func _ready() -> void:
 	add_to_group("trap_boulder")
 	start_position = global_position
-	$HitArea.monitoring = false  # only when rolling
-	print("BoulderTrap ready, groups: ", get_groups())
-
+	$HitArea.monitoring = false
+	# Ensure we can hit the Player layer (Layer 2)
+	$HitArea.set_collision_mask_value(2, true)
+	print("BoulderTrap ready")
 
 func can_activate() -> bool:
 	return (not active) and (times_used < max_uses)
@@ -50,7 +51,11 @@ func _deactivate() -> void:
 func _on_hit_area_body_entered(body: Node2D) -> void:
 	if not active:
 		return
+	
+	# If we hit a player, deal damage (Survivor script handles network routing)
 	if body.is_in_group("player") and body.has_method("apply_damage"):
 		print("Boulder hit player for ", damage)
 		body.apply_damage(damage)
+		
+		# Reset the boulder immediately upon hit
 		_deactivate()
