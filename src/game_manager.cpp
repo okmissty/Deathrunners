@@ -28,8 +28,8 @@ GameManager::~GameManager() {
 
 void GameManager::_ready() {
     // Connect multiplayer signals
-    MultiplayerAPI *multiplayer = get_multiplayer();
-    if (multiplayer) {
+    Ref<MultiplayerAPI> multiplayer = get_multiplayer();
+    if (multiplayer.is_valid()) {
         multiplayer->connect("peer_connected", 
                            Callable(this, "_on_player_connected"));
         multiplayer->connect("peer_disconnected", 

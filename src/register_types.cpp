@@ -1,5 +1,7 @@
 #include "register_types.h"
 
+#include <godot_cpp/classes/input_event.hpp>
+
 #include "player.h"
 #include "death_player.h"
 #include "obstacle.h"

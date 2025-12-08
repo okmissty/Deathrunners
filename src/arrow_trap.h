@@ -11,21 +11,21 @@ class ArrowTrap : public Node2D {
     GDCLASS(ArrowTrap, Node2D)
 
 protected:
-    /** Register methods/properties with Godot. */
+    // Register methods/properties with Godot.
     static void _bind_methods();
 
 public:
-    /** Construct ArrowTrap. */
+    // Construct ArrowTrap.
     ArrowTrap();
-    /** Destroy ArrowTrap. */
+    // Destroy ArrowTrap.
     ~ArrowTrap();
 
-    /** Called when node enters scene. */
+    // Called when node enters scene.
     void _ready() override;
-    /** Called each frame with delta seconds. */
+    // Called each frame with delta seconds.
     void _process(double delta) override;
 };
 
-} // namespace godot
+}
 
-#endif // ARROW_TRAP_H
+#endif 

@@ -1,11 +1,6 @@
 #include "GameLogic.h"
 #include <vector>
 
-
-
-
-
-
 struct Player {
     float x, y;
     float vx, vy;

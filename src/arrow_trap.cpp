@@ -7,14 +7,14 @@ using namespace godot;
 /** Bind ArrowTrap methods to Godot. */
 void ArrowTrap::_bind_methods() {}
 
-/** Constructor. */
+// Constructor.
 ArrowTrap::ArrowTrap() {}
 
-/** Destructor. */
+// Destructor.
 ArrowTrap::~ArrowTrap() {}
 
-/** Node ready callback. */
+// Node ready callback.
 void ArrowTrap::_ready() {}
 
-/** Per-frame update for arrow trap. */
+// Per-frame update for arrow trap.
 void ArrowTrap::_process(double delta) {}

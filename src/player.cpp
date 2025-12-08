@@ -49,8 +49,8 @@ void Player::_ready() {
 
 void Player::_physics_process(double delta) {
     // Only process input if this is the local player
-    MultiplayerAPI *multiplayer = get_multiplayer();
-    if (multiplayer && is_multiplayer_authority()) {
+        Ref<MultiplayerAPI> multiplayer = get_multiplayer();
+        if (multiplayer.is_valid() && is_multiplayer_authority()) {
         handle_input(delta);
     }
     
@@ -67,8 +67,8 @@ void Player::_physics_process(double delta) {
 
 void Player::_process(double delta) {
     // Update hunger over time (only on authority)
-    MultiplayerAPI *multiplayer = get_multiplayer();
-    if (multiplayer && is_multiplayer_authority()) {
+        Ref<MultiplayerAPI> multiplayer = get_multiplayer();
+        if (multiplayer.is_valid() && is_multiplayer_authority()) {
         update_hunger(delta);
     }
 }

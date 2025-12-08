@@ -37,8 +37,8 @@ void Survivor::_physics_process(double delta) {
 }
 
 void Survivor::_process(double delta) {
-    MultiplayerAPI *mp = get_multiplayer();
-    if (mp && is_multiplayer_authority()) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid() && is_multiplayer_authority()) {
         // hunger logic could go here in a fuller conversion
         // For PoC keep it minimal
     }
