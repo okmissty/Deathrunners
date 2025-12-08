@@ -17,10 +17,8 @@ var _hunger_bar: ProgressBar
 @export var hunger_decrease_rate: float = 15.0
 @export var hunger_damage_per_second: float = 2.0
 
-# --- LIVES SYSTEM ---
 var lives: int
 @export var max_lives: int = 3
-# --------------------
 
 var alive: bool = true
 var reached_goal: bool = false
@@ -66,7 +64,6 @@ func _physics_process(delta: float) -> void:
 	if multiplayer.has_multiplayer_peer():
 		process_input = is_multiplayer_authority()
 		
-	# If dead or won, don't move
 	if not alive or reached_goal:
 		return
 
@@ -86,7 +83,6 @@ func _physics_process(delta: float) -> void:
 			
 		_handle_animations(dir)
 		
-		# Hunger logic
 		var is_moving: bool = abs(dir) > 0.1
 		if is_moving:
 			hunger -= hunger_decrease_rate * delta
@@ -96,27 +92,48 @@ func _physics_process(delta: float) -> void:
 		if hunger <= 0.0:
 			apply_damage(hunger_damage_per_second * delta)
 
-		# Fall damage / Abyss
 		if global_position.y > death_y:
-			apply_damage(1000.0) # Instant kill amount
+			apply_damage(1000.0)
 		
 		_update_ui()
 		
 		if multiplayer.has_multiplayer_peer():
-			# Sync position, lives, etc
 			sync_state.rpc(global_position, velocity, health, hunger, lives, sprite.animation if sprite else "idle", sprite.flip_h if sprite else false)
 	
 	move_and_slide()
+	
+	# NEW: Limit movement to camera view
+	if process_input:
+		_clamp_to_camera_bounds()
+
+func _clamp_to_camera_bounds():
+	var cam = get_viewport().get_camera_2d()
+	if not cam: return
+	
+	# Get camera view info
+	var view_rect = get_viewport_rect()
+	var cam_pos = cam.global_position
+	var zoom = cam.zoom
+	
+	# Calculate world boundaries visible to camera
+	var half_width = (view_rect.size.x / zoom.x) * 0.5
+	var left_bound = cam_pos.x - half_width
+	var right_bound = cam_pos.x + half_width
+	
+	# Add padding so we don't hug the absolute edge (32 pixels)
+	var padding = 32.0
+	
+	# Clamp player X position
+	global_position.x = clamp(global_position.x, left_bound + padding, right_bound - padding)
 
 @rpc("unreliable_ordered")
 func sync_state(pos: Vector2, vel: Vector2, h: float, hu: float, l: int, anim: String, flip: bool):
-	# Clients update their local copy of other players
 	if not is_multiplayer_authority():
 		global_position = pos
 		velocity = vel
 		health = h
 		hunger = hu
-		lives = l # Sync lives
+		lives = l
 		if sprite:
 			sprite.play(anim)
 			sprite.flip_h = flip
@@ -142,17 +159,15 @@ func _handle_death_or_respawn():
 	print(name, " lost a life. Lives remaining: ", lives)
 	
 	if lives > 0:
-		# RESPAWN LOGIC
 		respawn()
 	else:
-		# PERMANENT DEATH
 		alive = false
 		print(name, " is permanently dead.")
 		if multiplayer.has_multiplayer_peer():
 			sync_death.rpc()
 		if sprite:
-			sprite.play("idle") # Or death anim
-			sprite.modulate = Color(0.5, 0.5, 0.5, 0.5) # Fade out slightly
+			sprite.play("idle")
+			sprite.modulate = Color(0.5, 0.5, 0.5, 0.5)
 
 func respawn():
 	print("Respawning at: ", checkpoint_position)
@@ -160,9 +175,6 @@ func respawn():
 	velocity = Vector2.ZERO
 	health = max_health
 	hunger = max_hunger
-	# Reset hunger or keep it? Usually reset on death makes it fairer.
-	
-	# Optional: Sync immediate teleport to avoid interpolation lag
 	if multiplayer.has_multiplayer_peer():
 		sync_respawn.rpc(checkpoint_position)
 
@@ -170,7 +182,6 @@ func respawn():
 func sync_respawn(pos: Vector2):
 	global_position = pos
 	velocity = Vector2.ZERO
-	# Visual effect for respawn could go here
 
 @rpc("call_local", "reliable")
 func sync_death():
@@ -182,7 +193,6 @@ func sync_death():
 		sprite.modulate = Color(0.5, 0.5, 0.5, 0.5)
 	_update_ui()
 
-# ... (Keep existing heal, restore_hunger, set_checkpoint, mark_goal_reached methods) ...
 func heal(amount: float) -> void:
 	if not alive: return
 	health = min(max_health, health + amount)
@@ -215,7 +225,6 @@ func _update_ui() -> void:
 	if not multiplayer.has_multiplayer_peer() or is_multiplayer_authority():
 		if _health_bar: _health_bar.value = health
 		if _hunger_bar: _hunger_bar.value = hunger
-		# You could also add a Lives Label update here if you have one
 
 func _handle_animations(direction: float) -> void:
 	if not sprite: return

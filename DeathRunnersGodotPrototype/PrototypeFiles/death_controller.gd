@@ -1,9 +1,9 @@
-# death_controller_multiplayer.gd - Fixed UI Updates
+# death_controller_multiplayer.gd - Fixed UI Finding and Updates
 extends Node2D
 
 @export var aoe_scene: PackedScene
 @export var falling_block_scene: PackedScene
-@export var survivor_path: NodePath # Added to match main.tscn
+@export var survivor_path: NodePath
 
 var preplaced_traps: Array = []
 var selected_trap_index: int = -1
@@ -23,9 +23,14 @@ var player_indicator_base_scale: Vector2 = Vector2.ONE
 var enabled: bool = false
 
 func _ready() -> void:
-	# Correct path with space
+	# FIX: robustly find the labels (try both names just in case)
 	trap_label = get_node_or_null("../UI/Death HUD/TrapLabel")
+	if not trap_label:
+		trap_label = get_node_or_null("../UI/DeathHUD/TrapLabel")
+		
 	target_label = get_node_or_null("../UI/Death HUD/TargetLabel")
+	if not target_label:
+		target_label = get_node_or_null("../UI/DeathHUD/TargetLabel")
 	
 	if multiplayer.has_multiplayer_peer():
 		enabled = not multiplayer.is_server()
@@ -50,7 +55,6 @@ func _process(_delta: float) -> void:
 	if not enabled:
 		return
 	
-	# Input handling
 	if Input.is_action_just_pressed("death_trap_prev"):
 		_select_prev_trap()
 	if Input.is_action_just_pressed("death_trap_next"):
@@ -70,7 +74,7 @@ func _process(_delta: float) -> void:
 
 	_update_player_indicator_follow()
 	
-	# FIX: Continuously update UI to show reducing uses
+	# FIX: Update UI every frame to react to usage
 	_update_trap_hud(_current_trap())
 
 func _refresh_preplaced_traps() -> void:

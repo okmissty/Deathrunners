@@ -18,28 +18,23 @@ var survivors = {}
 var player_roles = {}
 var death_player_id = -1
 var my_role = ""
-var players_ready = {} # Track which players are ready
+var players_ready = {}
 
 func _ready() -> void:
 	end_label.text = ""
 	
-	# Hide game over menu initially
 	if game_over_menu: 
 		game_over_menu.visible = false
-	
-	# Connect UI buttons if they exist
 	if restart_button: 
 		restart_button.pressed.connect(_on_restart_pressed)
 	if menu_button: 
 		menu_button.pressed.connect(_on_menu_pressed)
 	
-	# Get Role Data
 	player_roles = get_tree().get_meta("player_roles", {})
 	death_player_id = get_tree().get_meta("death_player_id", -1)
 	
 	if multiplayer.has_multiplayer_peer():
 		setup_multiplayer()
-		# Tell server we're ready (Handshake)
 		rpc_id(1, "player_ready", multiplayer.get_unique_id())
 	else:
 		get_tree().change_scene_to_file("res://menu.tscn")
@@ -50,7 +45,6 @@ func setup_multiplayer():
 	
 	print("Setting up game. My ID: ", my_id, " My Role: ", my_role)
 	
-	# Display role at top
 	if role_label:
 		role_label.text = "You are: " + my_role
 		if my_role == "Death":
@@ -58,7 +52,6 @@ func setup_multiplayer():
 		else:
 			role_label.modulate = Color(0.3, 1, 0.3)
 	
-	# Setup based on role
 	if my_role == "Death":
 		if death_controller:
 			death_controller.set_process(true)
@@ -74,11 +67,9 @@ func setup_multiplayer():
 		if death_hud:
 			death_hud.visible = false
 	
-	# Configure Spawner
 	if multiplayer_spawner:
 		multiplayer_spawner.spawn_function = _spawn_survivor
 	
-	# Listen for connections
 	if multiplayer.is_server():
 		multiplayer.peer_connected.connect(_on_peer_connected)
 		multiplayer.peer_disconnected.connect(_on_peer_disconnected)
@@ -87,28 +78,21 @@ func setup_multiplayer():
 func player_ready(player_id: int):
 	if not multiplayer.is_server():
 		return
-	
 	players_ready[player_id] = true
 	print("Player ", player_id, " is ready. Total ready: ", players_ready.size(), "/", player_roles.size())
-	
-	# Check if all players are ready
 	if players_ready.size() >= player_roles.size():
 		print("All players ready! Spawning survivors...")
-		await get_tree().create_timer(0.5).timeout # Safety delay
+		await get_tree().create_timer(0.5).timeout
 		spawn_all_survivors()
 
 func spawn_all_survivors():
 	if not multiplayer.is_server():
 		return
-	
 	var spawn_offset = 0
 	for player_id in player_roles:
 		if player_roles[player_id] == "Survivor":
 			if multiplayer_spawner:
-				var data = {
-					"id": player_id,
-					"x_offset": spawn_offset
-				}
+				var data = { "id": player_id, "x_offset": spawn_offset }
 				multiplayer_spawner.spawn(data)
 			else:
 				spawn_survivor_for_player(player_id, spawn_offset)
@@ -130,31 +114,23 @@ func _spawn_survivor(data: Dictionary) -> Node:
 		survivor_instance.set_multiplayer_authority(player_id)
 		print("Set authority for survivor ", player_id)
 		
-		if player_id == multiplayer.get_unique_id() and horizontal_cam:
-			horizontal_cam.survivor = survivor_instance
+		# NOTE: Camera assignment lines REMOVED here because camera now automatically follows all players
 	)
 	
 	print("Spawned survivor for player ", player_id, " at position ", survivor_instance.position)
 	return survivor_instance
 
 func spawn_survivor_for_player(player_id: int, x_offset: int):
-	if survivors.has(player_id):
-		return
-	
+	if survivors.has(player_id): return
 	var survivor_instance = survivor_scene.instantiate()
 	survivor_instance.name = "Survivor_" + str(player_id)
 	survivor_instance.position = Vector2(352 + x_offset, 501)
 	survivor_instance.scale = Vector2(3, 3)
 	survivor_instance.add_to_group("player")
-	
 	add_child(survivor_instance)
 	survivors[player_id] = survivor_instance
 	survivor_instance.set_multiplayer_authority(player_id)
-	
 	print("Spawned survivor for player ", player_id)
-	
-	if player_id == multiplayer.get_unique_id() and horizontal_cam:
-		horizontal_cam.survivor = survivor_instance
 
 func _on_peer_connected(id):
 	print("Peer connected to game: ", id)
@@ -167,15 +143,11 @@ func _on_peer_disconnected(id):
 		survivors.erase(id)
 
 func _process(_delta: float) -> void:
-	if game_over:
-		return
-	
-	# Death Player Logic
+	if game_over: return
 	if Engine.get_process_frames() % 60 == 0:
 		if death_controller and death_controller.enabled:
 			death_controller._refresh_players()
 
-	# Win Condition Check
 	var any_survivor_alive = false
 	var any_survivor_won = false
 	var survivor_count = 0
@@ -183,16 +155,11 @@ func _process(_delta: float) -> void:
 	for survivor in survivors.values():
 		if is_instance_valid(survivor):
 			survivor_count += 1
-			# Check 'alive' property (which now accounts for lives > 0)
-			var alive = survivor.get("alive") 
+			var alive = survivor.get("alive")
 			var reached_goal = survivor.get("reached_goal")
-			
-			if alive:
-				any_survivor_alive = true
-			if reached_goal:
-				any_survivor_won = true
+			if alive: any_survivor_alive = true
+			if reached_goal: any_survivor_won = true
 	
-	# Only end game if we actually had survivors to begin with
 	if survivor_count > 0:
 		if any_survivor_won:
 			_show_game_over("Survivors win!")
@@ -203,15 +170,9 @@ func _show_game_over(text: String) -> void:
 	if game_over: return
 	game_over = true
 	end_label.text = text
-	
-	# Show buttons for everyone
-	if game_over_menu:
-		game_over_menu.visible = true
-	
-	# Only Host can actually restart the server logic
+	if game_over_menu: game_over_menu.visible = true
 	if multiplayer.is_server():
-		if restart_button: 
-			restart_button.text = "Restart Game (Host)"
+		if restart_button: restart_button.text = "Restart Game (Host)"
 		sync_game_over.rpc(text)
 
 @rpc("call_local", "reliable")
@@ -222,11 +183,9 @@ func sync_game_over(text: String):
 
 func _on_restart_pressed():
 	if multiplayer.is_server():
-		# Reload current scene for everyone
 		rpc("reload_game_scene")
 
 func _on_menu_pressed():
-	# Disconnect and go to menu
 	if multiplayer.has_multiplayer_peer():
 		multiplayer.multiplayer_peer.close()
 	get_tree().change_scene_to_file("res://menu.tscn")

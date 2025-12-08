@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var speed: float = 300.0
-@export var damage: float = 40.0
+@export var damage: float = 20.0
 @export var lifetime: float = 4.0
 @export var max_uses: int = 3
 
@@ -10,12 +10,33 @@ var times_used: int = 0
 var time_active: float = 0.0
 var start_position: Vector2
 
+@onready var hit_area = $HitArea
+
 func _ready() -> void:
 	add_to_group("trap_boulder")
 	start_position = global_position
-	$HitArea.monitoring = false
-	# Ensure we can hit the Player layer (Layer 2)
-	$HitArea.set_collision_mask_value(2, true)
+	
+	# Failsafe: Create shape if missing
+	var has_shape = false
+	for child in hit_area.get_children():
+		if child is CollisionShape2D and child.shape != null:
+			has_shape = true
+			break
+	if not has_shape:
+		var shape_node = CollisionShape2D.new()
+		var circle = CircleShape2D.new()
+		circle.radius = 40.0
+		shape_node.shape = circle
+		hit_area.add_child(shape_node)
+
+	# Connect signal if needed
+	if not hit_area.body_entered.is_connected(_on_hit_area_body_entered):
+		hit_area.body_entered.connect(_on_hit_area_body_entered)
+	
+	# Layer 1 + 2
+	hit_area.collision_mask = 3
+	hit_area.monitoring = false
+	
 	print("BoulderTrap ready")
 
 func can_activate() -> bool:
@@ -28,10 +49,11 @@ func activate() -> void:
 	active = true
 	time_active = 0.0
 	global_position = start_position
-	$HitArea.monitoring = true
-	print("Boulder trap activated at: ", global_position, " use ", times_used, "/", max_uses)
+	
+	hit_area.set_deferred("monitoring", true)
+	print("Boulder trap activated")
 
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not active:
 		return
 
@@ -44,18 +66,20 @@ func _process(delta: float) -> void:
 func _deactivate() -> void:
 	active = false
 	time_active = 0.0
-	$HitArea.monitoring = false
+	hit_area.set_deferred("monitoring", false)
 	global_position = start_position
-	print("Boulder trap deactivated")
 
-func _on_hit_area_body_entered(body: Node2D) -> void:
+func _on_hit_area_body_entered(body: Node) -> void:
 	if not active:
 		return
 	
-	# If we hit a player, deal damage (Survivor script handles network routing)
-	if body.is_in_group("player") and body.has_method("apply_damage"):
-		print("Boulder hit player for ", damage)
-		body.apply_damage(damage)
+	if body.is_in_group("player"):
+		print("Boulder HIT: ", body.name)
 		
-		# Reset the boulder immediately upon hit
+		# FIX: Only the SERVER triggers the damage logic.
+		# This prevents double damage.
+		if multiplayer.is_server() and body.has_method("apply_damage"):
+			body.apply_damage(damage)
+		
+		# Everyone deactivates the boulder visually
 		_deactivate()

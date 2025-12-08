@@ -138,5 +138,5 @@ autoplay = "explode"
 frame = 11
 frame_progress = 1.0
 
-[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
 [connection signal="body_entered" from="HitArea" to="." method="_on_area_body_entered"]
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]

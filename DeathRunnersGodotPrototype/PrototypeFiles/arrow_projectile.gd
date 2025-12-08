@@ -1,7 +1,7 @@
 extends Area2D
 
 @export var speed: float = 500.0
-@export var damage: float = 20.0
+@export var damage: float = 15.0 # Set this to 15
 @export var direction: Vector2 = Vector2.RIGHT
 
 var active: bool = true
@@ -26,10 +26,11 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 
 	if body.is_in_group("player"):
-		# Apply damage if possible (Survivor script handles networking)
-		if body.has_method("apply_damage"):
+		# FIX: Only the Server (Host) triggers the damage.
+		# This prevents the "Double Damage" bug.
+		if multiplayer.is_server() and body.has_method("apply_damage"):
 			body.apply_damage(damage)
 		
-		# Destroy arrow immediately on local machine
+		# Visual cleanup happens for EVERYONE so the arrow disappears instantly
 		active = false
 		queue_free()
