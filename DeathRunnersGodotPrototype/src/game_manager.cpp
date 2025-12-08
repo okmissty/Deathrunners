@@ -35,6 +35,47 @@ void GameManager::_ready() {
         multiplayer->connect("peer_disconnected", 
                            Callable(this, "_on_player_disconnected"));
     }
+    ResourceLoader *loader = ResourceLoader::get_singleton();
+    player_scene = loader->load("res://scenes/player.tscn");
+}
+
+void GameManager::start_game() {
+    if (game_started) {
+        return;
+    }
+    
+    game_started = true;
+    
+    // Pick random death player
+    Array player_ids = players.keys();
+    int random_index = UtilityFunctions::randi() % player_ids.size();
+    death_player_id = player_ids[random_index];
+    
+    UtilityFunctions::print("Game started! Player ", death_player_id, " is Death");
+    
+    // SPAWN PLAYERS
+    for (int i = 0; i < player_ids.size(); i++) {
+        int id = player_ids[i];
+        
+        if (player_scene.is_valid()) {
+            Node *player_node = player_scene->instantiate();
+            Player *player = Object::cast_to<Player>(player_node);
+            
+            if (player) {
+                player->set_name(String::num(id)); // Naming is critical for networking!
+                player->set_player_id(id);
+                
+                // If this is the "Death" player, maybe spawn them somewhere else?
+                // For now, spawn everyone at 0,0
+                player->set_position(Vector2(0, -100)); // Spawn slightly in the air
+                
+                // Set the network authority so the client controls their own player
+                player->set_multiplayer_authority(id);
+                
+                add_child(player);
+            }
+        }
+    }
 }
 
 /**

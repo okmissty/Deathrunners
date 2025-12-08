@@ -25,7 +25,7 @@ private:
     bool game_started;
 
     Ref<ENetMultiplayerPeer> peer;
-
+    Ref<PackedScene> player_scene; 
 protected:
     static void _bind_methods();
 

@@ -48,19 +48,27 @@ void Player::_ready() {
 }
 
 void Player::_physics_process(double delta) {
-    // Only process input if this is the local player
-        Ref<MultiplayerAPI> multiplayer = get_multiplayer();
-        if (multiplayer.is_valid() && is_multiplayer_authority()) {
-        handle_input(delta);
+    // 1. NETWORK SYNC (Client Side)
+    // If we are NOT the authority, we just update our position to match the server
+    MultiplayerAPI *multiplayer = get_multiplayer();
+    if (multiplayer && !is_multiplayer_authority()) {
+        set_position(synced_position);
+        set_velocity(synced_velocity);
+        move_and_slide(); // Optional: keeps physics smoother than just setting position
+        return; // Skip the rest of the logic for clients
     }
-    
-    // Apply gravity to all players
+
+    // 2. AUTHORITY LOGIC (Server Side)
+    handle_input(delta);
     apply_gravity(delta);
-    
-    // Move the character
     move_and_slide();
     
-    // Update position for network sync
+    // 3. FALL DEATH CHECK (New Addition)
+    if (get_global_position().y > 2000.0f) { // 2000.0f is the death plane
+        take_damage(max_health);
+    }
+
+    // 4. SYNC VARIABLES
     synced_position = get_position();
     synced_velocity = get_velocity();
 }
