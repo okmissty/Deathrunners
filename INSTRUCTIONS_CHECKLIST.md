@@ -26,14 +26,9 @@
   - [ ] Code compiles and runs without errors (verify with `make`)
 
 - [ ] Final Presentation (10–15 minutes)
-  - [ ] Problem statement
-  - [ ] Background research summary
+  - [x] Problem statement
+  - [x] Background research summary
   - [ ] UML and architecture overview
   - [ ] Implementation details + demo/screenshots
   - [ ] User feedback summary
   - [ ] Reflection and lessons learned
-
-Notes and next steps:
-- Run `make` to validate C++ build and fix any compilation issues in `src/`.
-- Collect/format any missing user survey responses into `user_surveys.txt` if needed.
-- If you want, I can export `UML.puml` to an image and/or run the build and help fix compile issues.

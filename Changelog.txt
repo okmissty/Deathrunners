@@ -4,6 +4,7 @@ Changelog (Based on our git commits)
 - Merged recent branch work and cleaned up a few lingering issues.
 - Fixed the level goal behavior and addressed multiple small bugs reported during late testing.
 - Added/updated docstrings and corrected a bomb/label display issue. Short, focused fixes to stabilize the final build.
+- Music added
 
 2025-12-07 — Traps, maps, and gameplay tuning
 - Finished major updates to traps so they behave consistently in the scene, still need to verify multi-player damage distribution.
