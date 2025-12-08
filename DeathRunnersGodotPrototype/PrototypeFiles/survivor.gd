@@ -214,12 +214,40 @@ func set_checkpoint(pos: Vector2) -> void:
 	checkpoint_position = pos
 	print(name, " checkpoint set to: ", pos)
 
+# IMPROVED GOAL DETECTION
 func mark_goal_reached() -> void:
+	print("=== ", name, " REACHED THE GOAL! ===")
 	reached_goal = true
-	if multiplayer.has_multiplayer_peer(): sync_goal_reached.rpc()
+	
+	# Make sure the value is set
+	print("  reached_goal is now: ", reached_goal)
+	
+	# Sync across network
+	if multiplayer.has_multiplayer_peer():
+		print("  Syncing goal reached across network...")
+		sync_goal_reached.rpc()
+		
+		# If we're the authority, also notify the main scene directly
+		if is_multiplayer_authority():
+			var main = get_tree().current_scene
+			if main:
+				print("  Notifying main scene directly...")
+				# Force the main scene to check win conditions
+				if main.has_method("_show_game_over"):
+					main.call_deferred("_show_game_over", "Survivors win!")
 
 @rpc("call_local", "reliable")
-func sync_goal_reached(): reached_goal = true
+func sync_goal_reached():
+	reached_goal = true
+	print(name, " goal reached synced! reached_goal = ", reached_goal)
+	
+	# Force main scene to check win condition on all clients
+	var main = get_tree().current_scene
+	if main:
+		# Trigger a check in the next frame
+		if main.has_method("_process"):
+			main.set("game_over", false)  # Allow win check
+			main.call_deferred("_process", 0.01)
 
 func _update_ui() -> void:
 	if not multiplayer.has_multiplayer_peer() or is_multiplayer_authority():

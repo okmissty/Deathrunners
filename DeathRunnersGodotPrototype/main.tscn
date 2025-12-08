@@ -250,6 +250,11 @@ position = Vector2(2707, 496)
 scale = Vector2(4.2244897, 4.137931)
 texture = ExtResource("24_1u8w0")
 
+[node name="plant3" type="Sprite2D" parent="Decorations"]
+position = Vector2(2015, 487)
+scale = Vector2(4.666666, 4.0381956)
+texture = ExtResource("14_vivmo")
+
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(34.999996, 0)
 scale = Vector2(5, 5)
@@ -439,7 +444,7 @@ texture = ExtResource("22_lswn8")
 
 [node name="BoulderTrap1" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
 z_index = -1
-position = Vector2(1833, 516)
+position = Vector2(2019, 512)
 speed = -100.0
 
 [node name="ArrowTrap1" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
@@ -448,9 +453,20 @@ position = Vector2(701, 525)
 [node name="ArrowTrap2" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
 position = Vector2(1187, 531)
 
+[node name="ArrowTrap3" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
+position = Vector2(3836, 538)
+
+[node name="ArrowTrap4" parent="." groups=["trap_arrow"] instance=ExtResource("11_w48qg")]
+position = Vector2(4347, 380)
+
 [node name="BoulderTrap2" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
 z_index = -1
 position = Vector2(1353, 519)
+speed = -100.0
+
+[node name="BoulderTrap3" parent="." groups=["trap_boulder"] instance=ExtResource("10_4c57u")]
+z_index = -1
+position = Vector2(6660, 518)
 speed = -100.0
 
 [node name="Goal" parent="." instance=ExtResource("8_5vw27")]
@@ -479,8 +495,3 @@ collision_mask = 3
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dxjcl2ktsv2og")
 spawn_path = NodePath("..")
-
-[node name="plant" type="Sprite2D" parent="."]
-position = Vector2(2015, 487)
-scale = Vector2(4.666666, 4.0381956)
-texture = ExtResource("14_vivmo")
