@@ -47,27 +47,31 @@ To play run the Godot prototype in `DeathRunnersGodotPrototype/`
 
 
 1. Menu Sreen (Then a 4 player example)
-![alt text](image.png)
+![alt text](Screenshots\image.png)
 
-![alt text](image-1.png)
+![alt text](Screenshots\image-1.png)
 
 - Whoever is hosting the game would pick "Host Game" and the others would pick "Join Game". 
 
-![alt text](image-2.png)
-![alt text](image-3.png)
+![alt text](Screenshots\image-2.png)
+![alt text](Screenshots\image-3.png)
 
 2. Host starts the Game! Everyone will know their roles based on the menu, and it says it again in game.
-![alt text](image-4.png)
+![alt text](Screenshots\image-4.png)
 - The Death player has a different view than the other players.
 
 3. From here the game starts, the Death player switches between traps to try and take out the survivors. While the survivors push through to the end (Heres us just an overview of our map)
-![alt text](image-5.png)
+![alt text](Screenshots\image-5.png)
 
 4. If the survivors make it to the end goal, then the game ends and the screen says "Survivors Win" otherwise if a survivor uses all 3 lives or dies from hunger it says "Death Wins"
-![alt text](image-6.png)
+
+![alt text](Screenshots\image-6.png)
+
 - Dead players become ghosts and can spectate
-![alt text](image-7.png)
-![alt text](image-8.png)
+
+![alt text](Screenshots\image-7.png)
+
+![alt text](Screenshots\image-8.png)
 
 ## Sources:
 
