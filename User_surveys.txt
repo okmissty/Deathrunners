@@ -1,0 +1,55 @@
+User Surveys 
+______________________-
+
+Protoype Surveys:
+
+User 1 - Casual Gamer, CS Major
+Suggestions:
+- Add a brief tutorial or instruction screen
+- Balance the hunger drain rate
+- Add visual/audio feedback when Death activates traps
+- Maybe add a cooldown indicator for Death so I know when I can use abilities again
+- Would definitely play this with friends once the multiplayer works!
+
+
+User 2 - Multiplayer Enthusiast
+Suggestions:
+- A clear main menu with "Host Game" and "Join Game" buttons
+- Some way to see who's connected (player list)
+- Networked movement - right now it's just local
+- Role assignment - who gets to be Death? Random? First player? Let us choose?
+- Maybe voice chat integration or at least text chat?
+
+User 3 - Non-CS Casual Gamer
+Suggestions:
+- A tutorial level or at least a controls screen at the start
+- Visual clarity - use actual sprites or clearer shapes so I know what's a trap, what's a pickup, what's the goal
+- Better UI - the health/hunger bars are functional but could look nicer
+- Game over menu with a "Restart" button instead of making me relaunch
+- Instructions for the Death player - I tried being Death and had no idea what I was doing
+
+
+User 4 -  Game Tester/Ethusiest 
+Suggestions:
+- Hunger system is punishing - Draining at 15 points/second while moving means players are incentivized to stand still, which contradicts the "runner" gameplay. Recommendation: 3-5 points/second, or only drain during sprinting
+- Survivor has no agency - Just running and dodging. Consider adding: double jump, dash ability, or items to counter Death
+- The 2-3 levels need: platforms, multiple paths, risk/reward routes
+- Trap placement should be strategic, not just activatable anywhere
+- Add environmental hazards that exist independently of Death player
+- Needs more depth to win: Time limits? Score system based on health remaining? Multiple survivors racing?
+- Latency/Disconnections?
+
+_____________________________________________________
+Final Version User surveys:
+
+
+Tester #1: 
+
+
+Tester #2
+
+Tester #3
+
+
+Tester #4
+

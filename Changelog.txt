@@ -1,0 +1,49 @@
+Changelog (Based on our git commits)
+
+2025-12-08 — Final polish and bug fixes
+- Merged recent branch work and cleaned up a few lingering issues.
+- Fixed the level goal behavior and addressed multiple small bugs reported during late testing.
+- Added/updated docstrings and corrected a bomb/label display issue. Short, focused fixes to stabilize the final build.
+
+2025-12-07 — Traps, maps, and gameplay tuning
+- Finished major updates to traps so they behave consistently in the scene, still need to verify multi-player damage distribution.
+- Improved and polished two maps (visual and collision adjustments).
+- Fixed pickups, survivor depletion logic, and trap activation edge cases.
+
+2025-12-06 — C++ conversion and UI polish
+- Converted several Godot scripts into C++ GDExtension skeletons.
+- Improved health and hunger bar visuals and logic.
+- Added assets to health/hunger pickups and refined their behavior.
+
+2025-12-05 — Menu and multiplayer progress
+- Menu improvements (background and new pixel font from Google) and several bug fixes.
+- Multiplayer system functioning with a few minor remaining issues to solve during final testing.
+
+2025-12-04 to 2025-12-03 — Core trap and death mechanics
+- Continued work on traps and death mechanics. implemented behaviors for when a player falls off the level.
+
+2025-12-02 — Level setup and trap selection
+- Set up the playable level and added trap-selection features for the Death role.
+- Completed AOE trap animation and began wiring trap logic into the gameplay loop.
+
+2025-11-21 — Prototype assets and camera fixes
+- Added checkpoint assets and updated camera behavior for better player visibility.
+- Polished sprites, running animation, and scene touch-ups in preparation for prototype testing.
+
+2025-11-20 — Projectile and trap implementations
+- Arrow trap now fires projectiles correctly, began integrating boulder and AoE traps.
+- Organized sprite assets for easier use across scenes.
+
+2025-11-19 — Health, hunger, hazards, and collisions
+- Implemented health and hunger systems and added WIP hazards.
+- Fixed background and collision settings for more stable level behavior.
+
+2025-11-17 — Prototype import
+- Added the Godot prototype folder `DeathRunnersGodotPrototype/` to the repository for rapid prototyping and playtesting.
+
+2025-11-16 — Source and networking groundwork
+- Added many C++ `src/` files and started wiring networking basics.
+- General repository reorganization and readme updates.
+
+2025-11-07 — Project kickoff and docs
+- Initial project README and proposal-related documentation created.
