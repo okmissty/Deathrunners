@@ -18,16 +18,16 @@ Deathrunners is a 2D multiplayer side-scroller survival game. One player is assi
 - `UML.puml` — UML diagram representing classes and relationships.
 
 **Features implemented:**
-1. Multiplayer networking (2-4 players) — managed by `GameManager`.
+1. Multiplayer (2-4 players) — managed by `GameManager`.
 2. Death role with obstacle spawning (`DeathPlayer`, `DeathController`).
 3. Health and hunger systems (`Player`, `Survivor`).
-4. Multiple trap types (arrow, boulder, AoE) and projectiles.
+4. Multiple trap types (arrow, boulder, AoE) and projectiles with selection.
 5. Pickup items (health and hunger restoration).
+6. Checkpoints
 
 **Tech Stack:**
 - Godot Engine 4.3+ (prototype)
 - C++ (Godot GDExtension / godot-cpp)
-- Make (Makefile) — simple build helper for the C++ sources
 
 ## How to build and run:
 
@@ -75,17 +75,23 @@ To play run the Godot prototype in `DeathRunnersGodotPrototype/`
 
 ## Sources:
 
-Art:
-Survivor Sprite: https://jesse-m.itch.io/jungle-pack
+**Art:**
 
-Asset/Background/Tile credits: https://jesse-m.itch.io/jungle-pack
+- Survivor Sprite: https://jesse-m.itch.io/jungle-pack
 
-Menu: (We got it off pinterest dont tell anyone)
+- Asset/Background/Tile credits: https://jesse-m.itch.io/jungle-pack
+
+- Menu picture: (We got it off pinterest)
+
+- Music: Tyeon
 
 
-Gameplay:
-Multiplayer: https://youtu.be/V4a_J38XdHk?si=EstLyZ-nUp4PxfV7
+**Godot Tutorials/Videos:**
+- Multiplayer: https://youtu.be/V4a_J38XdHk?si=EstLyZ-nUp4PxfV7
 
+- How to make a video game Godot Beginner Tutorial: https://youtu.be/LOhfqjmasi0?si=jVWSm0eqk360wgwt
+ 
+- Godot for absolute beginners: https://youtu.be/s0O3a2AgoBA?si=jm-VWv2QUcttzJ1O
 
 
 

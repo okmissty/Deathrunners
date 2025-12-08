@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://df8a5iyhj1xj0"]
+[gd_scene load_steps=29 format=4 uid="uid://df8a5iyhj1xj0"]
 
 [ext_resource type="Script" uid="uid://bun16gqsxom2x" path="res://main.gd" id="1_5vw27"]
 [ext_resource type="PackedScene" uid="uid://cmb1uscbu8rbe" path="res://parallax_background.tscn" id="1_272bh"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dnoftimsdqnaj" path="res://PrototypeFiles/hazard.tscn" id="17_getpj"]
 [ext_resource type="Texture2D" uid="uid://w2bv84yxq7e4" path="res://Assets/background/vine.png" id="22_d13ii"]
 [ext_resource type="Texture2D" uid="uid://byqnwdmxhtol4" path="res://Assets/Boulder.png" id="22_lswn8"]
+[ext_resource type="AudioStream" uid="uid://b4o6hl5h5rqwp" path="res://Assets/Music/Ford Project 2 with volume fix.mp3" id="22_ryguw"]
 [ext_resource type="Texture2D" uid="uid://d10oungf5cygk" path="res://Assets/background/house.png" id="23_1u8w0"]
 [ext_resource type="Texture2D" uid="uid://cd0o181bmkktp" path="res://Assets/background/rock.png" id="24_1u8w0"]
 
@@ -495,3 +496,9 @@ collision_mask = 3
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("uid://dxjcl2ktsv2og")
 spawn_path = NodePath("..")
+
+[node name="FordProject2WithVolumeFix" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_ryguw")
+volume_db = -23.08
+autoplay = true
+parameters/looping = false

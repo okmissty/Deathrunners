@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b4o6hl5h5rqwp"
+path="res://.godot/imported/Ford Project 2 with volume fix.mp3-f90587ab0768f6ec7b17ea683b214851.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Ford Project 2 with volume fix.mp3"
+dest_files=["res://.godot/imported/Ford Project 2 with volume fix.mp3-f90587ab0768f6ec7b17ea683b214851.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
