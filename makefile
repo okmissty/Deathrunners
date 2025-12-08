@@ -23,21 +23,21 @@ all: build
 .PHONY: build
 build:
 	@echo "Building Death Run C++ extension..."
-	$(SCONS) platform=$(PLATFORM) target=$(TARGET)
+	cd godot-cpp && $(SCONS) platform=$(PLATFORM) target=$(TARGET)
 	@echo "Build complete!"
 
 # Build release version
 .PHONY: release
 release:
 	@echo "Building release version..."
-	$(SCONS) platform=$(PLATFORM) target=template_release
+	cd godot-cpp && $(SCONS) platform=$(PLATFORM) target=template_release
 	@echo "Release build complete!"
 
 # Clean build artifacts
 .PHONY: clean
 clean:
 	@echo "Cleaning build artifacts..."
-	$(SCONS) --clean
+	cd godot-cpp && $(SCONS) --clean
 	rm -rf project/bin/
 	@echo "Clean complete!"
 

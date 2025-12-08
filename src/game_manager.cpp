@@ -37,6 +37,11 @@ void GameManager::_ready() {
     }
 }
 
+/**
+ * @brief Host a game by creating an ENet server and setting the multiplayer peer.
+ *
+ * This creates an ENet server on PORT and registers the host as player 1.
+ */
 void GameManager::host_game() {
     peer = Ref<ENetMultiplayerPeer>(memnew(ENetMultiplayerPeer));
     Error error = peer->create_server(PORT, MAX_PLAYERS);
@@ -53,6 +58,10 @@ void GameManager::host_game() {
     register_player(1, Dictionary());
 }
 
+/**
+ * @brief Join an existing server as a client.
+ * @param address Server IP to connect to.
+ */
 void GameManager::join_game(const String &address) {
     peer = Ref<ENetMultiplayerPeer>(memnew(ENetMultiplayerPeer));
     Error error = peer->create_client(address, PORT);
@@ -66,6 +75,10 @@ void GameManager::join_game(const String &address) {
     UtilityFunctions::print("Connecting to ", address, ":", PORT);
 }
 
+/**
+ * @brief Callback when a new peer connects.
+ * @param id Peer id assigned by ENet.
+ */
 void GameManager::_on_player_connected(int id) {
     UtilityFunctions::print("Player ", id, " connected");
     
@@ -82,17 +95,29 @@ void GameManager::_on_player_connected(int id) {
     }
 }
 
+/**
+ * @brief Callback when a peer disconnects; removes them from the registry.
+ */
 void GameManager::_on_player_disconnected(int id) {
     UtilityFunctions::print("Player ", id, " disconnected");
     players.erase(id);
 }
 
+/**
+ * @brief Register a player in the local players dictionary.
+ */
 void GameManager::register_player(int id, const Dictionary &player_info) {
     players[id] = player_info;
     
     UtilityFunctions::print("Registered player ", id);
 }
 
+/**
+ * @brief Start the game: mark started and choose Death player.
+ *
+ * This is a simple implementation which randomly chooses a death player
+ * from the registered players. Scene setup/spawning is left as a TODO.
+ */
 void GameManager::start_game() {
     if (game_started) {
         return;
