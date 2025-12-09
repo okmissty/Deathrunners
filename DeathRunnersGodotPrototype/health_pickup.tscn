@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://healthpickup"]
+[gd_scene load_steps=3 format=3 uid="uid://healthpickup"]
 
-[ext_resource type="Script" uid="uid://dumqujlibnef0" path="res://health_pickup.gd" id="1_hsdfg"]
+[ext_resource type="Script" path="res://HealthPickup" id="1_hsdfg"]
 [ext_resource type="Texture2D" uid="uid://h5fpygiuifjx" path="res://Assets/background/heart.png" id="2_awyve"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huou6"]
