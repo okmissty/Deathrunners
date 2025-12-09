@@ -1,0 +1,16 @@
+[configuration]
+
+entry_symbol = "deathrun_library_init"
+compatibility_minimum = "4.3"
+reloadable = true
+
+[libraries]
+
+macos.debug = "res://bin/libdeathrunners.macos.template_debug.framework"
+macos.release = "res://bin/libdeathrunners.macos.template_release.framework"
+windows.debug.x86_32 = "res://bin/libdeathrunners.windows.template_debug.x86_32.dll"
+windows.release.x86_32 = "res://bin/libdeathrunners.windows.template_release.x86_32.dll"
+windows.debug.x86_64 = "res://bin/libdeathrunners.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "res://bin/libdeathrunners.windows.template_release.x86_64.dll"
+linux.debug.x86_64 = "res://bin/libdeathrunners.linux.template_debug.x86_64.so"
+linux.release.x86_64 = "res://bin/libdeathrunners.linux.template_release.x86_64.so"

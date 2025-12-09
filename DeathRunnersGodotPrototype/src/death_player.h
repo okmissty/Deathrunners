@@ -25,6 +25,8 @@ private:
     Ref<PackedScene> spike_scene;
     Ref<PackedScene> pit_scene;
     Ref<PackedScene> enemy_scene;
+    
+    static bool _sort_traps_by_x(const Node* a, const Node* b);
 
 protected:
     static void _bind_methods();

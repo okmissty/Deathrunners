@@ -1,6 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://mc3rp2mub6wh"]
+[gd_scene load_steps=18 format=3 uid="uid://mc3rp2mub6wh"]
 
-[ext_resource type="Script" uid="uid://dx6hh1futt21c" path="res://PrototypeFiles/aoe_trap.gd" id="1_qfc4f"]
+[ext_resource type="Script" path="res://AoeTrap" id="1_qfc4f"]
 [ext_resource type="Texture2D" uid="uid://l66gtxdh3bwd" path="res://Assets/Fire Effect and Bullet 16x16.png" id="2_akfgn"]
 [ext_resource type="Texture2D" uid="uid://cmfykaxdk6gjg" path="res://hhuH20.png" id="2_hy4h2"]
 

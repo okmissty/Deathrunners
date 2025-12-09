@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnoftimsdqnaj"]
+[gd_scene load_steps=2 format=3 uid="uid://dnoftimsdqnaj"]
 
-[ext_resource type="Script" uid="uid://bdausovdycqrn" path="res://PrototypeFiles/hazard.gd" id="1_xc6ka"]
+[ext_resource type="Script" path="res://Hazard" id="1_xc6ka"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4fw0i"]
 size = Vector2(32, 32)

@@ -1,6 +1,6 @@
-[gd_scene load_steps=29 format=3 uid="uid://dxjcl2ktsv2og"]
+[gd_scene load_steps=28 format=3 uid="uid://dxjcl2ktsv2og"]
 
-[ext_resource type="Script" uid="uid://b5p8ibptxae1b" path="res://PrototypeFiles/survivor.gd" id="1_46ptc"]
+[ext_resource type="Script" path="res://Player" id="1_46ptc"]
 [ext_resource type="Texture2D" uid="uid://ba7het8lkoeuc" path="res://Assets/Character/sprites/landing.png" id="2_aj430"]
 [ext_resource type="Texture2D" uid="uid://dgibo58vnfdam" path="res://Assets/Character/sprites/idling.png" id="3_2h466"]
 [ext_resource type="Texture2D" uid="uid://d2514ixjb5c47" path="res://Assets/Character/sprites/jump.png" id="4_5se0h"]

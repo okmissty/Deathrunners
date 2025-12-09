@@ -1,6 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://dofa221wg6twp"]
+[gd_scene load_steps=10 format=3 uid="uid://dofa221wg6twp"]
 
-[ext_resource type="Script" path="res://PrototypeFiles/checkpoint.gd" id="1_luqgl"]
+[ext_resource type="Script" path="res://Checkpoint" id="1_luqgl"]
 [ext_resource type="Texture2D" uid="uid://diu8apdoso2t3" path="res://Assets/background/star.png" id="2_axgdc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_as43r"]
