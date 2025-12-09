@@ -108,14 +108,14 @@ func _spawn_survivor(data: Dictionary) -> Node:
 	survivor_instance.scale = Vector2(3, 3)
 	survivor_instance.add_to_group("player")
 	
+	# --- FIX START ---
+	# Set authority IMMEDIATELY, not inside a .ready callback
+	survivor_instance.set_multiplayer_authority(player_id)
+	# --- FIX END ---
+	
 	survivors[player_id] = survivor_instance
 	
-	survivor_instance.ready.connect(func():
-		survivor_instance.set_multiplayer_authority(player_id)
-		print("Set authority for survivor ", player_id)
-		
-		# NOTE: Camera assignment lines REMOVED here because camera now automatically follows all players
-	)
+	# (You can remove the survivor_instance.ready.connect block entirely)
 	
 	print("Spawned survivor for player ", player_id, " at position ", survivor_instance.position)
 	return survivor_instance
