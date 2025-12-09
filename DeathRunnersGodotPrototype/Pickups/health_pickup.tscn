@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://healthpickup"]
+
+[ext_resource type="Texture2D" uid="uid://h5fpygiuifjx" path="res://Assets/background/heart.png" id="2_awyve"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_huou6"]
+size = Vector2(23.5, 23.5)
+
+[node name="HealthPickup" type="HealthPickup"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(5, 5)
+offset_left = -13.0
+offset_top = -18.0
+offset_right = 18.0
+offset_bottom = 13.0
+texture = ExtResource("2_awyve")
+expand_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -4)
+shape = SubResource("RectangleShape2D_huou6")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
