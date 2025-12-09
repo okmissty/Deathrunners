@@ -373,6 +373,23 @@ offset_top = 12.0
 offset_right = 628.0
 offset_bottom = 72.0
 
+[node name="GameOverMenu" type="Panel" parent="UI"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RestartButton" type="Button" parent="UI/GameOverMenu"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Restart"
+
+[node name="MenuButton" type="Button" parent="UI/GameOverMenu"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Main Menu"
+
 [node name="Checkpoint1" parent="." instance=ExtResource("6_7mycd")]
 position = Vector2(238, 509)
 collision_layer = 2
