@@ -1,11 +1,12 @@
 # Build Instructions for Death Runners C++ GDExtension
 
 ## Overview
+
 This project has been refactored to run entirely on C++ code using Godot's GDExtension system. The original GDScript files in `PrototypeFiles/` have been ported to C++ implementations in the `src/` directory.
 
 ## Prerequisites
 
-1. **Godot 4.3+** - Download from https://godotengine.org/
+1. **Godot 4.3+** - Download from [https://godotengine.org/](https://godotengine.org/)
 2. **SCons** - Build system for compiling the GDExtension
    - Install via pip: `pip install scons`
    - Or via system package manager
@@ -41,6 +42,7 @@ cd ..
 ```
 
 Replace `<platform>` with:
+
 - `windows` for Windows
 - `linux` for Linux
 - `macos` for macOS
@@ -61,7 +63,7 @@ This will create the compiled library in the `bin/` directory.
 
 ## Project Structure
 
-```
+```text
 DeathRunnersGodotPrototype/
 ├── src/                       # C++ source files
 │   ├── main_script.cpp/.h     # Main game logic
@@ -92,12 +94,14 @@ DeathRunnersGodotPrototype/
 All game logic has been ported to C++ and registered as GDExtension classes:
 
 ### Core Game Classes
+
 - **MainScript** - Main game coordinator, spawns players, tracks game state
 - **Menu** - Multiplayer lobby with role assignment
 - **Player** - Survivor character with health/hunger/movement
 - **DeathController** - Death player controller for spawning obstacles
 
 ### Game Objects
+
 - **Checkpoint** - Respawn points for players
 - **Goal** - Win condition for survivors
 - **Hazard** - Static danger zones
@@ -106,17 +110,20 @@ All game logic has been ported to C++ and registered as GDExtension classes:
 - **HungerPickup** - Restores player hunger
 
 ### Traps & Obstacles
+
 - **AoeTrap** - Area of effect damage trap
 - **ArrowTrap** - Shoots arrow projectiles
 - **ArrowProjectile** - Arrow projectile entity
 - **BoulderTrap** - Falling boulder obstacle
 
 ### Utilities
+
 - **HorizontalCam** - Camera controller
 
 ## Scene Files
 
 All `.tscn` files have been updated to reference the C++ classes:
+
 - Script paths changed from `res://PrototypeFiles/*.gd` to `res://ClassName`
 - This tells Godot to use the registered GDExtension classes
 
@@ -127,6 +134,7 @@ All `.tscn` files have been updated to reference the C++ classes:
 3. Press F5 to run, or use the Play button
 
 If you get errors about missing classes, ensure:
+
 - The GDExtension is compiled (check `bin/` directory)
 - The `deathrunners.gdextension` file exists
 - The library path in `.gdextension` matches your compiled file
@@ -143,15 +151,18 @@ If you get errors about missing classes, ensure:
 ## Troubleshooting
 
 ### "Cannot find library" error
+
 - Make sure you built the GDExtension for your platform
 - Check the `bin/` directory for the compiled library
 - Verify the path in `deathrunners.gdextension` matches
 
 ### "Class not found" errors
+
 - Ensure all classes are registered in `register_types.cpp`
 - Check that `ClassDB::register_class<ClassName>()` is called
 
 ### Build errors
+
 - Ensure godot-cpp is built first
 - Check that your compiler is in the PATH
 - Verify SCons is installed correctly
@@ -168,6 +179,7 @@ If you get errors about missing classes, ensure:
 ## Academic Notes
 
 This project demonstrates:
+
 - C++ game development with Godot
 - GDExtension system usage
 - Multiplayer networking in C++

@@ -3,11 +3,13 @@
 ## What Was Done
 
 ### 1. GDExtension Setup ✓
+
 - Created `deathrunners.gdextension` - Configuration file that registers the C++ library with Godot
 - Created `SConstruct` - Build system for compiling C++ code
 - This enables Godot to load and use C++ classes as if they were GDScript
 
 ### 2. Scene Files Updated ✓
+
 Updated all `.tscn` files to reference C++ classes instead of GDScript:
 
 **Main Game Files:**
@@ -34,7 +36,9 @@ Updated all `.tscn` files to reference C++ classes instead of GDScript:
 ### 3. C++ Implementations Completed ✓
 
 #### MainScript (main_script.cpp/.h)
+
 **Ported from:** `main.gd`
+
 **Implements:**
 - Multiplayer game coordination
 - Player spawning system
@@ -52,7 +56,9 @@ Updated all `.tscn` files to reference C++ classes instead of GDScript:
 - Game state tracking
 
 #### Menu (menu.cpp/.h)
+
 **Ported from:** `menu.gd`
+
 **Implements:**
 - Multiplayer lobby system
 - Host/Join functionality
@@ -72,6 +78,7 @@ Updated all `.tscn` files to reference C++ classes instead of GDScript:
 The following C++ files already exist in `src/` with various levels of implementation:
 
 #### Fully/Partially Implemented:
+
 - `player.cpp/.h` - Player movement, health, hunger (needs review)
 - `death_controller.cpp/.h` - Death player functionality
 - `checkpoint.cpp/.h` - Checkpoint system
@@ -87,6 +94,7 @@ The following C++ files already exist in `src/` with various levels of implement
 - `horizontal_cam.cpp/.h` - Camera controller
 
 #### Registration:
+
 - `register_types.cpp/.h` - All classes registered with Godot ✓
 
 ## What Still Needs Work
@@ -113,6 +121,7 @@ Some C++ files may need logic ported from their GDScript equivalents:
 - Port any missing functionality
 
 ### 4. Test in Godot
+
 1. Open project in Godot
 2. Check console for any errors
 3. Test basic gameplay

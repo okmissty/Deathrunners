@@ -3,158 +3,296 @@
 #include <godot_cpp/classes/input.hpp>
 #include <godot_cpp/classes/multiplayer_api.hpp>
 #include <godot_cpp/classes/multiplayer_peer.hpp>
+#include <godot_cpp/classes/viewport.hpp>
+#include <godot_cpp/classes/scene_tree.hpp>
+#include <godot_cpp/variant/utility_functions.hpp>
 
 using namespace godot;
 
 void Player::_bind_methods() {
-    // Bind methods that can be called from GDScript or networked
     ClassDB::bind_method(D_METHOD("take_damage", "amount"), &Player::take_damage);
     ClassDB::bind_method(D_METHOD("heal", "amount"), &Player::heal);
     ClassDB::bind_method(D_METHOD("eat", "amount"), &Player::eat);
+    ClassDB::bind_method(D_METHOD("mark_goal_reached"), &Player::mark_goal_reached);
     
-    ClassDB::bind_method(D_METHOD("get_health"), &Player::get_health);
-    ClassDB::bind_method(D_METHOD("set_health", "h"), &Player::set_health);
+    // RPCs
+    ClassDB::bind_method(D_METHOD("sync_respawn", "pos"), &Player::sync_respawn);
+    ClassDB::bind_method(D_METHOD("sync_death"), &Player::sync_death);
+    ClassDB::bind_method(D_METHOD("sync_goal_reached"), &Player::sync_goal_reached);
     
-    ClassDB::bind_method(D_METHOD("get_hunger"), &Player::get_hunger);
-    ClassDB::bind_method(D_METHOD("set_hunger", "h"), &Player::set_hunger);
+    // Properties
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "health"), "set_health", "get_health");
+    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hunger"), "set_hunger", "get_hunger");
+    ADD_PROPERTY(PropertyInfo(Variant::INT, "lives"), "set_lives", "get_lives");
     
-    ClassDB::bind_method(D_METHOD("get_player_id"), &Player::get_player_id);
-    ClassDB::bind_method(D_METHOD("set_player_id", "id"), &Player::set_player_id);
-    
-    // Properties for network synchronization
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "health"), "set_health", "get_health");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "hunger"), "set_hunger", "get_hunger");
-    ADD_PROPERTY(PropertyInfo(Variant::INT, "player_id"), "set_player_id", "get_player_id");
+    ClassDB::bind_method(D_METHOD("sync_state", "pos", "vel", "h", "hu", "l", "anim", "flip"), &Player::sync_state);
 }
 
 Player::Player() {
     speed = 200.0f;
     jump_velocity = -400.0f;
-    health = 100;
-    max_health = 100;
-    hunger = 100;
-    max_hunger = 100;
+    gravity = 980.0f;
+    
+    health = 100.0f;
+    max_health = 100.0f;
+    hunger = 100.0f;
+    max_hunger = 100.0f;
+    lives = 3;
+    max_lives = 3;
+    
     is_alive = true;
-    player_id = 0;
+    reached_goal = false;
+    
+    sprite = nullptr;
+    health_bar = nullptr;
+    hunger_bar = nullptr;
 }
 
-Player::~Player() {
-}
+Player::~Player() {}
 
 void Player::_ready() {
-    // Set up physics properties
-    set_floor_stop_on_slope_enabled(true);
-    set_floor_snap_length(5.0);
+    Dictionary sync_opts;
+    sync_opts["rpc_mode"] = MultiplayerAPI::RPC_MODE_ANY_PEER;
+    sync_opts["transfer_mode"] = MultiplayerPeer::TRANSFER_MODE_UNRELIABLE_ORDERED;
+    sync_opts["call_local"] = false; 
+    rpc_config("sync_state", sync_opts);
+
+    Dictionary reliable_opts;
+    reliable_opts["rpc_mode"] = MultiplayerAPI::RPC_MODE_ANY_PEER;
+    reliable_opts["transfer_mode"] = MultiplayerPeer::TRANSFER_MODE_RELIABLE;
+    reliable_opts["call_local"] = true;
+    
+    rpc_config("apply_damage", reliable_opts);
+    rpc_config("sync_respawn", reliable_opts);
+    rpc_config("sync_death", reliable_opts);
+    rpc_config("sync_goal_reached", reliable_opts);
+    rpc_config("sync_health", reliable_opts);
+    rpc_config("sync_hunger", reliable_opts);
+
+    // --- FIX 1: Use Object::cast_to instead of template get_node ---
+    sprite = Object::cast_to<AnimatedSprite2D>(get_node_or_null("AnimatedSprite2D"));
+    
+    checkpoint_position = get_global_position();
+    add_to_group("player");
+    
+    call_deferred("_setup_ui_bars");
+}
+
+void Player::_setup_ui_bars() {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp->has_multiplayer_peer() || is_multiplayer_authority()) {
+        SceneTree* tree = get_tree();
+        if (tree && tree->get_current_scene()) {
+            // --- FIX 2: Use Object::cast_to for UI bars ---
+            Node* health_node = tree->get_current_scene()->get_node_or_null("UI/BarsContainer/HealthRow/HealthBar");
+            health_bar = Object::cast_to<ProgressBar>(health_node);
+
+            Node* hunger_node = tree->get_current_scene()->get_node_or_null("UI/BarsContainer/HungerRow/HungerBar");
+            hunger_bar = Object::cast_to<ProgressBar>(hunger_node);
+            
+            _update_ui();
+        }
+    }
 }
 
 void Player::_physics_process(double delta) {
-    // 1. NETWORK SYNC (Client Side)
-    // If we are NOT the authority, we just update our position to match the server
-    MultiplayerAPI *multiplayer = get_multiplayer();
-    if (multiplayer && !is_multiplayer_authority()) {
-        set_position(synced_position);
-        set_velocity(synced_velocity);
-        move_and_slide(); // Optional: keeps physics smoother than just setting position
-        return; // Skip the rest of the logic for clients
+    if (!is_alive || reached_goal) return;
+
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    bool is_auth = !mp->has_multiplayer_peer() || is_multiplayer_authority();
+
+    if (!is_auth) {
+        return; 
     }
 
-    // 2. AUTHORITY LOGIC (Server Side)
+    if (!is_on_floor()) {
+        Vector2 vel = get_velocity();
+        vel.y += gravity * delta;
+        set_velocity(vel);
+    }
+
     handle_input(delta);
-    apply_gravity(delta);
-    move_and_slide();
     
-    // 3. FALL DEATH CHECK (New Addition)
-    if (get_global_position().y > 2000.0f) { // 2000.0f is the death plane
-        take_damage(max_health);
+    // Update hunger
+    if (get_velocity().length() > 10.0f) {
+        hunger -= 15.0f * delta;
+    }
+    if (hunger <= 0) {
+        hunger = 0;
+        take_damage(2.0f * delta);
     }
 
-    // 4. SYNC VARIABLES
-    synced_position = get_position();
-    synced_velocity = get_velocity();
+    // Fall death check
+    if (get_global_position().y > 2000.0f) {
+        take_damage(1000.0f);
+    }
+
+    move_and_slide();
+    _clamp_to_camera_bounds();
+    _update_ui();
+
+    // Sync state to other clients
+    if (mp->has_multiplayer_peer()) {
+        String current_anim = "idle";
+        bool current_flip = false;
+        if (sprite) {
+            current_anim = sprite->get_animation();
+            current_flip = sprite->is_flipped_h();
+        }
+        
+        Array args;
+        args.push_back(get_global_position());
+        args.push_back(get_velocity());
+        args.push_back(health);
+        args.push_back(hunger);
+        args.push_back(lives);
+        args.push_back(current_anim);
+        args.push_back(current_flip);
+        
+        rpc("sync_state", args);
+    }
+}
+
+void Player::sync_state(Vector2 pos, Vector2 vel, float h, float hu, int l, String anim, bool flip) {
+    if (!is_multiplayer_authority()) {
+        set_global_position(pos);
+        set_velocity(vel);
+        health = h;
+        hunger = hu;
+        lives = l;
+        
+        if (sprite) {
+            sprite->play(anim);
+            sprite->set_flip_h(flip);
+        }
+    }
 }
 
 void Player::_process(double delta) {
-    // Update hunger over time (only on authority)
-        Ref<MultiplayerAPI> multiplayer = get_multiplayer();
-        if (multiplayer.is_valid() && is_multiplayer_authority()) {
-        update_hunger(delta);
-    }
 }
 
 void Player::handle_input(double delta) {
-    Input *input = Input::get_singleton();
+    Input* input = Input::get_singleton();
     Vector2 velocity = get_velocity();
+    float dir = 0.0f;
+
+    if (input->is_action_pressed("ui_left")) dir -= 1.0f;
+    if (input->is_action_pressed("ui_right")) dir += 1.0f;
     
-    // Horizontal movement
-    if (input->is_action_pressed("move_left")) {
-        velocity.x = -speed;
-    } else if (input->is_action_pressed("move_right")) {
-        velocity.x = speed;
-    } else {
-        velocity.x = 0;
-    }
-    
-    // Jump
-    if (input->is_action_just_pressed("jump") && is_on_floor()) {
+    velocity.x = dir * speed;
+
+    if (input->is_action_just_pressed("ui_accept") && is_on_floor()) {
         velocity.y = jump_velocity;
     }
     
     set_velocity(velocity);
+    _handle_animations(dir);
 }
 
-void Player::apply_gravity(double delta) {
-    Vector2 velocity = get_velocity();
+void Player::_handle_animations(float dir) {
+    if (!sprite) return;
+    
+    if (dir > 0) sprite->set_flip_h(false);
+    else if (dir < 0) sprite->set_flip_h(true);
     
     if (!is_on_floor()) {
-        velocity.y += 980.0 * delta; // Gravity
-    }
-    
-    set_velocity(velocity);
-}
-
-void Player::update_hunger(double delta) {
-    // Decrease hunger over time
-    hunger -= static_cast<int>(2.0 * delta); // Lose 2 hunger per second
-    
-    if (hunger <= 0) {
-        hunger = 0;
-        // Take damage when hungry
-        take_damage(static_cast<int>(5.0 * delta));
+        if (get_velocity().y < 0) sprite->play("jump");
+        else sprite->play("fall");
+    } else {
+        if (Math::abs(get_velocity().x) > 0.1f) sprite->play("run");
+        else sprite->play("idle");
     }
 }
 
-void Player::take_damage(int amount) {
+void Player::_clamp_to_camera_bounds() {
+    Viewport* vp = get_viewport();
+    if (!vp) return;
+    Camera2D* cam = vp->get_camera_2d();
+    if (!cam) return;
+    
+    float cam_x = cam->get_global_position().x;
+    Rect2 visible_rect = vp->get_visible_rect();
+    float half_width = (visible_rect.size.x / cam->get_zoom().x) * 0.5f;
+    
+    float padding = 32.0f;
+    float left = cam_x - half_width + padding;
+    float right = cam_x + half_width - padding;
+    
+    Vector2 pos = get_global_position();
+    pos.x = CLAMP(pos.x, left, right);
+    set_global_position(pos);
+}
+
+void Player::take_damage(float amount) {
+    if (!is_alive) return;
+    
     health -= amount;
-    
     if (health <= 0) {
         health = 0;
-        is_alive = false;
-        // Trigger death animation/logic
-        set_visible(false);
+        lives--;
+        UtilityFunctions::print("Player lost a life. Lives left: ", lives);
+        
+        if (lives > 0) {
+            respawn();
+        } else {
+            is_alive = false;
+            if (sprite) sprite->set_modulate(Color(0.5, 0.5, 0.5, 0.5));
+            if (get_multiplayer()->has_multiplayer_peer()) {
+                rpc("sync_death");
+            }
+        }
+    }
+    _update_ui();
+}
+
+void Player::respawn() {
+    set_global_position(checkpoint_position);
+    set_velocity(Vector2(0, 0));
+    health = max_health;
+    hunger = max_hunger;
+    
+    if (get_multiplayer()->has_multiplayer_peer()) {
+        Array args;
+        args.push_back(checkpoint_position);
+        rpc("sync_respawn", args);
     }
 }
 
-void Player::heal(int amount) {
-    health += amount;
-    if (health > max_health) {
-        health = max_health;
-    }
+void Player::sync_respawn(Vector2 pos) {
+    set_global_position(pos);
+    set_velocity(Vector2(0, 0));
 }
 
-void Player::eat(int amount) {
-    hunger += amount;
-    if (hunger > max_hunger) {
-        hunger = max_hunger;
-    }
+void Player::sync_death() {
+    is_alive = false;
+    if (sprite) sprite->set_modulate(Color(0.5, 0.5, 0.5, 0.5));
 }
 
-void Player::set_health(int h) {
-    health = h;
-    if (health <= 0) {
-        is_alive = false;
+void Player::mark_goal_reached() {
+    reached_goal = true;
+    if (get_multiplayer()->has_multiplayer_peer()) {
+        rpc("sync_goal_reached");
     }
+    
+    Node* main = get_tree()->get_current_scene();
+    if (main) main->call_deferred("_show_game_over", "Survivors win!");
 }
 
-void Player::set_hunger(int h) {
-    hunger = h;
+void Player::sync_goal_reached() {
+    reached_goal = true;
+}
+
+void Player::_update_ui() {
+    if (health_bar) health_bar->set_value(health);
+    if (hunger_bar) hunger_bar->set_value(hunger);
+}
+
+void Player::heal(float amount) {
+    health = Math::min(max_health, health + amount);
+    _update_ui();
+}
+
+void Player::eat(float amount) {
+    hunger = Math::min(max_hunger, hunger + amount);
+    _update_ui();
 }

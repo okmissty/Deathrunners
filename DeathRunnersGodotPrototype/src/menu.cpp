@@ -60,8 +60,8 @@ void Menu::_ready() {
     }
     
     // Connect multiplayer signals
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid()) {
         mp->connect("peer_connected", Callable(this, "_on_peer_connected"));
         mp->connect("peer_disconnected", Callable(this, "_on_peer_disconnected"));
         mp->connect("connected_to_server", Callable(this, "_on_connected_to_server"));
@@ -74,8 +74,8 @@ void Menu::_ready() {
 void Menu::_on_host_pressed() {
     peer->create_server(PORT, MAX_PLAYERS);
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid()) {
         mp->set_multiplayer_peer(peer);
     }
     
@@ -108,8 +108,8 @@ void Menu::_on_join_pressed() {
     
     peer->create_client(ip, PORT);
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid()) {
         mp->set_multiplayer_peer(peer);
     }
     
@@ -136,8 +136,8 @@ void Menu::_on_connected_to_server() {
 void Menu::_on_peer_connected(int id) {
     UtilityFunctions::print("Player connected: ", id);
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp || !mp->is_server()) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid() || !mp->is_server()) return;
     
     // Assign new player as survivor initially
     connected_players[id] = "Survivor";
@@ -172,8 +172,8 @@ void Menu::_on_peer_connected(int id) {
 void Menu::_on_peer_disconnected(int id) {
     UtilityFunctions::print("Player disconnected: ", id);
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp || !mp->is_server()) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid() || !mp->is_server()) return;
     
     connected_players.erase(id);
     
@@ -221,7 +221,7 @@ void Menu::_assign_death_player() {
     if (player_ids.size() == 0) return;
     
     // Randomly select one player to be Death
-    int random_index = Math::randi() % player_ids.size();
+    int random_index = UtilityFunctions::randi() % player_ids.size();
     death_player_id = player_ids[random_index];
     
     // Update roles
@@ -238,8 +238,8 @@ void Menu::_assign_death_player() {
 }
 
 void Menu::_on_start_pressed() {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp || !mp->is_server()) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid() || !mp->is_server()) return;
     
     // Ensure we have a Death player
     if (death_player_id == -1) {
@@ -258,8 +258,8 @@ void Menu::_on_start_pressed() {
 }
 
 void Menu::request_player_list() {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp || !mp->is_server()) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid() || !mp->is_server()) return;
     
     int sender_id = mp->get_remote_sender_id();
     Array args;
@@ -283,8 +283,8 @@ void Menu::finalize_roles(const Dictionary& players, int death_id) {
         tree->set_meta("death_player_id", death_player_id);
     }
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid()) {
         int my_id = mp->get_unique_id();
         String my_role = connected_players.has(my_id) ? String(connected_players[my_id]) : "Unknown";
         UtilityFunctions::print("My ID: ", my_id);
@@ -306,8 +306,8 @@ void Menu::_update_player_list() {
     String text = "Players:\n";
     Array player_ids = connected_players.keys();
     
-    MultiplayerAPI* mp = get_multiplayer();
-    int my_id = mp ? mp->get_unique_id() : -1;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    int my_id = mp.is_valid() ? mp->get_unique_id() : -1;
     
     for (int i = 0; i < player_ids.size(); i++) {
         int id = player_ids[i];

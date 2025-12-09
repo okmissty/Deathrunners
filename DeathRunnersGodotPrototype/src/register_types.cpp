@@ -5,7 +5,7 @@
 #include "player.h"
 #include "death_player.h"
 #include "obstacle.h"
-#include "survivor.h"
+// REMOVED: #include "survivor.h" 
 #include "death_controller.h"
 #include "hhpickup.h"
 #include "aoe_trap.h"
@@ -56,12 +56,6 @@ void initialize_deathrun_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<GameManager>();
 }
 
-/**
- * @brief Called when the module is being removed/unloaded.
- *
- * For this project there is no special cleanup required, but the function
- * exists to satisfy the GDExtension lifecycle contract.
- */
 void uninitialize_deathrun_module(ModuleInitializationLevel p_level) {
     if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
         return;

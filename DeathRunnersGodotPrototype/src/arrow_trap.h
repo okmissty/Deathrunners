@@ -3,6 +3,7 @@
 
 
 #include <godot_cpp/classes/node2d.hpp>
+#include <godot_cpp/classes/packed_scene.hpp>
 
 namespace godot {
 

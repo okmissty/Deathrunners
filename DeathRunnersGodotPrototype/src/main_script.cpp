@@ -47,6 +47,15 @@ MainScript::MainScript() {
 MainScript::~MainScript() {}
 
 void MainScript::_ready() {
+    Dictionary opts;
+    opts["rpc_mode"] = MultiplayerAPI::RPC_MODE_ANY_PEER;
+    opts["transfer_mode"] = MultiplayerPeer::TRANSFER_MODE_RELIABLE;
+    opts["call_local"] = true;
+
+    rpc_config("player_ready", opts);
+    rpc_config("sync_game_over", opts);
+    rpc_config("reload_game_scene", opts);
+
     // Get node references
     death_controller = get_node<DeathController>("DeathController");
     end_label = get_node<Label>("UI/EndLabel");
@@ -85,8 +94,8 @@ void MainScript::_ready() {
         }
     }
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp && mp->has_multiplayer_peer()) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid() && mp->has_multiplayer_peer()) {
         setup_multiplayer();
         Array args;
         args.push_back(mp->get_unique_id());
@@ -99,8 +108,8 @@ void MainScript::_ready() {
 }
 
 void MainScript::setup_multiplayer() {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid()) return;
     
     int my_id = mp->get_unique_id();
     my_role = player_roles.has(my_id) ? String(player_roles[my_id]) : "Unknown";
@@ -143,8 +152,8 @@ void MainScript::setup_multiplayer() {
 }
 
 void MainScript::player_ready(int player_id) {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp || !mp->is_server()) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid() || !mp->is_server()) return;
     
     players_ready[player_id] = true;
     UtilityFunctions::print("Player ", player_id, " is ready. Total ready: ", 
@@ -161,8 +170,8 @@ void MainScript::player_ready(int player_id) {
 }
 
 void MainScript::spawn_all_survivors() {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (!mp || !mp->is_server()) return;
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (!mp.is_valid() || !mp->is_server()) return;
     
     int spawn_offset = 0;
     Array player_ids = player_roles.keys();
@@ -301,8 +310,8 @@ void MainScript::_show_game_over(const String& text) {
         game_over_menu->set_visible(true);
     }
     
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp && mp->is_server()) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid() && mp->is_server()) {
         if (restart_button) {
             restart_button->set_text("Restart Game (Host)");
         }
@@ -323,15 +332,15 @@ void MainScript::sync_game_over(const String& text) {
 }
 
 void MainScript::_on_restart_pressed() {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp && mp->is_server()) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid() && mp->is_server()) {
         rpc("reload_game_scene", Array());
     }
 }
 
 void MainScript::_on_menu_pressed() {
-    MultiplayerAPI* mp = get_multiplayer();
-    if (mp && mp->has_multiplayer_peer()) {
+    Ref<MultiplayerAPI> mp = get_multiplayer();
+    if (mp.is_valid() && mp->has_multiplayer_peer()) {
         Ref<MultiplayerPeer> peer = mp->get_multiplayer_peer();
         if (peer.is_valid()) {
             peer->close();
