@@ -1,6 +1,5 @@
 [gd_scene load_steps=18 format=3 uid="uid://mc3rp2mub6wh"]
 
-[ext_resource type="Script" path="res://AoeTrap" id="1_qfc4f"]
 [ext_resource type="Texture2D" uid="uid://l66gtxdh3bwd" path="res://Assets/Fire Effect and Bullet 16x16.png" id="2_akfgn"]
 [ext_resource type="Texture2D" uid="uid://cmfykaxdk6gjg" path="res://hhuH20.png" id="2_hy4h2"]
 
@@ -102,12 +101,7 @@ animations = [{
 "speed": 15.0
 }]
 
-[node name="AoETrap" type="CharacterBody2D"]
-top_level = true
-collision_layer = 4
-script = ExtResource("1_qfc4f")
-warning_time = 1.2
-active_time = 1.0
+[node name="AoE" type="AoeTrap"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.9999999)

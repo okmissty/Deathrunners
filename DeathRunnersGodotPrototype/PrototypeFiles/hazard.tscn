@@ -1,13 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://dnoftimsdqnaj"]
 
-[ext_resource type="Script" path="res://Hazard" id="1_xc6ka"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4fw0i"]
 size = Vector2(32, 32)
 
-[node name="Hazard" type="Area2D"]
+[node name="Hazard" type="Hazard"]
 collision_layer = 4
-script = ExtResource("1_xc6ka")
 
 [node name="HazardAppearance" type="ColorRect" parent="."]
 offset_left = -16.0
