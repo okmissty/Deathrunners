@@ -11,11 +11,11 @@ Deathrunners is a 2D multiplayer side-scroller survival game. One player is assi
 **Project layout**:
 
 - `DeathRunnersGodotPrototype/` — Original Godot prototype (GDScript, scenes, assets).
-- `src/` — C++ conversion of game nodes and gameplay logic (GDExtension/Godot C++ skeletons).
+- `DeathRunnersGodotPrototype/src/` — C++ conversion of game nodes and gameplay logic (GDExtension/Godot C++ skeletons).
 - `Makefile` — Build script for C++ components (requires Godot headers / `godot-cpp` to be configured).
 - `User_surveys.txt` — Collected user feedback and prototype/final surveys.
 - `Changlog.txt` — Project changelog generated from commit history.
-- `UML.puml` — UML diagram representing classes and relationships.
+- `UML Diagram.png` — UML diagram representing classes and relationships.
 
 **Features implemented:**
 1. Multiplayer (2-4 players) — managed by `GameManager`.
