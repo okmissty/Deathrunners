@@ -33,7 +33,7 @@ User 4 -  Game Tester/Ethusiest
 Suggestions:
 - Hunger system is punishing - Draining at 15 points/second while moving means players are incentivized to stand still, which contradicts the "runner" gameplay. Recommendation: 3-5 points/second, or only drain during sprinting
 - Survivor has no agency - Just running and dodging. Consider adding: double jump, dash ability, or items to counter Death
-- The 2-3 levels need: platforms, multiple paths, risk/reward routes
+- The level needs: platforms, multiple paths, risk/reward routes
 - Trap placement should be strategic, not just activatable anywhere
 - Add environmental hazards that exist independently of Death player
 - Needs more depth to win: Time limits? Score system based on health remaining? Multiple survivors racing?
@@ -42,8 +42,8 @@ Suggestions:
 _____________________________________________________
 Final Version User surveys:
 
-Tester #1: Alicia L. Non gamer - cs major 
-(2 players)
+Tester #1: Alicia / Non gamer - cs major 
+(2 players) (One of them being us)
 - Very fun, enjoyablse and aesthically pleasing
 - Didn't know what the stars were for (The old checkpoints)
 - Just enough pickups and traps to succeed
@@ -52,21 +52,27 @@ Tester #1: Alicia L. Non gamer - cs major
 Suggestions: Add traps under the parkour section
 Statisfaction: 4/5 Stars 
 
-Tester #2 Kurt / Gamer - Non cs major
-(2 players)
+Tester #2: Kurt / Gamer - Non cs major
+(2 players) (One of them being us)
 - Wasn't able to tell if he was hitting the survivor as death
 - Uncesscary health and hunger bar on death screen
 - Survivor experience is better than death experience
-- Hard to avoid the boulder trap
+- Hard to avoid the boulder trap, but no connection issues!
 - Overall fun game!
 
-Suggestions: Indicator if trap hit was sucessful, Restart button
+Suggestions: Indicator if trap hit was sucessful
 Statisfaction: 2/5 Stars 
 
+Testers #3 & Tester #4: David and Kiet
+(4 players) (Two of them being us)
+- The chaos is more enjoyable with more people
+- Fun but wish it was  more fast paced
+- Awkward out of place looking assets (like arrow rap/boulder)
+- No connection problemss but it is annoying the .exe file gets flagged as unsafe. 
+- A tutorial or guide would help
+
+Suggestions: Different survivor sprites, crouching
+Statisfaction: 4/5 
 
 
-Tester #3
-
-
-Tester #4
 

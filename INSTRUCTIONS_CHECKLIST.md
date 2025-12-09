@@ -28,7 +28,7 @@
 - [ ] Final Presentation (10–15 minutes)
   - [x] Problem statement
   - [x] Background research summary
-  - [ ] UML and architecture overview
+  - [x] UML and architecture overview
   - [ ] Implementation details + demo/screenshots
   - [ ] User feedback summary
   - [ ] Reflection and lessons learned
