@@ -25,10 +25,10 @@
   - [ ] All functions have docstrings or inline documentation (headers and source)
   - [ ] Code compiles and runs without errors (verify with `make`)
 
-- [ ] Final Presentation (10–15 minutes)
+- [x] Final Presentation (10–15 minutes)
   - [x] Problem statement
   - [x] Background research summary
   - [x] UML and architecture overview
-  - [ ] Implementation details + demo/screenshots
+  - [x] Implementation details + demo/screenshots
   - [x] User feedback summary
   - [x] Reflection and lessons learned

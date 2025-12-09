@@ -5,6 +5,13 @@ Changelog (Based on our git commits)
 - Fixed the level goal behavior and addressed multiple small bugs reported during late testing.
 - Added/updated docstrings and corrected a bomb/label display issue. Short, focused fixes to stabilize the final build.
 - Music added
+- Fixed music volume and finalized audio settings.
+- Added UML diagram 
+- Produced a test DeathRunners executable and organized build artifacts for easier testing.
+- Moved and reorganized several src/ files for clearer structure.
+- Readme screenshot updated to reflect latest UI changes.
+- Documentation and user feedback (surveys) 
+- Fixed some multiplayer errors discovered during late testing and checked off completed tasks in the project checklist.
 
 2025-12-07 — Traps, maps, and gameplay tuning
 - Finished major updates to traps so they behave consistently in the scene, still need to verify multi-player damage distribution.
