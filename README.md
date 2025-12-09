@@ -95,6 +95,8 @@ To play run the Godot prototype in `DeathRunnersGodotPrototype/`
  
 - Godot for absolute beginners: https://youtu.be/s0O3a2AgoBA?si=jm-VWv2QUcttzJ1O
 
+- We also utilized Godot's Asset Library that includes a variety of samples/demos for free
+
 
 ## AI tools:
 https://chatgpt.com/share/69383b90-3994-8008-ad70-6dc63dcca2c0
