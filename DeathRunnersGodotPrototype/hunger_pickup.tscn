@@ -1,13 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://hungerpickup"]
 
-[ext_resource type="Script" path="res://HungerPickup" id="1_hsdfg2"]
 [ext_resource type="Texture2D" uid="uid://cr8oqlruwq6ke" path="res://Assets/background/carrot-1.png" id="2_1jju3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huou6"]
 size = Vector2(39, 39)
 
-[node name="HungerPickup" type="Area2D"]
-script = ExtResource("1_hsdfg2")
+[node name="HungerPickup" type="HungerPickup"]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_right = 40.0

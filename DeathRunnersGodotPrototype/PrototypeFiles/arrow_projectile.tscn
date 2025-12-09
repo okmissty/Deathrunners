@@ -1,15 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://c8k7dphv8fw27"]
 
-[ext_resource type="Script" path="res://ArrowProjectile" id="1_kd5qf"]
 [ext_resource type="Texture2D" uid="uid://cmckfjjllt2gw" path="res://Assets/ArrowProjectile.png" id="2_q8lfg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kd5qf"]
 size = Vector2(25, 8)
 
-[node name="ArrowProjectile" type="Area2D"]
+[node name="ArrowProjectile" type="ArrowProjectile"]
 collision_layer = 4
 collision_mask = 2
-script = ExtResource("1_kd5qf")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_kd5qf")

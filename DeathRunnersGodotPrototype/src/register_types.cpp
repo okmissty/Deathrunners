@@ -5,7 +5,6 @@
 #include "player.h"
 #include "death_player.h"
 #include "obstacle.h"
-// REMOVED: #include "survivor.h" 
 #include "death_controller.h"
 #include "hhpickup.h"
 #include "aoe_trap.h"
@@ -37,6 +36,7 @@ void initialize_deathrun_module(ModuleInitializationLevel p_level) {
 
     ClassDB::register_class<Player>();
     ClassDB::register_class<DeathController>();
+    ClassDB::register_class<Obstacle>(); // Register base class first
     ClassDB::register_class<HHPickup>();
     ClassDB::register_class<AoeTrap>();
     ClassDB::register_class<BoulderTrap>();
@@ -52,7 +52,6 @@ void initialize_deathrun_module(ModuleInitializationLevel p_level) {
     ClassDB::register_class<Node2DScript>();
     ClassDB::register_class<Menu>();
     ClassDB::register_class<DeathPlayer>();
-    ClassDB::register_class<Obstacle>();
     ClassDB::register_class<GameManager>();
 }
 

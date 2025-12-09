@@ -21,8 +21,16 @@ void Player::_bind_methods() {
     ClassDB::bind_method(D_METHOD("sync_goal_reached"), &Player::sync_goal_reached);
     
     // Properties
+    ClassDB::bind_method(D_METHOD("set_health", "health"), &Player::set_health);
+    ClassDB::bind_method(D_METHOD("get_health"), &Player::get_health);
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "health"), "set_health", "get_health");
+
+    ClassDB::bind_method(D_METHOD("set_hunger", "hunger"), &Player::set_hunger);
+    ClassDB::bind_method(D_METHOD("get_hunger"), &Player::get_hunger);
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hunger"), "set_hunger", "get_hunger");
+
+    ClassDB::bind_method(D_METHOD("set_lives", "lives"), &Player::set_lives);
+    ClassDB::bind_method(D_METHOD("get_lives"), &Player::get_lives);
     ADD_PROPERTY(PropertyInfo(Variant::INT, "lives"), "set_lives", "get_lives");
     
     ClassDB::bind_method(D_METHOD("sync_state", "pos", "vel", "h", "hu", "l", "anim", "flip"), &Player::sync_state);
