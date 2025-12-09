@@ -36,7 +36,6 @@ void initialize_deathrun_module(ModuleInitializationLevel p_level) {
     }
 
     ClassDB::register_class<Player>();
-    ClassDB::register_class<Survivor>();
     ClassDB::register_class<DeathController>();
     ClassDB::register_class<HHPickup>();
     ClassDB::register_class<AoeTrap>();

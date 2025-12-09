@@ -10,6 +10,11 @@ namespace godot {
 class ArrowTrap : public Node2D {
     GDCLASS(ArrowTrap, Node2D)
 
+private:
+    float shoot_cooldown;
+    float timer;
+    Ref<PackedScene> projectile_scene;
+    
 protected:
     // Register methods/properties with Godot.
     static void _bind_methods();
