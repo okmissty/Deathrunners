@@ -30,5 +30,5 @@
   - [x] Background research summary
   - [x] UML and architecture overview
   - [ ] Implementation details + demo/screenshots
-  - [ ] User feedback summary
-  - [ ] Reflection and lessons learned
+  - [x] User feedback summary
+  - [x] Reflection and lessons learned

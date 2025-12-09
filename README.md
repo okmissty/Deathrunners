@@ -88,10 +88,12 @@ To play run the Godot prototype in `DeathRunnersGodotPrototype/`
 
 **Godot Tutorials/Videos:**
 - Multiplayer: https://youtu.be/V4a_J38XdHk?si=EstLyZ-nUp4PxfV7
+- Multiplayer (helped a lot ): https://docs.godotengine.org/en/stable/tutorials/networking/high_level_multiplayer.html
 
 - How to make a video game Godot Beginner Tutorial: https://youtu.be/LOhfqjmasi0?si=jVWSm0eqk360wgwt
  
 - Godot for absolute beginners: https://youtu.be/s0O3a2AgoBA?si=jm-VWv2QUcttzJ1O
+
 
 
 
