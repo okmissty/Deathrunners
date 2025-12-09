@@ -2,13 +2,13 @@
 #define GOAL_H
 
 
-#include <godot_cpp/classes/node2d.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 
 namespace godot {
 
 /** Friendly goal node; represents level end or objective. */
-class Goal : public Node2D {
-    GDCLASS(Goal, Node2D)
+class Goal : public Area2D {
+    GDCLASS(Goal, Area2D)
 
 protected:
     /** Register methods with Godot. */
