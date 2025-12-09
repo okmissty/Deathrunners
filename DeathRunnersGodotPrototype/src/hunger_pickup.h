@@ -2,13 +2,13 @@
 #define HUNGER_PICKUP_H
 
 
-#include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 
 namespace godot {
 
 /** Hunger-only pickup node (restores hunger). */
-class HungerPickup : public Node {
-    GDCLASS(HungerPickup, Node)
+class HungerPickup : public Area2D {
+    GDCLASS(HungerPickup, Area2D)
 
 protected:
     /** Bind methods/properties for Godot. */

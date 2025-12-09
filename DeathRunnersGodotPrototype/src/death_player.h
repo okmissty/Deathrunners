@@ -1,7 +1,7 @@
 #ifndef DEATH_PLAYER_H
 #define DEATH_PLAYER_H
 
-#include <godot_cpp/classes/node2d.hpp>
+#include <godot_cpp/classes/character_body2d.hpp>
 #include <godot_cpp/classes/packed_scene.hpp>
 #include <godot_cpp/variant/vector2.hpp>
 
@@ -12,8 +12,8 @@ namespace godot {
  * 
  * Handles spawning obstacles and enemies to eliminate survivors
  */
-class DeathPlayer : public Node2D {
-    GDCLASS(DeathPlayer, Node2D)
+class DeathPlayer : public CharacterBody2D {
+    GDCLASS(DeathPlayer, CharacterBody2D)
 
 private:
     float spawn_cooldown;

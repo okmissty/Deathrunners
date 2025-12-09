@@ -2,13 +2,13 @@
 #define HEALTH_PICKUP_H
 
 
-#include <godot_cpp/classes/node.hpp>
+#include <godot_cpp/classes/area2d.hpp>
 
 namespace godot {
 
 /** Health-only pickup node. */
-class HealthPickup : public Node {
-    GDCLASS(HealthPickup, Node)
+class HealthPickup : public Area2D {
+    GDCLASS(HealthPickup, Area2D)
 
 protected:
     /** Register API with Godot. */
