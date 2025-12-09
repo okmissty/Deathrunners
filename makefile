@@ -1,4 +1,4 @@
-# Makefile for CMSC 240 Final Project - Death Run Game
+# Makefile for CMSC 240 Final Project
 # Team: Claire Wu, Tyeon Ford, Andy Quach
 
 # Compiler and build system

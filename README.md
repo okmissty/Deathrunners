@@ -24,6 +24,7 @@ Deathrunners is a 2D multiplayer side-scroller survival game. One player is assi
 4. Multiple trap types (arrow, boulder, AoE) and projectiles with selection.
 5. Pickup items (health and hunger restoration).
 6. Checkpoints
+7. Spectating as Dead players
 
 **Tech Stack:**
 - Godot Engine 4.3+ (prototype)
