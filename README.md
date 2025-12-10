@@ -11,8 +11,8 @@ Deathrunners is a 2D multiplayer side-scroller survival game. One player is assi
 **Project layout**:
 
 - `DeathRunnersGodotPrototype/` — Original Godot prototype (GDScript, scenes, assets).
-- `DeathRunnersGodotPrototype/src/` — C++ conversion of game nodes and gameplay logic (GDExtension/Godot C++ skeletons).
-- `Makefile` — Build script for C++ components (requires Godot headers / `godot-cpp` to be configured).
+- `DeathRunnersGodotPrototype/src/` — C++ conversion of game nodes and gameplay logic (GDExtension / godot-cpp).
+- `Makefile` / `DeathRunnersGodotPrototype/SConstruct` — scripts we used while messing with the C++ build.
 - `User_surveys.txt` — Collected user feedback and prototype/final surveys.
 - `Changlog.txt` — Project changelog generated from commit history.
 - `UML Diagram.png` — UML diagram representing classes and relationships.
@@ -27,25 +27,26 @@ Deathrunners is a 2D multiplayer side-scroller survival game. One player is assi
 7. Spectating as Dead players
 
 **Tech Stack:**
-- Godot Engine 4.3+ (prototype)
+- Godot Engine 4.3+
 - C++ (Godot GDExtension / godot-cpp)
 
-## How to build and run:
+## How to build and run
 
-1. Ensure you have the Godot C++ bindings (`godot-cpp`) built and available. Follow Godot's GDExtension instructions if needed.
-2. From the project root, run:
+Godot 4.3.
+
+- To build the C++ GDExtension we used SCons from inside `DeathRunnersGodotPrototype`:
 
 ```powershell
-make
+cd "DeathRunnersGodotPrototype"
+scons platform=windows target=template_debug
 ```
 
-3. Open `DeathRunnersGodotPrototype/project.godot` in Godot 4.3+ and add the compiled GDExtension if you want to run the C++ nodes in the engine.
+- Then in Godot: open `DeathRunnersGodotPrototype/project.godot` and hit Play.
 
 Notes: the `src/` folder is the C++ logic converted from the Godot prototype to meet the project requirement. Some behavior is still implemented or tested in the Godot gd script scenes.
 
 ## Example usage/Screenshots
 To play run the Godot prototype in `DeathRunnersGodotPrototype/`
-
 
 1. Menu Sreen (Then a 4 player example)
 ![alt text](Screenshots\image.png)
