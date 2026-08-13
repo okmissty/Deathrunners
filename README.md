@@ -99,9 +99,6 @@ To play run the Godot prototype in `DeathRunnersGodotPrototype/`
 - We also utilized Godot's Asset Library that includes a variety of samples/demos for free
 
 
-## AI tools:
-https://chatgpt.com/share/69383b90-3994-8008-ad70-6dc63dcca2c0
-https://chatgpt.com/share/69383dcf-34a8-8008-a791-a40b3805d87c
 
 
 
